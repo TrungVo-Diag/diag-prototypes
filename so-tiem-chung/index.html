@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<title>DIAG · Sổ tiêm chủng — prototype bản 2</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#E8EDF4;color:#0F1C2A;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input,textarea{font:inherit;color:inherit}
+
+/* ---------- page ---------- */
+.page{max-width:1240px;margin:0 auto;padding:28px 32px 48px;display:flex;gap:48px;align-items:flex-start}
+.stage{position:sticky;top:20px;display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0}
+.device-wrap{position:relative}
+.device{position:absolute;left:0;top:0;transform-origin:0 0;width:414px;height:868px;padding:12px;border-radius:68px;background:#10161D;box-shadow:0 30px 60px rgba(15,28,42,.28),inset 0 0 0 2px #2B3743}
+.screen{position:relative;width:390px;height:844px;border-radius:56px;overflow:hidden;background:#F3F8FC;isolation:isolate}
+.pager{display:flex;align-items:center;gap:10px}
+.pager button{height:40px;padding:0 16px;border-radius:20px;border:1px solid #C9D3DF;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.pager button:disabled{opacity:.45;cursor:default}
+.pager span{min-width:96px;text-align:center;font-size:14px;font-weight:600;color:#3B444D}
+.side{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.intro h1{margin:0 0 6px;font-size:30px;line-height:36px;letter-spacing:-.3px}
+.intro p{margin:0;font-size:15px;line-height:22px;color:#4A535C;max-width:640px}
+.intro p+p{margin-top:6px}
+.ver{display:inline-block;margin-right:6px;padding:1px 8px;border-radius:9px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;vertical-align:1px}
+.panel{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 2px rgba(15,28,42,.06)}
+.panel h2{margin:0 0 8px;font-size:17px}
+.panel ul,.panel ol{margin:0;padding-left:20px;font-size:14px;line-height:21px;color:#3B444D}
+.panel li+li{margin-top:5px}
+.panel li b{color:#0F1C2A}
+.list{padding:6px 8px 8px}
+.list h3{margin:10px 10px 4px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:#5E666E}
+.item{width:100%;display:flex;align-items:center;gap:12px;padding:9px 10px;border:0;border-radius:12px;background:transparent;text-align:left;font-size:15px;font-weight:600;cursor:pointer}
+.item:hover{background:#F1F5FA}
+.item .code{min-width:36px;height:28px;padding:0 6px;border-radius:8px;background:#EEF1F4;color:#4A535C;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.item[aria-current="true"]{background:#E6F0FE}
+.item[aria-current="true"] .code{background:#0766F7;color:#fff}
+.tagnew{margin-left:auto;font-size:11px;font-weight:700;color:#0C7640;background:#E3FCEF;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.notes-title{display:flex;align-items:center;gap:8px}
+.notes-title .code{min-width:32px;height:24px;padding:0 6px;border-radius:7px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.reset{align-self:flex-start;height:44px;padding:0 18px;border-radius:14px;border:1px solid #C9D3DF;background:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.foot{margin:0;font-size:12px;line-height:18px;color:#5E666E}
+body.narrow .page{flex-direction:column;align-items:center;padding:12px 8px 40px;gap:18px}
+body.narrow .stage{position:static}
+body.narrow .device{padding:0;background:none;box-shadow:none;border-radius:0;width:390px;height:844px}
+body.narrow .screen{border-radius:28px;box-shadow:0 10px 30px rgba(15,28,42,.18)}
+body.narrow .island{display:none}
+body.narrow .side{width:100%;max-width:560px}
+body.narrow .intro h1{font-size:24px;line-height:30px}
+
+/* ---------- phone chrome ---------- */
+.sb{position:absolute;left:0;right:0;top:0;height:50px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;pointer-events:none;color:#0F1C2A}
+.sb.light{color:#fff}
+.sb .t{font-size:16px;font-weight:600}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:122px;height:35px;border-radius:18px;background:#000;z-index:51;pointer-events:none}
+.toast{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(15,28,42,.94);color:#fff;font-size:14px;line-height:19px;font-weight:500;padding:10px 16px;border-radius:14px;width:max-content;max-width:320px;text-align:center;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+
+/* ---------- app ---------- */
+.app{position:absolute;inset:0;display:flex;flex-direction:column;background:#F3F8FC;color:#0F1C2A;font-size:15px;line-height:1.3}
+:where(.app) button{border:0;background:none;padding:0;margin:0;text-align:inherit;cursor:pointer;font:inherit;color:inherit}
+.app button:focus-visible{outline:2px solid #0766F7;outline-offset:2px}
+.app button:disabled{cursor:default}
+.nav{padding:50px 8px 2px;display:grid;grid-template-columns:72px 1fr 72px;align-items:center;flex-shrink:0}
+.nav h1{margin:0;text-align:center;font-size:17px;font-weight:600}
+.nav .back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#0766F7}
+.body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 16px 24px;display:flex;flex-direction:column;gap:10px;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex-shrink:0}
+.bar{flex-shrink:0;background:#fff;border-top:1px solid #E7E8EA;padding:12px 16px 30px;display:flex;align-items:center;gap:12px}
+.lbl{font-size:13px;font-weight:600;color:#5E666E;letter-spacing:.3px;padding:8px 4px 0;text-transform:uppercase}
+.card{background:#fff;border-radius:16px}
+.pad{padding:14px}
+.row{display:flex;align-items:center;gap:12px;width:100%}
+.row.top{align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.gap8{gap:8px}
+.between{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.grow{flex:1}
+.divider{height:1px;background:#EEF1F4;display:block}
+.chev{flex-shrink:0}
+.t13{font-size:13px;color:#6F777F}
+.t14{font-size:14px;color:#3B444D}
+.t14s{font-size:14px;font-weight:600;color:#0F1C2A}
+.t15{font-size:15px;color:#3B444D}
+.t15b{font-size:15px;font-weight:600}
+.t16{font-size:16px;font-weight:600}
+.t16n{font-size:16px;font-weight:500}
+.lh{line-height:18px}
+.lh2{line-height:19px}
+.ell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0}
+.c-blue{background:#E3F0FD;color:#0564BB}
+.c-amber{background:#FFF4DC;color:#8B5E04}
+.c-green{background:#E3FCEF;color:#0C7640}
+.c-gray{background:#F1F2F4;color:#4A535C}
+.btn{height:52px;width:100%;border-radius:14px;background:#0766F7;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.btn.sm{height:44px;border-radius:12px;font-size:15px}
+.btn.tint{background:#E3F0FD;color:#0564BB}
+.btn.auto2{width:auto;padding:0 22px}
+.pill{height:34px;padding:0 14px;border:1px solid #D5D9DD;border-radius:17px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:5px;flex-shrink:0;background:#fff}
+.pill.sm{height:32px;padding:0 11px;gap:4px;font-size:13px;color:#0766F7;border-color:#C9DBF3}
+.lnk{height:32px;display:flex;align-items:center;gap:5px;color:#0766F7;font-size:14px;font-weight:600}
+.av{display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.ibox{width:34px;height:34px;border-radius:10px;background:#E3F0FD;color:#0766F7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rowbtn{height:56px;padding:0 14px;display:flex;align-items:center;gap:12px;width:100%}
+.endnote{display:flex;gap:8px;align-items:flex-start;padding:4px 4px 0;font-size:13px;line-height:18px;color:#5E666E}
+.endnote svg{flex-shrink:0;margin-top:1px}
+.note{border-radius:14px;padding:12px 14px;display:flex;gap:10px;font-size:14px;line-height:20px}
+.note svg{flex-shrink:0;margin-top:1px}
+.note.blue{background:#E3F0FD;color:#0564BB}
+.note.amber{background:#FFF4DC;color:#8B5E04}
+
+/* whose record + tabs */
+.who{display:flex;align-items:center;gap:8px;padding:0 20px 12px;flex-shrink:0}
+.who .t13{white-space:nowrap}
+.segwrap{padding:0 16px;flex-shrink:0}
+.seg{padding:3px;border-radius:12px;background:#E4EAF1;display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.seg button{height:38px;border-radius:9px;color:#3B444D;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:#fff;box-shadow:0 1px 3px rgba(15,28,42,.14);color:#0F1C2A;font-weight:600}
+.cnt{height:20px;min-width:20px;padding:0 6px;border-radius:10px;background:#DCE3EB;color:#3B444D;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.cnt.amber{background:#FFF4DC;color:#8B5E04}
+
+/* upcoming list */
+.datebox{width:52px;height:56px;border-radius:12px;background:#EEF4FF;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.datebox b{font-size:20px;line-height:24px;color:#0766F7}
+.datebox small{font-size:11px;font-weight:600;color:#0550C8}
+.datebox.amber{background:#FFF4DC}
+.datebox.amber b,.datebox.amber small{color:#8B5E04}
+.card.over{border:1px solid #F3D9A4;overflow:hidden}
+.overhead{background:#FFF4DC;padding:8px 14px;display:flex;align-items:center;gap:6px;color:#8B5E04;font-size:13px;font-weight:700}
+.pad2{padding:12px 14px 10px}
+.overcta{padding:2px 14px 14px}
+.vcard{overflow:hidden}
+.place{display:flex;align-items:center;gap:10px;padding:10px 14px 12px;border-top:1px solid #EEF1F4}
+.place>svg{flex-shrink:0}
+.place .col{gap:1px}
+.card.over .place{border-top-color:#F6E7C6;padding-bottom:10px}
+
+/* done list */
+.sum{padding:2px 4px 0}
+.dis{padding:14px 14px 4px}
+.dhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:10px}
+.dhead h2{margin:0;font-size:17px;line-height:22px;font-weight:600}
+.prog{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:2px}
+.dots{display:flex;gap:4px}
+.dot{width:8px;height:8px;border-radius:4px;border:1.5px solid #9DB0C6;display:block}
+.dot.on{background:#0766F7;border-color:#0766F7}
+.pt{font-size:13px;font-weight:600;color:#0564BB}
+.drow{display:flex;align-items:center;gap:12px;width:100%;padding:9px 0;border-top:1px solid #EEF1F4}
+.drow.next{min-height:44px;padding:4px 0;border-top:1px dashed #DCE3EB}
+.drow .col .t13{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dn{width:50px;flex-shrink:0;font-size:14px;font-weight:600}
+.dn.muted{color:#5E666E}
+.nx{flex:1;min-width:0;font-size:14px;font-weight:500;color:#0564BB;display:flex;align-items:center;gap:6px}
+.nx.amber{color:#8B5E04;font-weight:600}
+.help{display:flex;align-items:center;gap:12px;padding:16px;width:100%;margin-top:2px}
+.hbox{width:44px;height:44px;border-radius:12px;background:#E3F0FD;color:#0766F7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* detail */
+.hero{padding:16px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.hero h2{margin:8px 0 0;font-size:22px;line-height:28px;font-weight:700}
+.stats{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.stats>div{background:#F3F8FC;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.stats .k{font-size:12px;font-weight:600;color:#5E666E;letter-spacing:.3px}
+.stats .v{font-size:20px;font-weight:700}
+.checks{display:flex;flex-direction:column;gap:10px}
+.ck{display:flex;gap:10px;font-size:15px;line-height:20px}
+.ck svg{flex-shrink:0;margin-top:1px}
+.kv{padding:4px 14px}
+.kvr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #EEF1F4;font-size:15px}
+.kvr:first-child{border-top:0}
+.kvr.top{align-items:flex-start}
+.kvr.top .pill{margin-top:8px}
+.hrs{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:13px;color:#6F777F}
+.tl{padding:12px 14px}
+.tlr{display:flex;gap:12px;width:100%;align-items:stretch}
+.tlm{width:20px;display:flex;flex-direction:column;align-items:center;padding-top:3px;flex-shrink:0}
+.m{width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.m.done{background:#0766F7;color:#fff}
+.m.ring{border:2px solid #0766F7;background:#fff}
+.m.ring.dim{border-color:#9DB0C6}
+.m.over{border:2px solid #C98A0A;background:#FFF4DC}
+.tll{width:2px;flex:1;background:#CFDCEB;margin-top:2px;min-height:14px;display:block}
+.tlc{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 0 14px}
+.tlc.cur{background:#EEF4FF;border-radius:10px;padding:5px 10px;margin-bottom:12px}
+.tlr:last-child .tlc:not(.cur){padding-bottom:0}
+.tlr:last-child .tlc.cur{margin-bottom:0}
+.tlr .chev{margin-top:2px}
+.td{font-size:14px;color:#3B444D;white-space:nowrap}
+.td.amb{color:#8B5E04;font-weight:600}
+.td.bl{color:#0564BB;font-weight:500}
+.dim{color:#5E666E}
+
+/* call confirmation, as iOS shows it */
+.scrim{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:rgba(15,28,42,.38);z-index:40;cursor:default}
+.ialert{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:270px;border-radius:14px;background:rgba(242,242,247,.97);z-index:41;overflow:hidden;text-align:center;box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.iat{padding:20px 16px 19px;font-size:17px;font-weight:600}
+.iab{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(60,60,67,.29)}
+.iab button{height:44px;border:0;background:none;padding:0;margin:0;font:inherit;font-size:17px;color:#007AFF;cursor:pointer}
+.iab button+button{border-left:1px solid rgba(60,60,67,.29)}
+.iab button.b{font-weight:600}
+
+/* empty */
+.body.center{align-items:center;justify-content:center;text-align:center;padding:0 32px 90px}
+.hero-ic{width:112px;height:112px;border-radius:56px;background:#E3F0FD;color:#0766F7;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.h20{margin:0;font-size:20px;font-weight:700}
+.p15{margin:0;font-size:15px;line-height:22px;color:#3B444D}
+.emptyhelp{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:10px}
+
+/* home */
+.hhead{background:#fff;border-radius:0 0 24px 24px;box-shadow:0 5px 20px rgba(15,28,42,.08);padding:58px 12px 16px 20px;display:flex;align-items:center;gap:13px;flex-shrink:0;position:relative;z-index:1}
+.avs{position:relative;display:block;flex-shrink:0;border-radius:50%}
+.seal{position:absolute;right:-3px;bottom:-3px;width:20px;height:20px;border-radius:10px;background:#6B7480;color:#fff;box-shadow:0 0 0 2px #fff;display:flex;align-items:center;justify-content:center}
+.seal.big{width:28px;height:28px;border-radius:14px;right:-2px;bottom:-2px;box-shadow:0 0 0 2.5px #fff}
+.hn{font-size:17px;font-weight:800}
+.hic{width:44px;height:44px;display:flex;align-items:center;justify-content:center;margin-left:auto}
+.body.hb{padding:20px 20px 24px;gap:16px}
+.qa{background:#fff;border-radius:22px;box-shadow:0 4px 11px rgba(15,28,42,.09);padding:16px 8px;display:grid;grid-template-columns:repeat(4,1fr)}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;padding:6px 2px}
+.tic{width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center}
+.tlab{height:30px;font-size:11.5px;line-height:14px;font-weight:600;text-align:center}
+.newb{position:absolute;top:0;right:6px;height:18px;padding:0 6px;border-radius:9px;border:2px solid #fff;background:#C9301C;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center}
+.hcard{border-radius:22px;box-shadow:0 4px 11px rgba(15,28,42,.09);padding:16px;display:flex;flex-direction:column;gap:12px}
+.h17{margin:0;font-size:17px;font-weight:700}
+.amb14{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:#8B5E04}
+.abox{width:44px;height:44px;border-radius:12px;background:#FFF4DC;color:#8B5E04;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.skel{border-radius:22px;background:#fff;box-shadow:0 4px 11px rgba(15,28,42,.09);padding:16px;display:flex;flex-direction:column;gap:10px}
+.skel i{display:block;height:12px;border-radius:6px;background:#EEF1F4}
+.tabbar{flex-shrink:0;height:84px;background:#fff;border-top:1px solid #E7E8EA;display:grid;grid-template-columns:repeat(4,1fr);padding-top:8px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:#6F777F;text-align:center}
+.tab.on{color:#0766F7;font-weight:600}
+
+/* profile tab (Hồ Sơ Của Tôi) */
+.ptop{flex-shrink:0;padding:50px 16px 4px;background:#F4F5F6}
+.ptop h1{margin:0;height:44px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600}
+.body.pb{background:#F4F5F6;padding:8px 20px 24px;gap:12px}
+.pcard{background:#fff;border-radius:16px;padding:22px 16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.bigav{position:relative;width:80px;height:80px;border-radius:40px;background:#DBE8FE;box-shadow:0 0 0 3px #fff;color:#0766F7;display:flex;align-items:center;justify-content:center}
+.pname{font-size:20px;font-weight:700}
+.icard{background:#fff;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.icard.two{flex-direction:row}
+.icard.two>div{flex:1;display:flex;flex-direction:column;gap:4px}
+.k11{font-size:11px;font-weight:500;color:#8A9096;letter-spacing:.2px}
+.v15{font-size:15px;font-weight:500}
+.mlist{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.mrow{display:flex;align-items:center;gap:14px;width:100%;padding:14px;background:#fff;border-radius:12px}
+.mic{width:40px;height:40px;border-radius:20px;background:#E6F0FE;color:#0766F7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.newi{height:20px;padding:0 8px;border-radius:10px;background:#C9301C;color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;flex-shrink:0}
+
+/* lock screen */
+.lock{position:absolute;inset:0;background:#1B2733;color:#fff;display:flex;flex-direction:column;align-items:center;padding:74px 12px 0}
+.ldate{font-size:19px;font-weight:600;color:#E6ECF2}
+.ltime{font-size:84px;line-height:92px;font-weight:600;letter-spacing:-1px;margin-bottom:26px}
+.nstack{width:100%;display:flex;flex-direction:column;gap:10px}
+.notif{width:100%;background:#F2F4F7;color:#0F1C2A;border-radius:22px;padding:12px 14px;display:flex;gap:12px;text-align:left}
+.nicon{width:38px;height:38px;border-radius:9px;background:#0766F7;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;letter-spacing:.3px;flex-shrink:0}
+.nt{font-size:15px;font-weight:600}
+.ntime{font-size:13px;color:#5E666E;white-space:nowrap}
+.nb{font-size:15px;line-height:20px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stage">
+    <div class="device-wrap" id="deviceWrap">
+      <div class="device" id="device">
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+    <div class="pager">
+      <button type="button" id="prevBtn">‹ Màn trước</button>
+      <span id="pagerLabel" aria-live="polite"></span>
+      <button type="button" id="nextBtn">Màn sau ›</button>
+    </div>
+  </div>
+
+  <aside class="side">
+    <header class="intro">
+      <h1>Sổ tiêm chủng</h1>
+      <p><span class="ver">Bản 2</span>Đã cập nhật theo góp ý BO ngày 05/11/2026. Prototype bấm được, dữ liệu mẫu; mốc thời gian là Thứ Năm 05/11/2026.</p>
+      <p>Hồ sơ đang chọn trong app: Nguyễn Minh An, 7 tháng tuổi (tài khoản của mẹ, Trần Thu Hà). Bấm trực tiếp trên điện thoại để đi theo luồng, hoặc chọn màn trong danh sách. Trên máy tính có thể dùng phím ← →.</p>
+    </header>
+
+    <section class="panel">
+      <h2>Đã sửa theo góp ý BO</h2>
+      <ul>
+        <li><b>B, C, C2:</b> bỏ phần chọn hồ sơ. Sổ hiện theo hồ sơ (PID) đang chọn trong app, chỉ giữ một dòng tên để biết đang xem sổ của ai. Muốn xem sổ người khác thì đổi hồ sơ bằng nút ⇆ như hiện nay.</li>
+        <li><b>Đặt lịch tiêm:</b> bỏ cả luồng (màn F–I cũ) và mọi nút "Đặt lịch tiêm". Thay bằng câu "Không cần đặt lịch trước, đến DIAG vào ngày hẹn".</li>
+        <li><b>A2 (mới):</b> lối vào "Sổ tiêm chủng" trong tab Hồ Sơ Của Tôi.</li>
+        <li><b>B, D:</b> mũi quá hạn có nút "Gọi CSKH"; mũi chưa tới hạn có nút "Chỉ đường". Mỗi lịch hẹn có tên và địa chỉ chi nhánh DIAG (nơi tiêm).</li>
+        <li><b>D:</b> "Chuẩn bị trước khi tiêm" dùng đúng nội dung BO gửi. Mũi quá hạn tách thành màn D2 cho dễ xem.</li>
+        <li><b>E:</b> nhà sản xuất, số lô, liều - đường dùng gộp vào tên vắc xin. Bỏ "Báo sai thông tin" (màn E2 cũ).</li>
+        <li><b>K cũ:</b> bỏ tự thêm mũi tiêm nơi khác. Thay bằng thẻ "Sổ thiếu mũi đã tiêm tại DIAG? Gọi CSKH" ở C và C2; thẻ này cũng dùng khi thông tin mũi tiêm chưa đúng.</li>
+      </ul>
+    </section>
+
+    <nav class="panel list" id="screenList" aria-label="Danh sách màn hình"></nav>
+
+    <section class="panel" aria-labelledby="notesTitle">
+      <h2 class="notes-title" id="notesTitle"></h2>
+      <ul id="notes"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Cần BO trả lời</h2>
+      <ol>
+        <li><b>Nơi tiêm:</b> mũi sắp tới hiện chi nhánh nào: nơi tiêm mũi trước, hay chi nhánh y tá ghi khi hẹn? Chi nhánh nào cũng tiêm được, hay chỉ một số chi nhánh có tiêm chủng? (Bản này đang hiện nơi tiêm mũi trước.)</li>
+        <li><b>Ngày hẹn và số mũi:</b> sau mỗi lần tiêm, y tá có ghi ngày hẹn mũi tiếp theo không? Hệ thống có lưu riêng "phòng bệnh gì" và "mũi số mấy / tổng mấy mũi", hay chỉ có tên vắc xin? Nếu chỉ có tên vắc xin, sổ chỉ hiện được danh sách mũi đã tiêm theo ngày, không có tab Sắp tới, nhắc lịch và nhóm theo bệnh.</li>
+        <li><b>Quá hạn:</b> tính quá hạn ngay sau ngày hẹn, hay sau vài ngày? Quá hạn lâu (ví dụ hơn 6 tháng) có còn hiện "Cần tiêm bù" không?</li>
+        <li><b>CSKH:</b> nút "Gọi CSKH" gọi tổng đài 1900 1717, hay tiêm chủng có số riêng?</li>
+        <li><b>Nhắc lịch:</b> các mốc trong "Quy tắc nhắc lịch" bên dưới có ổn không?</li>
+        <li><b>Tên tính năng:</b> "Sổ tiêm chủng" hay "Lịch sử tiêm chủng"?</li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Quy tắc nhắc lịch (đề xuất)</h2>
+      <ul>
+        <li>Mũi đến hạn: thông báo lúc 9:00, trước 3 ngày và trước 1 ngày, kèm tên chi nhánh.</li>
+        <li>Chưa tiêm sau ngày hẹn: nhắc 1 lần sau 3 ngày, mời gọi CSKH để được tư vấn tiêm bù; sau đó chỉ hiện trong sổ và thẻ Trang chủ.</li>
+        <li>Mỗi hồ sơ tối đa 1 thông báo nhắc mỗi ngày; các mũi cùng ngày gộp vào một thông báo.</li>
+        <li>Thông báo gửi về SĐT của tài khoản cho mọi hồ sơ, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.</li>
+        <li>Thẻ trên Trang chủ: theo hồ sơ đang chọn, khi có mũi quá hạn hoặc đến hạn trong 7 ngày tới.</li>
+        <li>Sau mỗi lần tiêm tại DIAG: 1 thông báo "Sổ tiêm chủng đã cập nhật".</li>
+        <li>Mọi thông báo cũng lưu trong mục Thông báo của app.</li>
+      </ul>
+    </section>
+
+    <button type="button" class="reset" id="resetBtn">Đặt lại dữ liệu mẫu</button>
+    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 2 (05/11/2026). Tên người, chi nhánh, địa chỉ, giờ mở cửa, số điện thoại và PID đều là dữ liệu mẫu; 1900 1717 là tổng đài DIAG đang dùng trong app.</p>
+  </aside>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- icons ---------- */
+  var I = {
+    back: '<path d="M15 18l-6-6 6-6"/>',
+    chev: '<path d="M9 18l6-6-6-6"/>',
+    syringe: '<path d="M18 2l4 4M17 7l3-3M19 9L8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5M9 11l4 4M5 19l-3 3M14 4l6 6"/>',
+    alert: '<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+    check: '<path d="M20 6L9 17l-5-5"/>',
+    info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+    clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+    calPlus: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/>',
+    pin: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+    bell: '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+    doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+    tag: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/>',
+    home: '<path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    calTab: '<rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
+    user: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="10" r="3.2"/><path d="M6.5 19c1.2-2.6 3.2-3.8 5.5-3.8s4.3 1.2 5.5 3.8"/>',
+    phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
+    nav: '<path d="M3 11l19-9-9 19-2-8-8-2z"/>',
+    headset: '<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>',
+    qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h.01M17.5 17.5H21V21h-3.5z"/>',
+    kit: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M12 11v6M9 14h6"/>',
+    gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+    swap: '<path d="M20 7H4M4 7l4-4M4 7l4 4M4 17h16M20 17l-4-4M20 17l-4 4"/>'
+  };
+  function ic(name, size, color, width, cls) {
+    return '<svg' + (cls ? ' class="' + cls + '"' : '') + ' width="' + (size || 18) + '" height="' + (size || 18) +
+      '" viewBox="0 0 24 24" fill="none" stroke="' + (color || 'currentColor') + '" stroke-width="' + (width || 2) +
+      '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[name] + '</svg>';
+  }
+  function chev() { return ic('chev', 18, '#B8BDC2', 2.2, 'chev'); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function hexA(h, a) { var n = parseInt(h.slice(1), 16); return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
+  var PERSON = '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 21.5c.8-4.6 4.5-7.5 9-7.5s8.2 2.9 9 7.5z"/></svg>';
+
+  /* ---------- sample data (made up) ---------- */
+  var TODAY = new Date(2026, 10, 5);
+  function parse(d) { var p = d.split('/'); return new Date(+p[2], +p[1] - 1, +p[0]); }
+  function daysFrom(d) { return Math.round((parse(d) - TODAY) / 86400000); }
+
+  var PROFILES = {
+    an: { id: 'an', name: 'Nguyễn Minh An', ageLong: '7 tháng tuổi', ini: 'MA', bg: '#E3F0FD', fg: '#0564BB' },
+    ha: { id: 'ha', name: 'Trần Thu Hà', ageLong: '34 tuổi', ini: 'TH', bg: '#FDECF3', fg: '#A3195B' }
+  };
+  var HOTLINE = '1900 1717';
+  var CENTERS = {
+    A: { name: 'DIAG [Chi nhánh A]', addr: '[Địa chỉ chi nhánh A]' },
+    B: { name: 'DIAG [Chi nhánh B]', addr: '[Địa chỉ chi nhánh B]' }
+  };
+  /* rec: the vaccine name exactly as the nurse typed it, maker, lot and dose included when entered */
+  var SERIES = [
+    { id: 'flu', disease: 'Cúm', full: 'Cúm mùa', vaccine: 'Vaxigrip Tetra 0.5ml', total: 2,
+      doses: [ { n: 1, st: 'done', date: '16/10/2026', wd: 'Thứ Sáu', place: 'A', rec: 'Vaxigrip Tetra 0.5ml (Sanofi)' },
+               { n: 2, st: 'up', date: '16/11/2026', wd: 'Thứ Hai', rel: 'Còn 11 ngày', place: 'A' } ] },
+    { id: 'pcv', disease: 'Phế cầu', full: 'Viêm phổi, viêm màng não, nhiễm khuẩn huyết, viêm tai giữa do phế cầu khuẩn', vaccine: 'Prevenar 20', total: 4,
+      doses: [ { n: 1, st: 'done', date: '12/05/2026', wd: 'Thứ Ba', place: 'B' },
+               { n: 2, st: 'done', date: '14/07/2026', wd: 'Thứ Ba', place: 'A' },
+               { n: 3, st: 'done', date: '14/09/2026', wd: 'Thứ Hai', place: 'A', rec: 'Prevenar 20 (Pfizer) 0,5ml' },
+               { n: 4, st: 'up', date: '12/03/2027', wd: 'Thứ Sáu', rel: 'Còn 4 tháng', place: 'A' } ] },
+    { id: 'menb', disease: 'Não mô cầu nhóm B', full: 'Viêm màng não, nhiễm khuẩn huyết do não mô cầu nhóm B', vaccine: 'Bexsero', total: 3,
+      doses: [ { n: 1, st: 'done', date: '24/08/2026', wd: 'Thứ Hai', place: 'A' },
+               { n: 2, st: 'over', date: '24/10/2026', wd: 'Thứ Bảy', rel: 'Quá hạn 12 ngày', place: 'A' },
+               { n: 3, st: 'later', rel: 'Hẹn sau khi tiêm mũi 2' } ] },
+    { id: 'hexa', disease: '6 trong 1', full: 'Bạch hầu, ho gà, uốn ván, bại liệt, Hib, viêm gan B', vaccine: 'Hexaxim', total: 4, showFull: true,
+      doses: [ { n: 1, st: 'done', date: '12/05/2026', wd: 'Thứ Ba', place: 'B' },
+               { n: 2, st: 'done', date: '12/06/2026', wd: 'Thứ Sáu', place: 'B' },
+               { n: 3, st: 'done', date: '13/07/2026', wd: 'Thứ Hai', place: 'B' },
+               { n: 4, st: 'up', date: '13/09/2027', wd: 'Thứ Hai', rel: 'Còn 10 tháng', place: 'B' } ] },
+    { id: 'measles', disease: 'Sởi', full: 'Bệnh sởi', vaccine: 'MVVac', total: 2,
+      doses: [ { n: 1, st: 'up', date: '12/12/2026', wd: 'Thứ Bảy', rel: 'Còn 37 ngày', place: 'A' },
+               { n: 2, st: 'later', rel: 'Hẹn sau khi tiêm mũi 1' } ] },
+    { id: 'je', disease: 'Viêm não Nhật Bản', full: 'Viêm não Nhật Bản', vaccine: 'Imojev', total: 2,
+      doses: [ { n: 1, st: 'up', date: '12/12/2026', wd: 'Thứ Bảy', rel: 'Còn 37 ngày', place: 'A' },
+               { n: 2, st: 'later', rel: 'Hẹn sau khi tiêm mũi 1' } ] }
+  ];
+  /* BO's text, 05/11/2026 */
+  var PREP = [
+    'Kiểm tra sức khỏe, đảm bảo không sốt hay mắc bệnh cấp tính.',
+    'Mang theo sổ tiêm chủng (nếu có), CCCD hoặc giấy khai sinh.',
+    'Mặc trang phục thoải mái, ăn nhẹ và uống đủ nước trước khi tiêm.',
+    'Không tự ý uống thuốc hạ sốt, giảm đau hoặc chất kích thích.'
+  ];
+
+  function byId(id) { for (var i = 0; i < SERIES.length; i++) if (SERIES[i].id === id) return SERIES[i]; return null; }
+  function ref(r) { var s = byId(r.s); var d = s.doses.filter(function (x) { return x.n === r.n; })[0] || s.doses[0]; return { s: s, d: d }; }
+  function doneN(s) { return s.doses.filter(function (d) { return d.st === 'done'; }).length; }
+
+  /* ---------- state ---------- */
+  function initial() { return { cur: 'A', stack: [], up: { s: 'flu', n: 2 }, dose: { s: 'pcv', n: 3 }, alert: false }; }
+  var state = initial();
+
+  /* ---------- shared pieces ---------- */
+  var OUT = 'data-act="toast" data-msg="Ngoài phạm vi prototype"';
+  var SWITCH_MSG = 'Mở “Chọn hồ sơ” có sẵn trong app. Đổi hồ sơ thì Trang chủ và sổ tiêm chủng đổi theo.';
+  function avatar(id, size) {
+    var p = PROFILES[id], fs = size <= 32 ? 11 : (size >= 44 ? 15 : 14);
+    return '<span class="av" aria-hidden="true" style="width:' + size + 'px;height:' + size + 'px;border-radius:' + (size / 2) +
+      'px;background:' + p.bg + ';color:' + p.fg + ';font-size:' + fs + 'px">' + p.ini + '</span>';
+  }
+  function avatarSeal(id, size) {
+    return '<button class="avs" data-act="toast" data-msg="' + SWITCH_MSG + '" aria-label="Đổi hồ sơ">' + avatar(id, size) +
+      '<span class="seal" aria-hidden="true">' + ic('swap', 11, 'currentColor', 2.6) + '</span></button>';
+  }
+  function nav(title) {
+    return '<header class="nav"><button class="back" data-back aria-label="Quay lại">' + ic('back', 24, 'currentColor', 2.4) +
+      '</button><h1>' + title + '</h1><span></span></header>';
+  }
+  function who(id) {
+    var p = PROFILES[id];
+    return '<div class="who">' + avatar(id, 28) + '<span class="t15b">' + p.name + '</span><span class="t13">· ' + p.ageLong + '</span></div>';
+  }
+  function upcomingItems() {
+    var items = [];
+    SERIES.forEach(function (s) { s.doses.forEach(function (d) { if (d.st === 'up' || d.st === 'over') items.push({ s: s, d: d }); }); });
+    return items;
+  }
+  function doneTotal() { return SERIES.reduce(function (n, s) { return n + doneN(s); }, 0); }
+  function seg(active) {
+    return '<div class="segwrap"><div class="seg" role="tablist" aria-label="Danh sách mũi tiêm">' +
+      '<button role="tab" aria-selected="' + (active === 'B') + '" class="' + (active === 'B' ? 'on' : '') + '" data-go="B" data-replace>Sắp tới <span class="cnt amber">' + upcomingItems().length + '</span></button>' +
+      '<button role="tab" aria-selected="' + (active === 'C') + '" class="' + (active === 'C' ? 'on' : '') + '" data-go="C" data-replace>Đã tiêm <span class="cnt">' + doneTotal() + '</span></button>' +
+      '</div></div>';
+  }
+  function ibox(name) { return '<span class="ibox">' + ic(name, 19) + '</span>'; }
+  function check(text) { return '<div class="ck">' + ic('check', 18, '#0C7640', 2.6) + '<span>' + text + '</span></div>'; }
+  function datebox(date, amber) {
+    var p = date.split('/');
+    return '<span class="datebox' + (amber ? ' amber' : '') + '"><b>' + (+p[0]) + '</b><small>TH ' + (+p[1]) + '</small></span>';
+  }
+  function timeline(s, cur) {
+    return '<section class="card tl">' + s.doses.map(function (d, i) {
+      var last = i === s.doses.length - 1, isCur = d.n === cur, mark, right, act = '';
+      var left = 'Mũi ' + d.n + (isCur ? ' · đang xem' : '');
+      if (d.st === 'done') {
+        mark = '<span class="m done">' + ic('check', 11, 'currentColor', 3.4) + '</span>';
+        right = '<span class="td">' + d.date + '</span>';
+        if (!isCur) act = ' data-act="dose" data-s="' + s.id + '" data-n="' + d.n + '"';
+      } else if (d.st === 'over') {
+        mark = '<span class="m over"></span>';
+        right = '<span class="td amb">Quá hạn · hẹn ' + d.date + '</span>';
+        if (!isCur) act = ' data-act="up" data-s="' + s.id + '" data-n="' + d.n + '"';
+      } else if (d.st === 'up') {
+        mark = '<span class="m ring"></span>';
+        right = '<span class="td bl">Hẹn ' + d.date + '</span>';
+        if (!isCur) act = ' data-act="up" data-s="' + s.id + '" data-n="' + d.n + '"';
+      } else {
+        mark = '<span class="m ring dim"></span>';
+        right = '<span class="td">' + (d.rel || 'Chưa có ngày hẹn') + '</span>';
+      }
+      var inner = '<span class="tlm">' + mark + (last ? '' : '<span class="tll"></span>') + '</span>' +
+        '<span class="tlc' + (isCur ? ' cur' : '') + '"><span class="t15b' + (d.st === 'later' ? ' dim' : '') + '">' + left + '</span>' + right + '</span>';
+      return act ? '<button class="tlr"' + act + '>' + inner + chev() + '</button>' : '<div class="tlr">' + inner + '</div>';
+    }).join('') + '</section>';
+  }
+  function placeRow(cid, withDir) {
+    var c = CENTERS[cid];
+    return '<div class="place">' + ic('pin', 16, '#6F777F', 2.2) + '<span class="col"><span class="t14s ell">' + c.name + '</span><span class="t13 ell">' + c.addr + '</span></span>' +
+      (withDir ? '<button class="pill sm" data-act="dir" data-c="' + cid + '">' + ic('nav', 13, 'currentColor', 2.4) + 'Chỉ đường</button>' : '') + '</div>';
+  }
+  function bar(inner) { return '<div class="bar">' + inner + '</div>'; }
+  function callBtn(label, cls) { return '<button class="btn' + (cls ? ' ' + cls : '') + '" data-act="call">' + ic('phone', 19) + label + '</button>'; }
+  function dirBtn(cid, label) { return '<button class="btn" data-act="dir" data-c="' + cid + '">' + ic('nav', 19) + label + '</button>'; }
+  function helpCard(title, body) {
+    return '<button class="card help" data-act="call"><span class="hbox">' + ic('headset', 20) + '</span>' +
+      '<span class="col"><span class="t16">' + title + '</span><span class="t14 lh2">' + body + '</span></span>' + chev() + '</button>';
+  }
+  function tile(label, color, icon, attrs, isNew) {
+    return '<button class="tile" ' + attrs + '><span class="tic" style="background:' + color + ';box-shadow:0 4px 10px ' + hexA(color, 0.45) + '">' +
+      ic(icon, 26, '#fff', 2) + '</span>' + (isNew ? '<span class="newb">Mới</span>' : '') + '<span class="tlab">' + label + '</span></button>';
+  }
+  function tabbar(active) {
+    var t = [['home', 'Trang chủ', 'A'], ['calTab', 'Lịch Hẹn'], ['doc', 'Kết Quả'], ['user', 'Hồ Sơ Của Tôi', 'A2']];
+    return '<nav class="tabbar" aria-label="Thanh điều hướng">' + t.map(function (x) {
+      var on = x[2] === active;
+      var attrs = on ? 'aria-current="page"' : (x[2] ? 'data-go="' + x[2] + '" data-root' : OUT);
+      return '<button class="tab' + (on ? ' on' : '') + '" ' + attrs + '>' + ic(x[0], 26, 'currentColor', 1.8) + x[1] + '</button>';
+    }).join('') + '</nav>';
+  }
+  function alertHtml() {
+    return '<button class="scrim" data-act="alertCancel" aria-label="Đóng"></button>' +
+      '<div class="ialert" role="alertdialog" aria-modal="true" aria-labelledby="alertTitle"><div class="iat" id="alertTitle">' + HOTLINE + '</div>' +
+      '<div class="iab"><button data-act="alertCancel">Hủy</button><button class="b" data-act="alertCall">Gọi</button></div></div>';
+  }
+
+  /* ---------- screens ---------- */
+  function scrA() {
+    return '<div class="hhead">' + avatarSeal('an', 46) + '<span class="col"><span class="t13">Xin chào,</span><span class="hn">NGUYỄN MINH AN</span></span>' +
+      '<button class="hic" ' + OUT + ' aria-label="Thông báo">' + ic('bell', 23, '#0766F7', 1.9) + '</button></div>' +
+      '<div class="body hb">' +
+        '<nav class="qa" aria-label="Truy cập nhanh">' +
+          tile('Đặt lịch hẹn', '#0766F7', 'calPlus', OUT) +
+          tile('Kết quả', '#12BAB4', 'doc', OUT) +
+          tile('Tiêm chủng', '#13A36B', 'syringe', 'data-go="B"', true) +
+          tile('Ưu đãi', '#E8412C', 'tag', OUT) +
+        '</nav>' +
+        '<section class="card hcard" aria-label="Nhắc lịch tiêm">' +
+          '<div class="between"><h2 class="h17">Nhắc lịch tiêm</h2><button class="lnk" data-go="B">Sổ tiêm chủng</button></div>' +
+          '<button class="row" data-act="up" data-s="menb" data-n="2"><span class="abox">' + ic('syringe', 22, 'currentColor', 1.9) + '</span>' +
+            '<span class="col"><span class="t16">Minh An cần tiêm bù 1 mũi</span>' +
+            '<span class="amb14">' + ic('alert', 14, 'currentColor', 2.2) + 'Não mô cầu B · quá hạn 12 ngày</span>' +
+            '<span class="t14">Tiếp theo: Cúm mũi 2 · 16/11</span></span>' + chev() + '</button>' +
+        '</section>' +
+        '<div class="skel" aria-hidden="true"><i style="width:40%"></i><i style="width:90%"></i><i style="width:75%"></i></div>' +
+        '<div class="skel" aria-hidden="true"><i style="width:55%"></i><i style="width:85%"></i></div>' +
+      '</div>' + tabbar('A');
+  }
+
+  function scrA2() {
+    function mrow(icon, title, attrs, isNew) {
+      return '<button class="mrow" ' + attrs + '><span class="mic">' + ic(icon, 18) + '</span><span class="grow t16n">' + title + '</span>' +
+        (isNew ? '<span class="newi">Mới</span>' : '') + ic('chev', 16, '#A3A9AF', 2.2, 'chev') + '</button>';
+    }
+    return '<header class="ptop"><h1>Hồ Sơ Của Tôi</h1></header>' +
+      '<div class="body pb">' +
+        '<section class="pcard"><button class="bigav" data-act="toast" data-msg="' + SWITCH_MSG + '" aria-label="Đổi hồ sơ">' + PERSON +
+          '<span class="seal big" aria-hidden="true">' + ic('swap', 14, 'currentColor', 2.6) + '</span></button><span class="pname">NGUYỄN MINH AN</span></section>' +
+        '<section class="icard two"><div><span class="k11">NGÀY SINH</span><span class="v15">12/03/2026</span></div>' +
+          '<div><span class="k11">GIỚI TÍNH</span><span class="v15">Nam</span></div></section>' +
+        '<section class="icard"><span class="k11">SỐ ĐIỆN THOẠI</span><span class="v15">0901 xxx xxx</span></section>' +
+        '<div class="mlist">' +
+          mrow('qr', 'Mã của tôi', OUT) +
+          mrow('kit', 'Hồ sơ bệnh án điện tử', OUT) +
+          mrow('syringe', 'Sổ tiêm chủng', 'data-go="B"', true) +
+          mrow('gift', 'Thử thách', OUT) +
+          mrow('tag', 'Khuyến mãi của tôi', OUT) +
+          mrow('doc', 'Đơn hàng đã mua', OUT) +
+          mrow('pin', 'Tìm chi nhánh Diag gần bạn', OUT) +
+          mrow('headset', 'Liên hệ hỗ trợ', OUT) +
+        '</div>' +
+      '</div>' + tabbar('A2');
+  }
+
+  function scrB() {
+    var items = upcomingItems();
+    var over = items.filter(function (x) { return x.d.st === 'over'; });
+    var up = items.filter(function (x) { return x.d.st === 'up'; }).sort(function (a, b) { return parse(a.d.date) - parse(b.d.date); });
+    var html = '';
+    over.forEach(function (x) {
+      var s = x.s, d = x.d;
+      html += '<section class="card over" aria-label="Cần tiêm bù">' +
+        '<div class="overhead">' + ic('alert', 16, 'currentColor', 2.2) + ' Cần tiêm bù · ' + d.rel.toLowerCase() + '</div>' +
+        '<button class="row pad2" data-act="up" data-s="' + s.id + '" data-n="' + d.n + '">' + datebox(d.date, true) +
+          '<span class="col"><span class="t16">' + s.disease + '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '/' + s.total +
+          '</span><span class="t13">Hẹn ' + d.wd + ', ' + d.date + '</span></span>' + chev() + '</button>' +
+        placeRow(d.place, false) +
+        '<div class="overcta">' + callBtn('Gọi CSKH để được tư vấn tiêm bù', 'sm tint') + '</div></section>';
+    });
+    var groups = [];
+    up.forEach(function (x) {
+      var g = groups.filter(function (y) { return y.date === x.d.date; })[0];
+      if (g) g.list.push(x); else groups.push({ date: x.d.date, wd: x.d.wd, rel: x.d.rel, place: x.d.place, list: [x] });
+    });
+    var lastMonth = '';
+    groups.forEach(function (g) {
+      var p = g.date.split('/'), mk = 'Tháng ' + (+p[1]) + ' · ' + p[2];
+      if (mk !== lastMonth) { html += '<div class="lbl">' + mk + '</div>'; lastMonth = mk; }
+      var chip = '<span class="chip ' + (daysFrom(g.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + g.rel + '</span>';
+      if (g.list.length === 1) {
+        var s = g.list[0].s, d = g.list[0].d;
+        html += '<section class="card vcard"><button class="row pad" data-act="up" data-s="' + s.id + '" data-n="' + d.n + '">' + datebox(g.date) +
+          '<span class="col"><span class="between"><span class="t13">' + g.wd + '</span>' + chip + '</span><span class="t16">' + s.disease +
+          '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '/' + s.total + '</span></span>' + chev() + '</button>' +
+          placeRow(g.place, true) + '</section>';
+      } else {
+        html += '<section class="card vcard" aria-label="Buổi tiêm ' + g.date + '"><div class="row top pad">' + datebox(g.date) +
+          '<span class="col gap8"><span class="between"><span class="t13">' + g.wd + ' · ' + g.list.length + ' mũi cùng buổi</span>' + chip + '</span>' +
+          g.list.map(function (x, i) {
+            return (i ? '<span class="divider"></span>' : '') + '<button class="row" data-act="up" data-s="' + x.s.id + '" data-n="' + x.d.n + '">' +
+              '<span class="col"><span class="t16">' + x.s.disease + '</span><span class="t14">' + x.s.vaccine + ' · Mũi ' + x.d.n + '/' + x.s.total +
+              '</span></span>' + chev() + '</button>';
+          }).join('') + '</span></div>' + placeRow(g.place, true) + '</section>';
+      }
+    });
+    html += '<div class="endnote">' + ic('info', 16) + '<span>Không cần đặt lịch trước: đến DIAG vào ngày hẹn, trong giờ mở cửa. Bác sĩ khám sàng lọc và xác nhận mũi tiêm tại chỗ.</span></div>';
+    return nav('Sổ tiêm chủng') + who('an') + seg('B') + '<div class="body">' + html + '</div>';
+  }
+
+  function scrC() {
+    var list = SERIES.filter(function (s) { return doneN(s) > 0; }).map(function (s) {
+      return { s: s, last: Math.max.apply(null, s.doses.filter(function (d) { return d.st === 'done'; }).map(function (d) { return +parse(d.date); })) };
+    }).sort(function (a, b) { return b.last - a.last; }).map(function (x) { return x.s; });
+    var html = '<div class="between sum"><span class="t15b">' + doneTotal() + ' mũi · ' + list.length + ' nhóm bệnh</span><span class="t13">Mới nhất trước</span></div>';
+    list.forEach(function (s) {
+      var done = s.doses.filter(function (d) { return d.st === 'done'; });
+      var head;
+      if (done.length === s.total) {
+        head = '<span class="chip c-green">' + ic('check', 13, 'currentColor', 3) + 'Hoàn thành</span>';
+      } else {
+        var dots = '';
+        for (var i = 0; i < s.total; i++) dots += '<span class="dot' + (i < done.length ? ' on' : '') + '"></span>';
+        head = '<span class="prog"><span class="dots" aria-hidden="true">' + dots + '</span><span class="pt">' + done.length + '/' + s.total + ' mũi</span></span>';
+      }
+      var rows = done.slice().sort(function (a, b) { return b.n - a.n; }).map(function (d) {
+        return '<button class="drow" data-act="dose" data-s="' + s.id + '" data-n="' + d.n + '"><span class="dn">Mũi ' + d.n + '</span>' +
+          '<span class="col"><span class="t15b">' + d.date + '</span><span class="t13">' + (d.rec || s.vaccine) + ' · ' + CENTERS[d.place].name + '</span></span>' + chev() + '</button>';
+      }).join('');
+      var next = s.doses.filter(function (d) { return d.st === 'up' || d.st === 'over'; })[0];
+      var nextRow = '';
+      if (next) {
+        var txt = next.st === 'over'
+          ? '<span class="nx amber">' + ic('alert', 15, 'currentColor', 2.2) + next.rel + ' · cần tiêm bù</span>'
+          : '<span class="nx">Hẹn ' + next.date + (daysFrom(next.date) <= 60 ? ' · còn ' + daysFrom(next.date) + ' ngày' : '') + '</span>';
+        nextRow = '<button class="drow next" data-act="up" data-s="' + s.id + '" data-n="' + next.n + '"><span class="dn muted">Mũi ' + next.n + '</span>' + txt + chev() + '</button>';
+      }
+      html += '<section class="card dis"><div class="dhead"><span class="col"><h2>' + s.disease + '</h2>' +
+        (s.showFull ? '<span class="t13 lh">' + s.full + '</span>' : '') + '</span>' + head + '</div>' + rows + nextRow + '</section>';
+    });
+    html += '<div class="endnote">' + ic('info', 16) + '<span>Dữ liệu từ hệ thống tiêm chủng DIAG, cập nhật sau mỗi lần tiêm tại DIAG.</span></div>';
+    html += helpCard('Sổ thiếu mũi đã tiêm tại DIAG?', 'Gọi CSKH ' + HOTLINE + ' để DIAG kiểm tra và cập nhật, kể cả khi thông tin mũi tiêm chưa đúng.');
+    return nav('Sổ tiêm chủng') + who('an') + seg('C') + '<div class="body">' + html + '</div>';
+  }
+
+  function scrC2() {
+    return nav('Sổ tiêm chủng') + who('ha') + '<div class="body center">' +
+      '<span class="hero-ic" aria-hidden="true">' + ic('syringe', 52, 'currentColor', 1.6) + '</span>' +
+      '<h2 class="h20">Chưa có mũi tiêm nào</h2>' +
+      '<p class="p15">Sau mỗi lần tiêm tại DIAG, mũi tiêm và ngày hẹn mũi tiếp theo sẽ tự lưu vào sổ này.</p>' +
+      '<div class="emptyhelp"><span class="t14">Đã tiêm tại DIAG nhưng sổ chưa có?</span>' + callBtn('Gọi CSKH', 'sm tint auto2') + '</div>' +
+      '</div>';
+  }
+
+  function scrD() {
+    var r = ref(state.up), s = r.s, d = r.d, over = d.st === 'over', cid = d.place || 'A', c = CENTERS[cid];
+    var chip = over
+      ? '<span class="chip c-amber">' + ic('alert', 13, 'currentColor', 2.4) + d.rel + '</span>'
+      : '<span class="chip ' + (daysFrom(d.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + ic('clock', 13, 'currentColor', 2.4) + 'Sắp tới · ' + d.rel.toLowerCase() + '</span>';
+    return nav(over ? 'Mũi cần tiêm bù' : 'Mũi tiêm sắp tới') + '<div class="body">' +
+      '<section class="card hero">' + chip + '<h2>' + s.disease + '</h2><div class="t15">' + s.vaccine + '</div>' +
+        '<div class="stats"><div><span class="k">MŨI</span><span class="v">' + d.n + '/' + s.total + '</span></div>' +
+        '<div><span class="k">NGÀY HẸN</span><span class="v">' + d.date + '</span><span class="t13">' + d.wd + '</span></div></div></section>' +
+      (over
+        ? '<div class="note amber">' + ic('alert', 17) + '<span>Mũi này đã quá ngày hẹn. Gọi CSKH để được tư vấn lịch tiêm bù trước khi đến DIAG.</span></div>'
+        : '<div class="note blue">' + ic('info', 17) + '<span>Không cần đặt lịch trước. Đến DIAG vào ngày hẹn, trong giờ mở cửa, để được khám sàng lọc và tiêm.</span></div>') +
+      '<div class="lbl">Nơi tiêm</div>' +
+      '<section class="card kv"><div class="kvr top"><span class="col"><span class="t15b">' + c.name + '</span><span class="t14">' + c.addr + '</span>' +
+        '<span class="hrs">' + ic('clock', 14, 'currentColor', 2.2) + '[Giờ mở cửa của chi nhánh]</span></span>' +
+        (over ? '<button class="pill" data-act="dir" data-c="' + cid + '">' + ic('nav', 14, 'currentColor', 2.4) + 'Chỉ đường</button>' : '') + '</div></section>' +
+      (over ? '' : '<button class="card rowbtn" data-act="calendar">' + ibox('calPlus') + '<span class="grow t16n">Thêm vào Lịch trên iPhone</span>' + chev() + '</button>') +
+      '<div class="lbl">Chuẩn bị trước khi tiêm</div>' +
+      '<section class="card pad checks">' + PREP.map(function (t) { return check(t); }).join('') + '</section>' +
+      '<div class="lbl">Phác đồ ' + s.disease + ' · ' + doneN(s) + '/' + s.total + ' mũi</div>' +
+      timeline(s, d.n) + '</div>' +
+      bar(over ? callBtn('Gọi CSKH') : dirBtn(cid, 'Chỉ đường'));
+  }
+
+  function scrE() {
+    var r = ref(state.dose), s = r.s, d = r.d, cid = d.place || 'A', c = CENTERS[cid];
+    return nav('Chi tiết mũi tiêm') + '<div class="body">' +
+      '<section class="card hero"><span class="chip c-green">' + ic('check', 13, 'currentColor', 3) + 'Đã tiêm</span>' +
+        '<h2>' + s.disease + '</h2><div class="t13 lh">' + s.full + '</div>' +
+        '<div class="stats"><div><span class="k">MŨI</span><span class="v">' + d.n + '/' + s.total + '</span></div>' +
+        '<div><span class="k">NGÀY TIÊM</span><span class="v">' + d.date + '</span><span class="t13">' + d.wd + '</span></div></div></section>' +
+      '<div class="lbl">Thông tin mũi tiêm</div>' +
+      '<section class="card kv">' +
+        '<div class="kvr top"><span class="col"><span class="t13">Vắc xin</span><span class="t15b">' + (d.rec || s.vaccine) + '</span></span></div>' +
+        '<div class="kvr top"><span class="col"><span class="t13">Nơi tiêm</span><span class="t15b">' + c.name + '</span><span class="t14">' + c.addr + '</span></span>' +
+          '<button class="pill" data-act="dir" data-c="' + cid + '">' + ic('nav', 14, 'currentColor', 2.4) + 'Chỉ đường</button></div>' +
+      '</section>' +
+      '<div class="lbl">Phác đồ ' + s.disease + ' · ' + doneN(s) + '/' + s.total + ' mũi</div>' +
+      timeline(s, d.n) +
+      '<div class="lbl">Người được tiêm</div>' +
+      '<section class="card pad row">' + avatar('an', 42) + '<span class="col"><span class="t16">NGUYỄN MINH AN</span><span class="t13">12/03/2026 · Nam · PID [mã hồ sơ]</span></span></section>' +
+      '</div>';
+  }
+
+  function scrJ() {
+    function n(title, body, time, attrs) {
+      return '<button class="notif" ' + attrs + '><span class="nicon" aria-hidden="true">DIAG</span><span class="col">' +
+        '<span class="between"><span class="nt">' + title + '</span><span class="ntime">' + time + '</span></span><span class="nb">' + body + '</span></span></button>';
+    }
+    return '<div class="lock"><div class="ldate">Thứ Sáu, 13 tháng 11</div><div class="ltime">9:41</div><div class="nstack">' +
+      n('Nhắc lịch tiêm cho Minh An', 'Thứ Hai 16/11 đến hẹn mũi Cúm (mũi 2) tại DIAG [Chi nhánh A]. Không cần đặt lịch; chạm để xem chỉ đường.', 'bây giờ', 'data-act="up" data-s="flu" data-n="2"') +
+      n('Minh An cần tiêm bù', 'Mũi Não mô cầu B (mũi 2) đã quá hạn từ 24/10. Gọi CSKH ' + HOTLINE + ' để được tư vấn lịch tiêm bù.', '27/10', 'data-act="up" data-s="menb" data-n="2"') +
+      n('Sổ tiêm chủng đã cập nhật', 'Đã lưu mũi Cúm (mũi 1) của Minh An. Mũi tiếp theo: 16/11/2026.', '16/10', 'data-act="dose" data-s="flu" data-n="1"') +
+      '</div></div>';
+  }
+
+  /* ---------- screen list + notes ---------- */
+  var GROUPS = ['Lối vào', 'Sổ tiêm chủng', 'Nhắc lịch'];
+  var SCREENS = [
+    { id: 'A', g: 0, name: 'Trang chủ · lối vào', render: scrA, notes: [
+      'Trang chủ đang chọn hồ sơ Nguyễn Minh An. Đổi hồ sơ bằng nút ⇆ trên ảnh đại diện như hiện nay; sổ tiêm chủng luôn theo hồ sơ đang chọn.',
+      'Nút nhanh "Tiêm chủng" có nhãn "Mới"; bật/tắt bằng cấu hình CDN như các nút khác. Màu xanh lá #13A36B là màu mới, cần thống nhất với Android.',
+      'Thẻ "Nhắc lịch tiêm" chỉ hiện khi hồ sơ có mũi quá hạn hoặc đến hạn trong 7 ngày; mũi quá hạn được ưu tiên. Đã bỏ nút Đặt lịch tiêm.',
+      'Thử bấm: nút Tiêm chủng, thẻ nhắc, hoặc tab Hồ Sơ Của Tôi.'] },
+    { id: 'A2', g: 0, name: 'Hồ Sơ Của Tôi · lối vào', render: scrA2, isNew: true, notes: [
+      'Mới theo góp ý BO: dòng "Sổ tiêm chủng" ngay dưới "Hồ sơ bệnh án điện tử", để khách không có nhắc lịch vẫn tìm được sổ.',
+      'Cùng kiểu dòng menu đang có trong tab; nhãn "Mới" bỏ sau vài phiên bản.',
+      'Thử bấm dòng Sổ tiêm chủng.'] },
+    { id: 'B', g: 1, name: 'Sổ tiêm chủng · Sắp tới', render: scrB, notes: [
+      'Không còn chip chọn hồ sơ: sổ hiện theo hồ sơ (PID) đang chọn trong app, chỉ giữ một dòng tên để biết đang xem sổ của ai.',
+      'Mỗi lịch hẹn có tên và địa chỉ chi nhánh DIAG (nơi tiêm) và nút "Chỉ đường" (mở Google Maps, không có thì Apple Maps, như "Tìm chi nhánh Diag").',
+      'Mũi quá hạn nằm trên cùng, màu cam, với nút "Gọi CSKH để được tư vấn tiêm bù".',
+      'Không có nút đặt lịch: khách đến DIAG vào ngày hẹn. Nhóm theo tháng; các mũi cùng ngày gộp thành một buổi.'] },
+    { id: 'C', g: 1, name: 'Sổ tiêm chủng · Đã tiêm', render: scrC, notes: [
+      'Nhóm theo bệnh, nhóm mới tiêm gần nhất lên trước; tiến độ 3/4 mũi; mũi tiếp theo hiện ngay trong nhóm.',
+      'Tên vắc xin hiện đúng như y tá nhập (ví dụ mũi Phế cầu 3).',
+      'Thay "Thêm mũi đã tiêm nơi khác" bằng thẻ "Sổ thiếu mũi đã tiêm tại DIAG?" gọi CSKH; thẻ này cũng dùng khi thông tin chưa đúng.'] },
+    { id: 'C2', g: 1, name: 'Hồ sơ chưa có mũi tiêm', render: scrC2, notes: [
+      'Ví dụ: hồ sơ đang chọn là Trần Thu Hà, chưa tiêm mũi nào tại DIAG.',
+      'Bỏ nút Đặt lịch tiêm; thay bằng "Gọi CSKH" cho khách đã tiêm tại DIAG mà sổ chưa có.'] },
+    { id: 'D', g: 1, name: 'Chi tiết mũi sắp tới', render: scrD, notes: [
+      'Mũi chưa tới hạn: nút chính "Chỉ đường". "Thêm vào Lịch" tạo sự kiện có sẵn tên và địa chỉ chi nhánh.',
+      'Nói rõ không cần đặt lịch: đến DIAG vào ngày hẹn, trong giờ mở cửa.',
+      '"Chuẩn bị trước khi tiêm" theo đúng nội dung BO gửi; sửa được qua CMS.',
+      'Giờ mở cửa lấy từ danh sách chi nhánh có sẵn trong app (Tìm chi nhánh Diag).'] },
+    { id: 'D2', g: 1, name: 'Chi tiết mũi quá hạn', render: scrD, notes: [
+      'Mũi quá hạn: nút chính "Gọi CSKH" (tổng đài 1900 1717) để được tư vấn lịch tiêm bù; "Chỉ đường" là nút phụ.',
+      'Bỏ "Thêm vào Lịch" vì ngày hẹn đã qua.',
+      'Thử bấm Gọi CSKH: iPhone hỏi xác nhận trước khi gọi.'] },
+    { id: 'E', g: 1, name: 'Chi tiết mũi đã tiêm', render: scrE, notes: [
+      'Nhà sản xuất, số lô, liều - đường dùng không còn là dòng riêng: gộp vào tên vắc xin, hiện đúng như y tá nhập.',
+      'Bỏ nút "Báo sai thông tin" (màn E2 cũ). Thông tin sai thì khách gọi CSKH từ thẻ cuối tab Đã tiêm.',
+      'Chỉ hiện tên, ngày sinh, PID; không lặp CCCD, SĐT, địa chỉ ở từng mũi.'] },
+    { id: 'J', g: 2, name: 'Thông báo nhắc lịch', render: scrJ, dark: true, notes: [
+      'Nhắc trước 3 ngày và trước 1 ngày, kèm tên chi nhánh; quá hạn 3 ngày thì nhắc gọi CSKH để tiêm bù.',
+      'Gửi về SĐT của tài khoản cho mọi hồ sơ, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.',
+      'Báo khi sổ có mũi mới sau mỗi lần tiêm. Thử bấm từng thông báo.'] }
+  ];
+  var PARENT = { A2: 'A', B: 'A', C: 'A', C2: 'A', D: 'B', D2: 'B', E: 'C', J: 'A' };
+  function screenById(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return SCREENS[i]; return null; }
+  function indexOf(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return i; return 0; }
+
+  /* ---------- rendering ---------- */
+  var screenEl = document.getElementById('screen');
+  var listEl = document.getElementById('screenList');
+  var SB_ICONS =
+    '<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>' +
+    '<svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M8 11.5l2.4-2.9a3.6 3.6 0 0 0-4.8 0z" fill="currentColor"/><path d="M3.6 6.5a6.6 6.6 0 0 1 8.8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M1 3.6a10.4 10.4 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+    '<svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".45"/></svg>';
+
+  function render(keepScroll) {
+    var scr = screenById(state.cur) || SCREENS[0];
+    var body = screenEl.querySelector('.app .body');
+    var y = keepScroll && body ? body.scrollTop : 0;
+    screenEl.innerHTML =
+      '<div class="sb' + (scr.dark ? ' light' : '') + '"><span class="t">' + (scr.dark ? '' : '9:41') + '</span><span class="ic">' + SB_ICONS + '</span></div>' +
+      '<div class="island"></div>' +
+      '<div class="app">' + scr.render() + '</div>' +
+      (state.alert ? alertHtml() : '') +
+      '<div class="toast" id="toast" role="status"></div>';
+    if (keepScroll) { var b = screenEl.querySelector('.app .body'); if (b) b.scrollTop = y; }
+    updateSide(scr);
+  }
+  function show(id, mode) {
+    if (mode === 'push' && state.cur && state.cur !== id) state.stack.push(state.cur);
+    if (mode === 'root') state.stack = [];
+    state.cur = id;
+    render(false);
+  }
+  function back() {
+    state.cur = state.stack.pop() || PARENT[state.cur] || 'A';
+    render(false);
+  }
+  var toastTimer;
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { var t = document.getElementById('toast'); if (t) t.classList.remove('on'); }, 2300);
+  }
+
+  /* Opening a screen from the list or the pager: D shows an upcoming dose, D2 the overdue one. */
+  function prepare(id) {
+    state.alert = false;
+    if (id === 'D' && ref(state.up).d.st !== 'up') state.up = { s: 'flu', n: 2 };
+    if (id === 'D2') state.up = { s: 'menb', n: 2 };
+  }
+
+  function doAct(act, d) {
+    switch (act) {
+      case 'up':
+        state.up = { s: d.s, n: +d.n };
+        show(ref(state.up).d.st === 'over' ? 'D2' : 'D', 'push');
+        break;
+      case 'dose': state.dose = { s: d.s, n: +d.n }; show('E', 'push'); break;
+      case 'call': state.alert = true; render(true); break;
+      case 'alertCancel': state.alert = false; render(true); break;
+      case 'alertCall': state.alert = false; render(true); toast('Đang gọi ' + HOTLINE + ' (mô phỏng)'); break;
+      case 'dir': toast('Mở Google Maps (không có thì Apple Maps) chỉ đường tới ' + CENTERS[d.c].name + ' (mô phỏng)'); break;
+      case 'calendar': toast('Đã thêm vào Lịch trên iPhone, kèm tên và địa chỉ chi nhánh (mô phỏng)'); break;
+      case 'toast': toast(d.msg); break;
+    }
+  }
+
+  screenEl.addEventListener('click', function (e) {
+    var t = e.target.closest('button');
+    if (!t || !screenEl.contains(t) || t.disabled) return;
+    if (t.hasAttribute('data-back')) { back(); return; }
+    if (t.dataset.act) { doAct(t.dataset.act, t.dataset); return; }
+    if (t.dataset.go) {
+      if (t.hasAttribute('data-replace')) show(t.dataset.go, 'replace');
+      else if (t.hasAttribute('data-root')) show(t.dataset.go, 'root');
+      else show(t.dataset.go, 'push');
+    }
+  });
+
+  function buildList() {
+    var html = '';
+    GROUPS.forEach(function (g, gi) {
+      html += '<h3>' + g + '</h3>';
+      SCREENS.filter(function (s) { return s.g === gi; }).forEach(function (s) {
+        html += '<button type="button" class="item" data-id="' + s.id + '"><span class="code">' + s.id + '</span><span>' + s.name + '</span>' +
+          (s.isNew ? '<span class="tagnew">Mới</span>' : '') + '</button>';
+      });
+    });
+    listEl.innerHTML = html;
+  }
+  listEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.item');
+    if (!b) return;
+    prepare(b.dataset.id);
+    show(b.dataset.id, 'root');
+    if (document.body.classList.contains('narrow')) document.getElementById('deviceWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function updateSide(scr) {
+    var items = listEl.querySelectorAll('.item');
+    for (var i = 0; i < items.length; i++) items[i].setAttribute('aria-current', items[i].dataset.id === scr.id ? 'true' : 'false');
+    document.getElementById('notesTitle').innerHTML = '<span class="code">' + scr.id + '</span>' + esc(scr.name);
+    document.getElementById('notes').innerHTML = scr.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('');
+    var idx = indexOf(scr.id);
+    document.getElementById('pagerLabel').textContent = scr.id + ' · ' + (idx + 1) + '/' + SCREENS.length;
+    document.getElementById('prevBtn').disabled = idx === 0;
+    document.getElementById('nextBtn').disabled = idx === SCREENS.length - 1;
+    if (history.replaceState) history.replaceState(null, '', '#' + scr.id);
+  }
+  function step(delta) {
+    var idx = indexOf(state.cur) + delta;
+    if (idx < 0 || idx >= SCREENS.length) return;
+    var id = SCREENS[idx].id;
+    prepare(id);
+    show(id, 'root');
+  }
+  document.getElementById('prevBtn').addEventListener('click', function () { step(-1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { step(1); });
+  document.addEventListener('keydown', function (e) {
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    state = initial();
+    render(false);
+    toast('Đã đặt lại dữ liệu mẫu');
+  });
+
+  /* ---------- fit the phone to the window ---------- */
+  var wrap = document.getElementById('deviceWrap');
+  var device = document.getElementById('device');
+  function fit() {
+    var narrow = window.innerWidth < 900;
+    document.body.classList.toggle('narrow', narrow);
+    var W = narrow ? 390 : 414, H = narrow ? 844 : 868;
+    var s = narrow ? Math.min(1, (window.innerWidth - 16) / W) : Math.min(1, Math.max(0.6, (window.innerHeight - 96) / H));
+    device.style.transform = 'scale(' + s + ')';
+    wrap.style.width = (W * s) + 'px';
+    wrap.style.height = (H * s) + 'px';
+  }
+  window.addEventListener('resize', fit);
+
+  /* ---------- start ---------- */
+  buildList();
+  var start = (location.hash || '').replace('#', '');
+  if (screenById(start)) { prepare(start); state.cur = start; }
+  fit();
+  render(false);
+})();
+</script>
+</body>
+</html>
