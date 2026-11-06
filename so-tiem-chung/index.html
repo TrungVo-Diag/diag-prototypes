@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex, nofollow">
-<title>DIAG · Sổ tiêm chủng — prototype bản 2</title>
+<title>DIAG · Sổ tiêm chủng — prototype bản 3</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -32,6 +32,11 @@ button,input,textarea{font:inherit;color:inherit}
 .panel ul,.panel ol{margin:0;padding-left:20px;font-size:14px;line-height:21px;color:#3B444D}
 .panel li+li{margin-top:5px}
 .panel li b{color:#0F1C2A}
+details.panel>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#3B444D}
+details.panel>summary::-webkit-details-marker{display:none}
+details.panel>summary::before{content:"";width:7px;height:7px;border-right:2px solid #6F777F;border-bottom:2px solid #6F777F;transform:rotate(-45deg);transition:transform .15s;flex-shrink:0}
+details.panel[open]>summary::before{transform:rotate(45deg)}
+details.panel[open]>summary{margin-bottom:10px}
 .list{padding:6px 8px 8px}
 .list h3{margin:10px 10px 4px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:#5E666E}
 .item{width:100%;display:flex;align-items:center;gap:12px;padding:9px 10px;border:0;border-radius:12px;background:transparent;text-align:left;font-size:15px;font-weight:600;cursor:pointer}
@@ -74,11 +79,13 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .body>*{flex-shrink:0}
 .bar{flex-shrink:0;background:#fff;border-top:1px solid #E7E8EA;padding:12px 16px 30px;display:flex;align-items:center;gap:12px}
 .lbl{font-size:13px;font-weight:600;color:#5E666E;letter-spacing:.3px;padding:8px 4px 0;text-transform:uppercase}
+.lbl.red{color:#B42318}
 .card{background:#fff;border-radius:16px}
 .pad{padding:14px}
 .row{display:flex;align-items:center;gap:12px;width:100%}
 .row.top{align-items:flex-start}
 .col{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.gap6{gap:6px}
 .gap8{gap:8px}
 .between{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .grow{flex:1}
@@ -96,7 +103,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .ell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0}
 .c-blue{background:#E3F0FD;color:#0564BB}
-.c-amber{background:#FFF4DC;color:#8B5E04}
+.c-red{background:#FEF3F2;color:#B42318}
 .c-green{background:#E3FCEF;color:#0C7640}
 .c-gray{background:#F1F2F4;color:#4A535C}
 .btn{height:52px;width:100%;border-radius:14px;background:#0766F7;color:#fff;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center}
@@ -114,7 +121,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .note{border-radius:14px;padding:12px 14px;display:flex;gap:10px;font-size:14px;line-height:20px}
 .note svg{flex-shrink:0;margin-top:1px}
 .note.blue{background:#E3F0FD;color:#0564BB}
-.note.amber{background:#FFF4DC;color:#8B5E04}
+.note.red{background:#FEF3F2;color:#B42318;font-weight:500}
 
 /* whose record + tabs */
 .who{display:flex;align-items:center;gap:8px;padding:0 20px 12px;flex-shrink:0}
@@ -124,41 +131,36 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .seg button{height:38px;border-radius:9px;color:#3B444D;font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:6px}
 .seg button.on{background:#fff;box-shadow:0 1px 3px rgba(15,28,42,.14);color:#0F1C2A;font-weight:600}
 .cnt{height:20px;min-width:20px;padding:0 6px;border-radius:10px;background:#DCE3EB;color:#3B444D;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
-.cnt.amber{background:#FFF4DC;color:#8B5E04}
+.cnt.red{background:#FEF3F2;color:#B42318}
 
 /* upcoming list */
 .datebox{width:52px;height:56px;border-radius:12px;background:#EEF4FF;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
 .datebox b{font-size:20px;line-height:24px;color:#0766F7}
 .datebox small{font-size:11px;font-weight:600;color:#0550C8}
-.datebox.amber{background:#FFF4DC}
-.datebox.amber b,.datebox.amber small{color:#8B5E04}
-.card.over{border:1px solid #F3D9A4;overflow:hidden}
-.overhead{background:#FFF4DC;padding:8px 14px;display:flex;align-items:center;gap:6px;color:#8B5E04;font-size:13px;font-weight:700}
+.datebox.red{background:#FEF3F2}
+.datebox.red b,.datebox.red small{color:#B42318}
+.card.miss{border:1px solid #FBD3CF;overflow:hidden}
 .pad2{padding:12px 14px 10px}
-.overcta{padding:2px 14px 14px}
+.missnote{margin:2px 14px 14px;padding:10px 12px;border-radius:10px;background:#FEF3F2;color:#B42318;font-size:14px;line-height:19px;font-weight:500;display:flex;align-items:center;gap:8px}
+.missnote svg{flex-shrink:0}
 .vcard{overflow:hidden}
 .place{display:flex;align-items:center;gap:10px;padding:10px 14px 12px;border-top:1px solid #EEF1F4}
 .place>svg{flex-shrink:0}
 .place .col{gap:1px}
-.card.over .place{border-top-color:#F6E7C6;padding-bottom:10px}
 
 /* done list */
 .sum{padding:2px 4px 0}
 .dis{padding:14px 14px 4px}
-.dhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:10px}
+.dhead{padding-bottom:10px}
 .dhead h2{margin:0;font-size:17px;line-height:22px;font-weight:600}
-.prog{display:flex;align-items:center;gap:8px;flex-shrink:0;padding-top:2px}
-.dots{display:flex;gap:4px}
-.dot{width:8px;height:8px;border-radius:4px;border:1.5px solid #9DB0C6;display:block}
-.dot.on{background:#0766F7;border-color:#0766F7}
-.pt{font-size:13px;font-weight:600;color:#0564BB}
+.dchip{align-self:flex-start;margin-top:6px}
 .drow{display:flex;align-items:center;gap:12px;width:100%;padding:9px 0;border-top:1px solid #EEF1F4}
 .drow.next{min-height:44px;padding:4px 0;border-top:1px dashed #DCE3EB}
 .drow .col .t13{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dn{width:50px;flex-shrink:0;font-size:14px;font-weight:600}
 .dn.muted{color:#5E666E}
 .nx{flex:1;min-width:0;font-size:14px;font-weight:500;color:#0564BB;display:flex;align-items:center;gap:6px}
-.nx.amber{color:#8B5E04;font-weight:600}
+.nx.red{color:#B42318;font-weight:600}
 .help{display:flex;align-items:center;gap:12px;padding:16px;width:100%;margin-top:2px}
 .hbox{width:44px;height:44px;border-radius:12px;background:#E3F0FD;color:#0766F7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
@@ -177,6 +179,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .kvr:first-child{border-top:0}
 .kvr.top{align-items:flex-start}
 .kvr.top .pill{margin-top:8px}
+.kvr .chip{align-self:flex-start}
 .hrs{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:13px;color:#6F777F}
 .tl{padding:12px 14px}
 .tlr{display:flex;gap:12px;width:100%;align-items:stretch}
@@ -184,8 +187,8 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .m{width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .m.done{background:#0766F7;color:#fff}
 .m.ring{border:2px solid #0766F7;background:#fff}
-.m.ring.dim{border-color:#9DB0C6}
-.m.over{border:2px solid #C98A0A;background:#FFF4DC}
+.m.over{border:2px solid #D92D20;background:#FEF3F2}
+.m.fin{background:#0C7640;color:#fff}
 .tll{width:2px;flex:1;background:#CFDCEB;margin-top:2px;min-height:14px;display:block}
 .tlc{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 0 14px}
 .tlc.cur{background:#EEF4FF;border-radius:10px;padding:5px 10px;margin-bottom:12px}
@@ -193,9 +196,10 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .tlr:last-child .tlc.cur{margin-bottom:0}
 .tlr .chev{margin-top:2px}
 .td{font-size:14px;color:#3B444D;white-space:nowrap}
-.td.amb{color:#8B5E04;font-weight:600}
+.td.red{color:#B42318;font-weight:600}
 .td.bl{color:#0564BB;font-weight:500}
-.dim{color:#5E666E}
+.ok{color:#0C7640}
+.redtxt{color:#B42318;font-weight:600}
 
 /* call confirmation, as iOS shows it */
 .scrim{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:rgba(15,28,42,.38);z-index:40;cursor:default}
@@ -228,8 +232,9 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 .newb{position:absolute;top:0;right:6px;height:18px;padding:0 6px;border-radius:9px;border:2px solid #fff;background:#C9301C;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center}
 .hcard{border-radius:22px;box-shadow:0 4px 11px rgba(15,28,42,.09);padding:16px;display:flex;flex-direction:column;gap:12px}
 .h17{margin:0;font-size:17px;font-weight:700}
-.amb14{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:#8B5E04}
-.abox{width:44px;height:44px;border-radius:12px;background:#FFF4DC;color:#8B5E04;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ubox{width:44px;height:44px;border-radius:12px;background:#E3F0FD;color:#0766F7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bl14{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:#0564BB}
+.missrow{min-height:36px;gap:8px;color:#B42318;font-size:15px;font-weight:600}
 .skel{border-radius:22px;background:#fff;box-shadow:0 4px 11px rgba(15,28,42,.09);padding:16px;display:flex;flex-direction:column;gap:10px}
 .skel i{display:block;height:12px;border-radius:6px;background:#EEF1F4}
 .tabbar{flex-shrink:0;height:84px;background:#fff;border-top:1px solid #E7E8EA;display:grid;grid-template-columns:repeat(4,1fr);padding-top:8px}
@@ -283,22 +288,34 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   <aside class="side">
     <header class="intro">
       <h1>Sổ tiêm chủng</h1>
-      <p><span class="ver">Bản 2</span>Đã cập nhật theo góp ý BO ngày 05/11/2026. Prototype bấm được, dữ liệu mẫu; mốc thời gian là Thứ Năm 05/11/2026.</p>
+      <p><span class="ver">Bản 3</span>Đã cập nhật theo trả lời của BO ngày 06/11/2026. Prototype bấm được, dữ liệu mẫu; mốc thời gian là Thứ Sáu 06/11/2026.</p>
       <p>Hồ sơ đang chọn trong app: Nguyễn Minh An, 7 tháng tuổi (tài khoản của mẹ, Trần Thu Hà). Bấm trực tiếp trên điện thoại để đi theo luồng, hoặc chọn màn trong danh sách. Trên máy tính có thể dùng phím ← →.</p>
     </header>
 
     <section class="panel">
-      <h2>Đã sửa theo góp ý BO</h2>
+      <h2>Đã sửa theo trả lời của BO</h2>
       <ul>
-        <li><b>B, C, C2:</b> bỏ phần chọn hồ sơ. Sổ hiện theo hồ sơ (PID) đang chọn trong app, chỉ giữ một dòng tên để biết đang xem sổ của ai. Muốn xem sổ người khác thì đổi hồ sơ bằng nút ⇆ như hiện nay.</li>
-        <li><b>Đặt lịch tiêm:</b> bỏ cả luồng (màn F–I cũ) và mọi nút "Đặt lịch tiêm". Thay bằng câu "Không cần đặt lịch trước, đến DIAG vào ngày hẹn".</li>
-        <li><b>A2 (mới):</b> lối vào "Sổ tiêm chủng" trong tab Hồ Sơ Của Tôi.</li>
-        <li><b>B, D:</b> mũi quá hạn có nút "Gọi CSKH"; mũi chưa tới hạn có nút "Chỉ đường". Mỗi lịch hẹn có tên và địa chỉ chi nhánh DIAG (nơi tiêm).</li>
-        <li><b>D:</b> "Chuẩn bị trước khi tiêm" dùng đúng nội dung BO gửi. Mũi quá hạn tách thành màn D2 cho dễ xem.</li>
-        <li><b>E:</b> nhà sản xuất, số lô, liều - đường dùng gộp vào tên vắc xin. Bỏ "Báo sai thông tin" (màn E2 cũ).</li>
-        <li><b>K cũ:</b> bỏ tự thêm mũi tiêm nơi khác. Thay bằng thẻ "Sổ thiếu mũi đã tiêm tại DIAG? Gọi CSKH" ở C và C2; thẻ này cũng dùng khi thông tin mũi tiêm chưa đúng.</li>
+        <li><b>Nơi tiêm:</b> chỉ còn Trung tâm Y khoa Diag Cao Thắng (D001), chi nhánh duy nhất đang tiêm. Địa chỉ và giờ Phòng khám lấy từ danh sách chi nhánh có sẵn trong app.</li>
+        <li><b>Số mũi:</b> bỏ tổng số mũi ("2/4", chấm tiến độ) vì hệ thống chỉ lưu phòng bệnh gì và mũi số mấy. Mỗi bệnh chỉ hiện các mũi đã tiêm và ngày hẹn y tá ghi cho mũi tiếp theo.</li>
+        <li><b>Hoàn thành phác đồ:</b> khi y tá ghi "Hoàn thành phác đồ", nhóm bệnh có nhãn xanh và phác đồ dừng ở mũi đó (ví dụ Rota, màn E2 mới).</li>
+        <li><b>Sắp tới:</b> chỉ gồm ngày hẹn y tá đã ghi. Đã bỏ Sởi và Viêm não Nhật Bản vì bé chưa tiêm mũi nào.</li>
+        <li><b>Quá hạn:</b> tính từ ngày sau ngày hẹn. Hiện màu đỏ với câu "Lịch tiêm vắc xin đã bị bỏ lỡ." như VNVC. Bỏ phần tiêm bù: không còn "Cần tiêm bù", nút "Gọi CSKH" ở mũi quá hạn và thông báo quá hạn.</li>
+        <li><b>Nhắc lịch:</b> 1 thông báo lúc 8:00 sáng, 2 ngày trước ngày hẹn, cùng lúc với SMS. Bỏ các mốc đề xuất trước (3 ngày, 1 ngày, quá hạn, "Sổ đã cập nhật").</li>
+        <li><b>Đã chốt:</b> tên "Sổ tiêm chủng"; tổng đài CSKH 1900 1717.</li>
       </ul>
     </section>
+
+    <details class="panel">
+      <summary>Đã sửa ở bản 2 (góp ý BO 05/11/2026)</summary>
+      <ul>
+        <li>Bỏ phần chọn hồ sơ: sổ theo hồ sơ (PID) đang chọn trong app; đổi hồ sơ bằng nút ⇆ như hiện nay.</li>
+        <li>Bỏ cả luồng đặt lịch tiêm: khách đến DIAG vào ngày hẹn, không cần đặt lịch trước.</li>
+        <li>Thêm lối vào "Sổ tiêm chủng" trong tab Hồ Sơ Của Tôi (màn A2).</li>
+        <li>Mũi chưa tới hạn có nút "Chỉ đường"; mỗi lịch hẹn có tên và địa chỉ nơi tiêm.</li>
+        <li>"Chuẩn bị trước khi tiêm" dùng đúng nội dung BO gửi.</li>
+        <li>Nhà sản xuất, số lô, liều gộp vào tên vắc xin như y tá nhập. Bỏ "Báo sai thông tin" và tự thêm mũi tiêm nơi khác, thay bằng thẻ "Sổ thiếu mũi đã tiêm tại DIAG? Gọi CSKH".</li>
+      </ul>
+    </details>
 
     <nav class="panel list" id="screenList" aria-label="Danh sách màn hình"></nav>
 
@@ -310,30 +327,27 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     <section class="panel">
       <h2>Cần BO trả lời</h2>
       <ol>
-        <li><b>Nơi tiêm:</b> mũi sắp tới hiện chi nhánh nào: nơi tiêm mũi trước, hay chi nhánh y tá ghi khi hẹn? Chi nhánh nào cũng tiêm được, hay chỉ một số chi nhánh có tiêm chủng? (Bản này đang hiện nơi tiêm mũi trước.)</li>
-        <li><b>Ngày hẹn và số mũi:</b> sau mỗi lần tiêm, y tá có ghi ngày hẹn mũi tiếp theo không? Hệ thống có lưu riêng "phòng bệnh gì" và "mũi số mấy / tổng mấy mũi", hay chỉ có tên vắc xin? Nếu chỉ có tên vắc xin, sổ chỉ hiện được danh sách mũi đã tiêm theo ngày, không có tab Sắp tới, nhắc lịch và nhóm theo bệnh.</li>
-        <li><b>Quá hạn:</b> tính quá hạn ngay sau ngày hẹn, hay sau vài ngày? Quá hạn lâu (ví dụ hơn 6 tháng) có còn hiện "Cần tiêm bù" không?</li>
-        <li><b>CSKH:</b> nút "Gọi CSKH" gọi tổng đài 1900 1717, hay tiêm chủng có số riêng?</li>
-        <li><b>Nhắc lịch:</b> các mốc trong "Quy tắc nhắc lịch" bên dưới có ổn không?</li>
-        <li><b>Tên tính năng:</b> "Sổ tiêm chủng" hay "Lịch sử tiêm chủng"?</li>
+        <li><b>Lịch đã bỏ lỡ, nút Gọi CSKH:</b> bản này bỏ hẳn nút, chỉ hiện "Lịch tiêm vắc xin đã bị bỏ lỡ." như VNVC. Có cần giữ nút "Gọi CSKH" để khách hỏi lại lịch tiêm không? (Thẻ "Sổ thiếu mũi đã tiêm tại DIAG?" ở tab Đã tiêm vẫn gọi được CSKH.)</li>
+        <li><b>Lịch đã bỏ lỡ hiện đến khi nào:</b> đến khi y tá ghi nhận mũi đó (như VNVC, có thể nhiều tháng), hay tự ẩn sau một thời gian, ví dụ 3 tháng?</li>
+        <li><b>Giờ tiêm:</b> bản này ghi theo giờ Phòng khám Cao Thắng trong app: 7:30 – 16:30, nghỉ trưa 12:00 – 13:00. Giờ nhận tiêm có đúng vậy không? Chủ nhật có tiêm không?</li>
+        <li><b>Nội dung nhắc lịch:</b> cần mẫu SMS nhắc lịch đang gửi, để thông báo trong app dùng cùng nội dung.</li>
+        <li><b>"Phòng bệnh gì":</b> hệ thống lưu tên ngắn (ví dụ "Phế cầu") hay mô tả dài như VNVC ("Viêm màng não, viêm phổi, nhiễm khuẩn huyết, viêm tai giữa do phế cầu")? Cần vài dòng dữ liệu thật đã che tên để làm đúng độ dài chữ.</li>
       </ol>
     </section>
 
     <section class="panel">
-      <h2>Quy tắc nhắc lịch (đề xuất)</h2>
+      <h2>Nhắc lịch (theo BO)</h2>
       <ul>
-        <li>Mũi đến hạn: thông báo lúc 9:00, trước 3 ngày và trước 1 ngày, kèm tên chi nhánh.</li>
-        <li>Chưa tiêm sau ngày hẹn: nhắc 1 lần sau 3 ngày, mời gọi CSKH để được tư vấn tiêm bù; sau đó chỉ hiện trong sổ và thẻ Trang chủ.</li>
-        <li>Mỗi hồ sơ tối đa 1 thông báo nhắc mỗi ngày; các mũi cùng ngày gộp vào một thông báo.</li>
-        <li>Thông báo gửi về SĐT của tài khoản cho mọi hồ sơ, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.</li>
-        <li>Thẻ trên Trang chủ: theo hồ sơ đang chọn, khi có mũi quá hạn hoặc đến hạn trong 7 ngày tới.</li>
-        <li>Sau mỗi lần tiêm tại DIAG: 1 thông báo "Sổ tiêm chủng đã cập nhật".</li>
-        <li>Mọi thông báo cũng lưu trong mục Thông báo của app.</li>
+        <li><b>8:00 sáng, 2 ngày trước ngày hẹn:</b> BE gửi thông báo trong app, cùng lúc và cùng nội dung với SMS đang gửi.</li>
+        <li>Không nhắc lịch đã bỏ lỡ; lịch đó chỉ hiện trong sổ.</li>
+        <li>Thông báo đến app của tài khoản có hồ sơ đó, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.</li>
+        <li>Thông báo cũng lưu trong mục Thông báo của app.</li>
+        <li>Thẻ "Nhắc lịch tiêm" trên Trang chủ: lịch hẹn gần nhất trong 30 ngày tới của hồ sơ đang chọn, thêm dòng đỏ nếu có lịch đã bỏ lỡ.</li>
       </ul>
     </section>
 
     <button type="button" class="reset" id="resetBtn">Đặt lại dữ liệu mẫu</button>
-    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 2 (05/11/2026). Tên người, chi nhánh, địa chỉ, giờ mở cửa, số điện thoại và PID đều là dữ liệu mẫu; 1900 1717 là tổng đài DIAG đang dùng trong app.</p>
+    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 3 (06/11/2026). Tên người, số điện thoại, PID và các mũi tiêm là dữ liệu mẫu. Tên, địa chỉ và giờ Phòng khám của Trung tâm Y khoa Diag Cao Thắng lấy từ danh sách chi nhánh trong app; 1900 1717 là tổng đài DIAG.</p>
   </aside>
 </div>
 
@@ -376,45 +390,59 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   function hexA(h, a) { var n = parseInt(h.slice(1), 16); return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')'; }
   var PERSON = '<svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 21.5c.8-4.6 4.5-7.5 9-7.5s8.2 2.9 9 7.5z"/></svg>';
 
-  /* ---------- sample data (made up) ---------- */
-  var TODAY = new Date(2026, 10, 5);
+  /* ---------- dates ---------- */
+  var TODAY = new Date(2026, 10, 6);
+  var WD = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
   function parse(d) { var p = d.split('/'); return new Date(+p[2], +p[1] - 1, +p[0]); }
   function daysFrom(d) { return Math.round((parse(d) - TODAY) / 86400000); }
+  function wd(d) { return WD[parse(d).getDay()]; }
+  function dm(d) { return d.slice(0, 5); }
+  function rel(d) {
+    var n = daysFrom(d);
+    if (n === 0) return 'Hôm nay';
+    if (n === 1) return 'Ngày mai';
+    if (n <= 60) return 'Còn ' + n + ' ngày';
+    var b = parse(d);
+    var m = (b.getFullYear() - TODAY.getFullYear()) * 12 + b.getMonth() - TODAY.getMonth() - (b.getDate() < TODAY.getDate() ? 1 : 0);
+    return 'Còn ' + m + ' tháng';
+  }
 
+  /* ---------- sample data (made up, except the branch) ---------- */
   var PROFILES = {
     an: { id: 'an', name: 'Nguyễn Minh An', ageLong: '7 tháng tuổi', ini: 'MA', bg: '#E3F0FD', fg: '#0564BB' },
     ha: { id: 'ha', name: 'Trần Thu Hà', ageLong: '34 tuổi', ini: 'TH', bg: '#FDECF3', fg: '#A3195B' }
   };
   var HOTLINE = '1900 1717';
-  var CENTERS = {
-    A: { name: 'DIAG [Chi nhánh A]', addr: '[Địa chỉ chi nhánh A]' },
-    B: { name: 'DIAG [Chi nhánh B]', addr: '[Địa chỉ chi nhánh B]' }
+  /* D001, the only branch that vaccinates (BO, 06/11/2026). Address and clinic hours from the app's branch list. */
+  var CENTER = {
+    name: 'Trung tâm Y khoa Diag Cao Thắng',
+    addr: '414 - 416 - 418 - 420 Cao Thắng, Phường Hòa Hưng, Thành phố Hồ Chí Minh',
+    hours: '7:30 – 16:30, nghỉ trưa 12:00 – 13:00'
   };
-  /* rec: the vaccine name exactly as the nurse typed it, maker, lot and dose included when entered */
+  var MISSED = 'Lịch tiêm vắc xin đã bị bỏ lỡ.';
+  /* What the system keeps for each dose (BO, 06/11/2026): the disease, the dose number, the vaccine name exactly
+     as the nurse typed it (rec), and then either the next appointment or "Hoàn thành phác đồ" (complete).
+     There is no total dose count, and no appointment exists for a vaccine that was never given. */
   var SERIES = [
-    { id: 'flu', disease: 'Cúm', full: 'Cúm mùa', vaccine: 'Vaxigrip Tetra 0.5ml', total: 2,
-      doses: [ { n: 1, st: 'done', date: '16/10/2026', wd: 'Thứ Sáu', place: 'A', rec: 'Vaxigrip Tetra 0.5ml (Sanofi)' },
-               { n: 2, st: 'up', date: '16/11/2026', wd: 'Thứ Hai', rel: 'Còn 11 ngày', place: 'A' } ] },
-    { id: 'pcv', disease: 'Phế cầu', full: 'Viêm phổi, viêm màng não, nhiễm khuẩn huyết, viêm tai giữa do phế cầu khuẩn', vaccine: 'Prevenar 20', total: 4,
-      doses: [ { n: 1, st: 'done', date: '12/05/2026', wd: 'Thứ Ba', place: 'B' },
-               { n: 2, st: 'done', date: '14/07/2026', wd: 'Thứ Ba', place: 'A' },
-               { n: 3, st: 'done', date: '14/09/2026', wd: 'Thứ Hai', place: 'A', rec: 'Prevenar 20 (Pfizer) 0,5ml' },
-               { n: 4, st: 'up', date: '12/03/2027', wd: 'Thứ Sáu', rel: 'Còn 4 tháng', place: 'A' } ] },
-    { id: 'menb', disease: 'Não mô cầu nhóm B', full: 'Viêm màng não, nhiễm khuẩn huyết do não mô cầu nhóm B', vaccine: 'Bexsero', total: 3,
-      doses: [ { n: 1, st: 'done', date: '24/08/2026', wd: 'Thứ Hai', place: 'A' },
-               { n: 2, st: 'over', date: '24/10/2026', wd: 'Thứ Bảy', rel: 'Quá hạn 12 ngày', place: 'A' },
-               { n: 3, st: 'later', rel: 'Hẹn sau khi tiêm mũi 2' } ] },
-    { id: 'hexa', disease: '6 trong 1', full: 'Bạch hầu, ho gà, uốn ván, bại liệt, Hib, viêm gan B', vaccine: 'Hexaxim', total: 4, showFull: true,
-      doses: [ { n: 1, st: 'done', date: '12/05/2026', wd: 'Thứ Ba', place: 'B' },
-               { n: 2, st: 'done', date: '12/06/2026', wd: 'Thứ Sáu', place: 'B' },
-               { n: 3, st: 'done', date: '13/07/2026', wd: 'Thứ Hai', place: 'B' },
-               { n: 4, st: 'up', date: '13/09/2027', wd: 'Thứ Hai', rel: 'Còn 10 tháng', place: 'B' } ] },
-    { id: 'measles', disease: 'Sởi', full: 'Bệnh sởi', vaccine: 'MVVac', total: 2,
-      doses: [ { n: 1, st: 'up', date: '12/12/2026', wd: 'Thứ Bảy', rel: 'Còn 37 ngày', place: 'A' },
-               { n: 2, st: 'later', rel: 'Hẹn sau khi tiêm mũi 1' } ] },
-    { id: 'je', disease: 'Viêm não Nhật Bản', full: 'Viêm não Nhật Bản', vaccine: 'Imojev', total: 2,
-      doses: [ { n: 1, st: 'up', date: '12/12/2026', wd: 'Thứ Bảy', rel: 'Còn 37 ngày', place: 'A' },
-               { n: 2, st: 'later', rel: 'Hẹn sau khi tiêm mũi 1' } ] }
+    { id: 'flu', disease: 'Cúm', full: 'Cúm mùa', vaccine: 'Vaxigrip Tetra 0.5ml',
+      doses: [ { n: 1, st: 'done', date: '16/10/2026', rec: 'Vaxigrip Tetra 0.5ml (Sanofi)' },
+               { n: 2, st: 'up', date: '16/11/2026' } ] },
+    { id: 'pcv', disease: 'Phế cầu', full: 'Viêm phổi, viêm màng não, nhiễm khuẩn huyết, viêm tai giữa do phế cầu khuẩn', vaccine: 'Prevenar 20',
+      doses: [ { n: 1, st: 'done', date: '12/05/2026' },
+               { n: 2, st: 'done', date: '14/07/2026' },
+               { n: 3, st: 'done', date: '14/09/2026', rec: 'Prevenar 20 (Pfizer) 0,5ml' },
+               { n: 4, st: 'up', date: '12/03/2027' } ] },
+    { id: 'menb', disease: 'Não mô cầu nhóm B', full: 'Viêm màng não, nhiễm khuẩn huyết do não mô cầu nhóm B', vaccine: 'Bexsero',
+      doses: [ { n: 1, st: 'done', date: '24/08/2026' },
+               { n: 2, st: 'over', date: '24/10/2026' } ] },
+    { id: 'hexa', disease: '6 trong 1', full: 'Bạch hầu, ho gà, uốn ván, bại liệt, Hib, viêm gan B', vaccine: 'Hexaxim', showFull: true,
+      doses: [ { n: 1, st: 'done', date: '12/05/2026' },
+               { n: 2, st: 'done', date: '12/06/2026' },
+               { n: 3, st: 'done', date: '13/07/2026' },
+               { n: 4, st: 'up', date: '13/09/2027' } ] },
+    { id: 'rota', disease: 'Tiêu chảy do Rota virus', full: 'Viêm dạ dày ruột, tiêu chảy cấp do Rota virus', vaccine: 'Rotarix', complete: true,
+      doses: [ { n: 1, st: 'done', date: '12/05/2026' },
+               { n: 2, st: 'done', date: '12/06/2026', rec: 'Rotarix 1.5ml (GSK)' } ] }
   ];
   /* BO's text, 05/11/2026 */
   var PREP = [
@@ -426,7 +454,14 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 
   function byId(id) { for (var i = 0; i < SERIES.length; i++) if (SERIES[i].id === id) return SERIES[i]; return null; }
   function ref(r) { var s = byId(r.s); var d = s.doses.filter(function (x) { return x.n === r.n; })[0] || s.doses[0]; return { s: s, d: d }; }
-  function doneN(s) { return s.doses.filter(function (d) { return d.st === 'done'; }).length; }
+  function doneDoses(s) { return s.doses.filter(function (d) { return d.st === 'done'; }); }
+  function doneN(s) { return doneDoses(s).length; }
+  function nextOf(s) { return s.doses.filter(function (d) { return d.st === 'up' || d.st === 'over'; })[0] || null; }
+  function isFinal(s, d) { var dd = doneDoses(s); return !!s.complete && dd.length > 0 && dd[dd.length - 1].n === d.n; }
+  /* what the nurse wrote after this dose: the next appointment, or nothing when the series is complete */
+  function recordedNext(s, d) { return isFinal(s, d) ? null : (s.doses.filter(function (x) { return x.n === d.n + 1; })[0] || null); }
+  function byDate(a, b) { return parse(a.d.date) - parse(b.d.date); }
+  function doseScreen(r) { var x = ref(r); return isFinal(x.s, x.d) ? 'E2' : 'E'; }
 
   /* ---------- state ---------- */
   function initial() { return { cur: 'A', stack: [], up: { s: 'flu', n: 2 }, dose: { s: 'pcv', n: 3 }, alert: false }; }
@@ -435,6 +470,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   /* ---------- shared pieces ---------- */
   var OUT = 'data-act="toast" data-msg="Ngoài phạm vi prototype"';
   var SWITCH_MSG = 'Mở “Chọn hồ sơ” có sẵn trong app. Đổi hồ sơ thì Trang chủ và sổ tiêm chủng đổi theo.';
+  function doseAttrs(act, s, n) { return 'data-act="' + act + '" data-s="' + s + '" data-n="' + n + '"'; }
   function avatar(id, size) {
     var p = PROFILES[id], fs = size <= 32 ? 11 : (size >= 44 ? 15 : 14);
     return '<span class="av" aria-hidden="true" style="width:' + size + 'px;height:' + size + 'px;border-radius:' + (size / 2) +
@@ -457,52 +493,59 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     SERIES.forEach(function (s) { s.doses.forEach(function (d) { if (d.st === 'up' || d.st === 'over') items.push({ s: s, d: d }); }); });
     return items;
   }
+  function missedItems() { return upcomingItems().filter(function (x) { return x.d.st === 'over'; }).sort(byDate); }
   function doneTotal() { return SERIES.reduce(function (n, s) { return n + doneN(s); }, 0); }
   function seg(active) {
+    var missed = missedItems().length;
     return '<div class="segwrap"><div class="seg" role="tablist" aria-label="Danh sách mũi tiêm">' +
-      '<button role="tab" aria-selected="' + (active === 'B') + '" class="' + (active === 'B' ? 'on' : '') + '" data-go="B" data-replace>Sắp tới <span class="cnt amber">' + upcomingItems().length + '</span></button>' +
+      '<button role="tab" aria-selected="' + (active === 'B') + '" class="' + (active === 'B' ? 'on' : '') + '" data-go="B" data-replace>Sắp tới <span class="cnt' + (missed ? ' red' : '') + '">' + upcomingItems().length + '</span></button>' +
       '<button role="tab" aria-selected="' + (active === 'C') + '" class="' + (active === 'C' ? 'on' : '') + '" data-go="C" data-replace>Đã tiêm <span class="cnt">' + doneTotal() + '</span></button>' +
       '</div></div>';
   }
   function ibox(name) { return '<span class="ibox">' + ic(name, 19) + '</span>'; }
   function check(text) { return '<div class="ck">' + ic('check', 18, '#0C7640', 2.6) + '<span>' + text + '</span></div>'; }
-  function datebox(date, amber) {
+  function datebox(date, red) {
     var p = date.split('/');
-    return '<span class="datebox' + (amber ? ' amber' : '') + '"><b>' + (+p[0]) + '</b><small>TH ' + (+p[1]) + '</small></span>';
+    return '<span class="datebox' + (red ? ' red' : '') + '"><b>' + (+p[0]) + '</b><small>TH ' + (+p[1]) + '</small></span>';
   }
+  function stats(k1, v1, k2, v2, sub) {
+    return '<div class="stats"><div><span class="k">' + k1 + '</span><span class="v">' + v1 + '</span></div>' +
+      '<div><span class="k">' + k2 + '</span><span class="v">' + v2 + '</span><span class="t13">' + sub + '</span></div></div>';
+  }
+  /* The doses on record plus the next appointment; a completed series ends with "Hoàn thành phác đồ". */
   function timeline(s, cur) {
-    return '<section class="card tl">' + s.doses.map(function (d, i) {
-      var last = i === s.doses.length - 1, isCur = d.n === cur, mark, right, act = '';
-      var left = 'Mũi ' + d.n + (isCur ? ' · đang xem' : '');
+    var rows = s.doses.map(function (d) {
+      var isCur = d.n === cur, r = { left: 'Mũi ' + d.n, cur: isCur, act: '' };
       if (d.st === 'done') {
-        mark = '<span class="m done">' + ic('check', 11, 'currentColor', 3.4) + '</span>';
-        right = '<span class="td">' + d.date + '</span>';
-        if (!isCur) act = ' data-act="dose" data-s="' + s.id + '" data-n="' + d.n + '"';
+        r.mark = '<span class="m done">' + ic('check', 11, 'currentColor', 3.4) + '</span>';
+        r.right = '<span class="td">' + d.date + '</span>';
+        if (!isCur) r.act = doseAttrs('dose', s.id, d.n);
       } else if (d.st === 'over') {
-        mark = '<span class="m over"></span>';
-        right = '<span class="td amb">Quá hạn · hẹn ' + d.date + '</span>';
-        if (!isCur) act = ' data-act="up" data-s="' + s.id + '" data-n="' + d.n + '"';
-      } else if (d.st === 'up') {
-        mark = '<span class="m ring"></span>';
-        right = '<span class="td bl">Hẹn ' + d.date + '</span>';
-        if (!isCur) act = ' data-act="up" data-s="' + s.id + '" data-n="' + d.n + '"';
+        r.mark = '<span class="m over"></span>';
+        r.right = '<span class="td red">Đã bỏ lỡ · hẹn ' + d.date + '</span>';
+        if (!isCur) r.act = doseAttrs('up', s.id, d.n);
       } else {
-        mark = '<span class="m ring dim"></span>';
-        right = '<span class="td">' + (d.rel || 'Chưa có ngày hẹn') + '</span>';
+        r.mark = '<span class="m ring"></span>';
+        r.right = '<span class="td bl">Hẹn ' + d.date + '</span>';
+        if (!isCur) r.act = doseAttrs('up', s.id, d.n);
       }
-      var inner = '<span class="tlm">' + mark + (last ? '' : '<span class="tll"></span>') + '</span>' +
-        '<span class="tlc' + (isCur ? ' cur' : '') + '"><span class="t15b' + (d.st === 'later' ? ' dim' : '') + '">' + left + '</span>' + right + '</span>';
-      return act ? '<button class="tlr"' + act + '>' + inner + chev() + '</button>' : '<div class="tlr">' + inner + '</div>';
+      return r;
+    });
+    if (s.complete) rows.push({ mark: '<span class="m fin">' + ic('check', 11, 'currentColor', 3.4) + '</span>', left: 'Hoàn thành phác đồ', leftCls: 'ok', right: '', cur: false, act: '' });
+    return '<section class="card tl">' + rows.map(function (r, i) {
+      var last = i === rows.length - 1;
+      var inner = '<span class="tlm">' + r.mark + (last ? '' : '<span class="tll"></span>') + '</span>' +
+        '<span class="tlc' + (r.cur ? ' cur' : '') + '"><span class="t15b' + (r.leftCls ? ' ' + r.leftCls : '') + '">' + r.left + '</span>' + r.right + '</span>';
+      return r.act ? '<button class="tlr" ' + r.act + '>' + inner + chev() + '</button>' : '<div class="tlr">' + inner + '</div>';
     }).join('') + '</section>';
   }
-  function placeRow(cid, withDir) {
-    var c = CENTERS[cid];
-    return '<div class="place">' + ic('pin', 16, '#6F777F', 2.2) + '<span class="col"><span class="t14s ell">' + c.name + '</span><span class="t13 ell">' + c.addr + '</span></span>' +
-      (withDir ? '<button class="pill sm" data-act="dir" data-c="' + cid + '">' + ic('nav', 13, 'currentColor', 2.4) + 'Chỉ đường</button>' : '') + '</div>';
+  function placeRow(withDir) {
+    return '<div class="place">' + ic('pin', 16, '#6F777F', 2.2) + '<span class="col"><span class="t14s">' + CENTER.name + '</span><span class="t13 ell">' + CENTER.addr + '</span></span>' +
+      (withDir ? '<button class="pill sm" data-act="dir">' + ic('nav', 13, 'currentColor', 2.4) + 'Chỉ đường</button>' : '') + '</div>';
   }
   function bar(inner) { return '<div class="bar">' + inner + '</div>'; }
   function callBtn(label, cls) { return '<button class="btn' + (cls ? ' ' + cls : '') + '" data-act="call">' + ic('phone', 19) + label + '</button>'; }
-  function dirBtn(cid, label) { return '<button class="btn" data-act="dir" data-c="' + cid + '">' + ic('nav', 19) + label + '</button>'; }
+  function dirBtn(label) { return '<button class="btn" data-act="dir">' + ic('nav', 19) + label + '</button>'; }
   function helpCard(title, body) {
     return '<button class="card help" data-act="call"><span class="hbox">' + ic('headset', 20) + '</span>' +
       '<span class="col"><span class="t16">' + title + '</span><span class="t14 lh2">' + body + '</span></span>' + chev() + '</button>';
@@ -527,6 +570,24 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
 
   /* ---------- screens ---------- */
   function scrA() {
+    var missed = missedItems();
+    var next = upcomingItems().filter(function (x) { return x.d.st === 'up' && daysFrom(x.d.date) <= 30; }).sort(byDate)[0];
+    var card = '';
+    if (next || missed.length) {
+      card = '<section class="card hcard" aria-label="Nhắc lịch tiêm">' +
+        '<div class="between"><h2 class="h17">Nhắc lịch tiêm</h2><button class="lnk" data-go="B">Sổ tiêm chủng</button></div>' +
+        (next
+          ? '<button class="row" ' + doseAttrs('up', next.s.id, next.d.n) + '><span class="ubox">' + ic('syringe', 22, 'currentColor', 1.9) + '</span>' +
+            '<span class="col"><span class="t16">' + next.s.disease + ' · Mũi ' + next.d.n + '</span>' +
+            '<span class="bl14">' + ic('clock', 14, 'currentColor', 2.2) + wd(next.d.date) + ', ' + dm(next.d.date) + ' · ' + rel(next.d.date).toLowerCase() + '</span>' +
+            '<span class="t14 ell">' + CENTER.name + '</span></span>' + chev() + '</button>'
+          : '') +
+        (next && missed.length ? '<span class="divider"></span>' : '') +
+        (missed.length
+          ? '<button class="row missrow" data-go="B">' + ic('alert', 17, 'currentColor', 2.2) + '<span class="grow">' + missed.length + ' lịch tiêm đã bị bỏ lỡ</span>' + chev() + '</button>'
+          : '') +
+        '</section>';
+    }
     return '<div class="hhead">' + avatarSeal('an', 46) + '<span class="col"><span class="t13">Xin chào,</span><span class="hn">NGUYỄN MINH AN</span></span>' +
       '<button class="hic" ' + OUT + ' aria-label="Thông báo">' + ic('bell', 23, '#0766F7', 1.9) + '</button></div>' +
       '<div class="body hb">' +
@@ -536,13 +597,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
           tile('Tiêm chủng', '#13A36B', 'syringe', 'data-go="B"', true) +
           tile('Ưu đãi', '#E8412C', 'tag', OUT) +
         '</nav>' +
-        '<section class="card hcard" aria-label="Nhắc lịch tiêm">' +
-          '<div class="between"><h2 class="h17">Nhắc lịch tiêm</h2><button class="lnk" data-go="B">Sổ tiêm chủng</button></div>' +
-          '<button class="row" data-act="up" data-s="menb" data-n="2"><span class="abox">' + ic('syringe', 22, 'currentColor', 1.9) + '</span>' +
-            '<span class="col"><span class="t16">Minh An cần tiêm bù 1 mũi</span>' +
-            '<span class="amb14">' + ic('alert', 14, 'currentColor', 2.2) + 'Não mô cầu B · quá hạn 12 ngày</span>' +
-            '<span class="t14">Tiếp theo: Cúm mũi 2 · 16/11</span></span>' + chev() + '</button>' +
-        '</section>' +
+        card +
         '<div class="skel" aria-hidden="true"><i style="width:40%"></i><i style="width:90%"></i><i style="width:75%"></i></div>' +
         '<div class="skel" aria-hidden="true"><i style="width:55%"></i><i style="width:85%"></i></div>' +
       '</div>' + tabbar('A');
@@ -574,79 +629,69 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   }
 
   function scrB() {
-    var items = upcomingItems();
-    var over = items.filter(function (x) { return x.d.st === 'over'; });
-    var up = items.filter(function (x) { return x.d.st === 'up'; }).sort(function (a, b) { return parse(a.d.date) - parse(b.d.date); });
+    var over = missedItems();
+    var up = upcomingItems().filter(function (x) { return x.d.st === 'up'; }).sort(byDate);
     var html = '';
-    over.forEach(function (x) {
-      var s = x.s, d = x.d;
-      html += '<section class="card over" aria-label="Cần tiêm bù">' +
-        '<div class="overhead">' + ic('alert', 16, 'currentColor', 2.2) + ' Cần tiêm bù · ' + d.rel.toLowerCase() + '</div>' +
-        '<button class="row pad2" data-act="up" data-s="' + s.id + '" data-n="' + d.n + '">' + datebox(d.date, true) +
-          '<span class="col"><span class="t16">' + s.disease + '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '/' + s.total +
-          '</span><span class="t13">Hẹn ' + d.wd + ', ' + d.date + '</span></span>' + chev() + '</button>' +
-        placeRow(d.place, false) +
-        '<div class="overcta">' + callBtn('Gọi CSKH để được tư vấn tiêm bù', 'sm tint') + '</div></section>';
-    });
+    if (over.length) {
+      html += '<div class="lbl red">Đã bỏ lỡ</div>';
+      over.forEach(function (x) {
+        var s = x.s, d = x.d;
+        html += '<section class="card miss" aria-label="Lịch tiêm đã bỏ lỡ"><button class="row pad2" ' + doseAttrs('up', s.id, d.n) + '>' + datebox(d.date, true) +
+          '<span class="col"><span class="t16">' + s.disease + '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '</span>' +
+          '<span class="t13">Hẹn ' + wd(d.date) + ', ' + d.date + '</span></span>' + chev() + '</button>' +
+          '<div class="missnote">' + ic('alert', 16, 'currentColor', 2.2) + '<span>' + MISSED + '</span></div></section>';
+      });
+    }
     var groups = [];
     up.forEach(function (x) {
       var g = groups.filter(function (y) { return y.date === x.d.date; })[0];
-      if (g) g.list.push(x); else groups.push({ date: x.d.date, wd: x.d.wd, rel: x.d.rel, place: x.d.place, list: [x] });
+      if (g) g.list.push(x); else groups.push({ date: x.d.date, list: [x] });
     });
     var lastMonth = '';
     groups.forEach(function (g) {
       var p = g.date.split('/'), mk = 'Tháng ' + (+p[1]) + ' · ' + p[2];
       if (mk !== lastMonth) { html += '<div class="lbl">' + mk + '</div>'; lastMonth = mk; }
-      var chip = '<span class="chip ' + (daysFrom(g.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + g.rel + '</span>';
+      var chip = '<span class="chip ' + (daysFrom(g.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + rel(g.date) + '</span>';
       if (g.list.length === 1) {
         var s = g.list[0].s, d = g.list[0].d;
-        html += '<section class="card vcard"><button class="row pad" data-act="up" data-s="' + s.id + '" data-n="' + d.n + '">' + datebox(g.date) +
-          '<span class="col"><span class="between"><span class="t13">' + g.wd + '</span>' + chip + '</span><span class="t16">' + s.disease +
-          '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '/' + s.total + '</span></span>' + chev() + '</button>' +
-          placeRow(g.place, true) + '</section>';
+        html += '<section class="card vcard"><button class="row pad" ' + doseAttrs('up', s.id, d.n) + '>' + datebox(g.date) +
+          '<span class="col"><span class="between"><span class="t13">' + wd(g.date) + '</span>' + chip + '</span><span class="t16">' + s.disease +
+          '</span><span class="t14">' + s.vaccine + ' · Mũi ' + d.n + '</span></span>' + chev() + '</button>' +
+          placeRow(true) + '</section>';
       } else {
         html += '<section class="card vcard" aria-label="Buổi tiêm ' + g.date + '"><div class="row top pad">' + datebox(g.date) +
-          '<span class="col gap8"><span class="between"><span class="t13">' + g.wd + ' · ' + g.list.length + ' mũi cùng buổi</span>' + chip + '</span>' +
+          '<span class="col gap8"><span class="between"><span class="t13">' + wd(g.date) + ' · ' + g.list.length + ' mũi cùng buổi</span>' + chip + '</span>' +
           g.list.map(function (x, i) {
-            return (i ? '<span class="divider"></span>' : '') + '<button class="row" data-act="up" data-s="' + x.s.id + '" data-n="' + x.d.n + '">' +
-              '<span class="col"><span class="t16">' + x.s.disease + '</span><span class="t14">' + x.s.vaccine + ' · Mũi ' + x.d.n + '/' + x.s.total +
-              '</span></span>' + chev() + '</button>';
-          }).join('') + '</span></div>' + placeRow(g.place, true) + '</section>';
+            return (i ? '<span class="divider"></span>' : '') + '<button class="row" ' + doseAttrs('up', x.s.id, x.d.n) + '>' +
+              '<span class="col"><span class="t16">' + x.s.disease + '</span><span class="t14">' + x.s.vaccine + ' · Mũi ' + x.d.n + '</span></span>' + chev() + '</button>';
+          }).join('') + '</span></div>' + placeRow(true) + '</section>';
       }
     });
-    html += '<div class="endnote">' + ic('info', 16) + '<span>Không cần đặt lịch trước: đến DIAG vào ngày hẹn, trong giờ mở cửa. Bác sĩ khám sàng lọc và xác nhận mũi tiêm tại chỗ.</span></div>';
+    html += '<div class="endnote">' + ic('info', 16) + '<span>Không cần đặt lịch trước: đến DIAG vào ngày hẹn, trong giờ Phòng khám (' + CENTER.hours + '). Bác sĩ khám sàng lọc và xác nhận mũi tiêm tại chỗ.</span></div>';
     return nav('Sổ tiêm chủng') + who('an') + seg('B') + '<div class="body">' + html + '</div>';
   }
 
   function scrC() {
     var list = SERIES.filter(function (s) { return doneN(s) > 0; }).map(function (s) {
-      return { s: s, last: Math.max.apply(null, s.doses.filter(function (d) { return d.st === 'done'; }).map(function (d) { return +parse(d.date); })) };
+      return { s: s, last: Math.max.apply(null, doneDoses(s).map(function (d) { return +parse(d.date); })) };
     }).sort(function (a, b) { return b.last - a.last; }).map(function (x) { return x.s; });
     var html = '<div class="between sum"><span class="t15b">' + doneTotal() + ' mũi · ' + list.length + ' nhóm bệnh</span><span class="t13">Mới nhất trước</span></div>';
     list.forEach(function (s) {
-      var done = s.doses.filter(function (d) { return d.st === 'done'; });
-      var head;
-      if (done.length === s.total) {
-        head = '<span class="chip c-green">' + ic('check', 13, 'currentColor', 3) + 'Hoàn thành</span>';
-      } else {
-        var dots = '';
-        for (var i = 0; i < s.total; i++) dots += '<span class="dot' + (i < done.length ? ' on' : '') + '"></span>';
-        head = '<span class="prog"><span class="dots" aria-hidden="true">' + dots + '</span><span class="pt">' + done.length + '/' + s.total + ' mũi</span></span>';
-      }
-      var rows = done.slice().sort(function (a, b) { return b.n - a.n; }).map(function (d) {
-        return '<button class="drow" data-act="dose" data-s="' + s.id + '" data-n="' + d.n + '"><span class="dn">Mũi ' + d.n + '</span>' +
-          '<span class="col"><span class="t15b">' + d.date + '</span><span class="t13">' + (d.rec || s.vaccine) + ' · ' + CENTERS[d.place].name + '</span></span>' + chev() + '</button>';
+      var rows = doneDoses(s).slice().sort(function (a, b) { return b.n - a.n; }).map(function (d) {
+        return '<button class="drow" ' + doseAttrs('dose', s.id, d.n) + '><span class="dn">Mũi ' + d.n + '</span>' +
+          '<span class="col"><span class="t15b">' + d.date + '</span><span class="t13">' + (d.rec || s.vaccine) + '</span></span>' + chev() + '</button>';
       }).join('');
-      var next = s.doses.filter(function (d) { return d.st === 'up' || d.st === 'over'; })[0];
-      var nextRow = '';
+      var next = nextOf(s), nextRow = '';
       if (next) {
         var txt = next.st === 'over'
-          ? '<span class="nx amber">' + ic('alert', 15, 'currentColor', 2.2) + next.rel + ' · cần tiêm bù</span>'
+          ? '<span class="nx red">' + ic('alert', 15, 'currentColor', 2.2) + 'Đã bỏ lỡ lịch hẹn ' + next.date + '</span>'
           : '<span class="nx">Hẹn ' + next.date + (daysFrom(next.date) <= 60 ? ' · còn ' + daysFrom(next.date) + ' ngày' : '') + '</span>';
-        nextRow = '<button class="drow next" data-act="up" data-s="' + s.id + '" data-n="' + next.n + '"><span class="dn muted">Mũi ' + next.n + '</span>' + txt + chev() + '</button>';
+        nextRow = '<button class="drow next" ' + doseAttrs('up', s.id, next.n) + '><span class="dn muted">Mũi ' + next.n + '</span>' + txt + chev() + '</button>';
       }
       html += '<section class="card dis"><div class="dhead"><span class="col"><h2>' + s.disease + '</h2>' +
-        (s.showFull ? '<span class="t13 lh">' + s.full + '</span>' : '') + '</span>' + head + '</div>' + rows + nextRow + '</section>';
+        (s.showFull ? '<span class="t13 lh">' + s.full + '</span>' : '') +
+        (s.complete ? '<span class="chip c-green dchip">' + ic('check', 13, 'currentColor', 3) + 'Hoàn thành phác đồ</span>' : '') +
+        '</span></div>' + rows + nextRow + '</section>';
     });
     html += '<div class="endnote">' + ic('info', 16) + '<span>Dữ liệu từ hệ thống tiêm chủng DIAG, cập nhật sau mỗi lần tiêm tại DIAG.</span></div>';
     html += helpCard('Sổ thiếu mũi đã tiêm tại DIAG?', 'Gọi CSKH ' + HOTLINE + ' để DIAG kiểm tra và cập nhật, kể cả khi thông tin mũi tiêm chưa đúng.');
@@ -663,43 +708,51 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   }
 
   function scrD() {
-    var r = ref(state.up), s = r.s, d = r.d, over = d.st === 'over', cid = d.place || 'A', c = CENTERS[cid];
-    var chip = over
-      ? '<span class="chip c-amber">' + ic('alert', 13, 'currentColor', 2.4) + d.rel + '</span>'
-      : '<span class="chip ' + (daysFrom(d.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + ic('clock', 13, 'currentColor', 2.4) + 'Sắp tới · ' + d.rel.toLowerCase() + '</span>';
-    return nav(over ? 'Mũi cần tiêm bù' : 'Mũi tiêm sắp tới') + '<div class="body">' +
+    var r = ref(state.up), s = r.s, d = r.d;
+    if (d.st === 'over') return scrD2();
+    var chip = '<span class="chip ' + (daysFrom(d.date) <= 14 ? 'c-blue' : 'c-gray') + '">' + ic('clock', 13, 'currentColor', 2.4) + 'Sắp tới · ' + rel(d.date).toLowerCase() + '</span>';
+    return nav('Mũi tiêm sắp tới') + '<div class="body">' +
       '<section class="card hero">' + chip + '<h2>' + s.disease + '</h2><div class="t15">' + s.vaccine + '</div>' +
-        '<div class="stats"><div><span class="k">MŨI</span><span class="v">' + d.n + '/' + s.total + '</span></div>' +
-        '<div><span class="k">NGÀY HẸN</span><span class="v">' + d.date + '</span><span class="t13">' + d.wd + '</span></div></div></section>' +
-      (over
-        ? '<div class="note amber">' + ic('alert', 17) + '<span>Mũi này đã quá ngày hẹn. Gọi CSKH để được tư vấn lịch tiêm bù trước khi đến DIAG.</span></div>'
-        : '<div class="note blue">' + ic('info', 17) + '<span>Không cần đặt lịch trước. Đến DIAG vào ngày hẹn, trong giờ mở cửa, để được khám sàng lọc và tiêm.</span></div>') +
+        stats('MŨI', d.n, 'NGÀY HẸN', d.date, wd(d.date)) + '</section>' +
+      '<div class="note blue">' + ic('info', 17) + '<span>Không cần đặt lịch trước. Đến DIAG vào ngày hẹn, trong giờ Phòng khám, để được khám sàng lọc và tiêm.</span></div>' +
       '<div class="lbl">Nơi tiêm</div>' +
-      '<section class="card kv"><div class="kvr top"><span class="col"><span class="t15b">' + c.name + '</span><span class="t14">' + c.addr + '</span>' +
-        '<span class="hrs">' + ic('clock', 14, 'currentColor', 2.2) + '[Giờ mở cửa của chi nhánh]</span></span>' +
-        (over ? '<button class="pill" data-act="dir" data-c="' + cid + '">' + ic('nav', 14, 'currentColor', 2.4) + 'Chỉ đường</button>' : '') + '</div></section>' +
-      (over ? '' : '<button class="card rowbtn" data-act="calendar">' + ibox('calPlus') + '<span class="grow t16n">Thêm vào Lịch trên iPhone</span>' + chev() + '</button>') +
+      '<section class="card kv"><div class="kvr top"><span class="col"><span class="t15b">' + CENTER.name + '</span><span class="t14">' + CENTER.addr + '</span>' +
+        '<span class="hrs">' + ic('clock', 14, 'currentColor', 2.2) + CENTER.hours + '</span></span></div></section>' +
+      '<button class="card rowbtn" data-act="calendar">' + ibox('calPlus') + '<span class="grow t16n">Thêm vào Lịch trên iPhone</span>' + chev() + '</button>' +
       '<div class="lbl">Chuẩn bị trước khi tiêm</div>' +
       '<section class="card pad checks">' + PREP.map(function (t) { return check(t); }).join('') + '</section>' +
-      '<div class="lbl">Phác đồ ' + s.disease + ' · ' + doneN(s) + '/' + s.total + ' mũi</div>' +
+      '<div class="lbl">Các mũi ' + s.disease + '</div>' +
       timeline(s, d.n) + '</div>' +
-      bar(over ? callBtn('Gọi CSKH') : dirBtn(cid, 'Chỉ đường'));
+      bar(dirBtn('Chỉ đường'));
+  }
+
+  function scrD2() {
+    var r = ref(state.up), s = r.s, d = r.d;
+    return nav('Lịch tiêm đã bỏ lỡ') + '<div class="body">' +
+      '<section class="card hero"><span class="chip c-red">' + ic('alert', 13, 'currentColor', 2.4) + 'Đã bỏ lỡ</span><h2>' + s.disease + '</h2><div class="t15">' + s.vaccine + '</div>' +
+        stats('MŨI', d.n, 'NGÀY HẸN', d.date, wd(d.date)) + '</section>' +
+      '<div class="note red">' + ic('alert', 17) + '<span>' + MISSED + '</span></div>' +
+      '<div class="lbl">Các mũi ' + s.disease + '</div>' +
+      timeline(s, d.n) + '</div>';
   }
 
   function scrE() {
-    var r = ref(state.dose), s = r.s, d = r.d, cid = d.place || 'A', c = CENTERS[cid];
+    var r = ref(state.dose), s = r.s, d = r.d, fin = isFinal(s, d), nx = recordedNext(s, d);
+    var nextVal = fin
+      ? '<span class="chip c-green">' + ic('check', 13, 'currentColor', 3) + 'Hoàn thành phác đồ</span>'
+      : (nx ? '<span class="t15b">Mũi ' + nx.n + ' · hẹn ' + nx.date + (nx.st === 'over' ? ' <span class="redtxt">· đã bỏ lỡ</span>' : '') + '</span>' : '<span class="t15b">Chưa có ngày hẹn</span>');
     return nav('Chi tiết mũi tiêm') + '<div class="body">' +
       '<section class="card hero"><span class="chip c-green">' + ic('check', 13, 'currentColor', 3) + 'Đã tiêm</span>' +
         '<h2>' + s.disease + '</h2><div class="t13 lh">' + s.full + '</div>' +
-        '<div class="stats"><div><span class="k">MŨI</span><span class="v">' + d.n + '/' + s.total + '</span></div>' +
-        '<div><span class="k">NGÀY TIÊM</span><span class="v">' + d.date + '</span><span class="t13">' + d.wd + '</span></div></div></section>' +
+        stats('MŨI', d.n, 'NGÀY TIÊM', d.date, wd(d.date)) + '</section>' +
       '<div class="lbl">Thông tin mũi tiêm</div>' +
       '<section class="card kv">' +
         '<div class="kvr top"><span class="col"><span class="t13">Vắc xin</span><span class="t15b">' + (d.rec || s.vaccine) + '</span></span></div>' +
-        '<div class="kvr top"><span class="col"><span class="t13">Nơi tiêm</span><span class="t15b">' + c.name + '</span><span class="t14">' + c.addr + '</span></span>' +
-          '<button class="pill" data-act="dir" data-c="' + cid + '">' + ic('nav', 14, 'currentColor', 2.4) + 'Chỉ đường</button></div>' +
+        '<div class="kvr top"><span class="col"><span class="t13">Nơi tiêm</span><span class="t15b">' + CENTER.name + '</span><span class="t14">' + CENTER.addr + '</span></span>' +
+          '<button class="pill" data-act="dir">' + ic('nav', 14, 'currentColor', 2.4) + 'Chỉ đường</button></div>' +
+        '<div class="kvr top"><span class="col gap6"><span class="t13">Mũi tiếp theo</span>' + nextVal + '</span></div>' +
       '</section>' +
-      '<div class="lbl">Phác đồ ' + s.disease + ' · ' + doneN(s) + '/' + s.total + ' mũi</div>' +
+      '<div class="lbl">Các mũi ' + s.disease + '</div>' +
       timeline(s, d.n) +
       '<div class="lbl">Người được tiêm</div>' +
       '<section class="card pad row">' + avatar('an', 42) + '<span class="col"><span class="t16">NGUYỄN MINH AN</span><span class="t13">12/03/2026 · Nam · PID [mã hồ sơ]</span></span></section>' +
@@ -711,10 +764,8 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
       return '<button class="notif" ' + attrs + '><span class="nicon" aria-hidden="true">DIAG</span><span class="col">' +
         '<span class="between"><span class="nt">' + title + '</span><span class="ntime">' + time + '</span></span><span class="nb">' + body + '</span></span></button>';
     }
-    return '<div class="lock"><div class="ldate">Thứ Sáu, 13 tháng 11</div><div class="ltime">9:41</div><div class="nstack">' +
-      n('Nhắc lịch tiêm cho Minh An', 'Thứ Hai 16/11 đến hẹn mũi Cúm (mũi 2) tại DIAG [Chi nhánh A]. Không cần đặt lịch; chạm để xem chỉ đường.', 'bây giờ', 'data-act="up" data-s="flu" data-n="2"') +
-      n('Minh An cần tiêm bù', 'Mũi Não mô cầu B (mũi 2) đã quá hạn từ 24/10. Gọi CSKH ' + HOTLINE + ' để được tư vấn lịch tiêm bù.', '27/10', 'data-act="up" data-s="menb" data-n="2"') +
-      n('Sổ tiêm chủng đã cập nhật', 'Đã lưu mũi Cúm (mũi 1) của Minh An. Mũi tiếp theo: 16/11/2026.', '16/10', 'data-act="dose" data-s="flu" data-n="1"') +
+    return '<div class="lock"><div class="ldate">Thứ Bảy, 14 tháng 11</div><div class="ltime">8:00</div><div class="nstack">' +
+      n('Nhắc lịch tiêm', 'Thứ Hai 16/11, Nguyễn Minh An có lịch tiêm Cúm (mũi 2) tại ' + CENTER.name + '. Chạm để xem chi tiết.', 'bây giờ', doseAttrs('up', 'flu', 2)) +
       '</div></div>';
   }
 
@@ -724,43 +775,46 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     { id: 'A', g: 0, name: 'Trang chủ · lối vào', render: scrA, notes: [
       'Trang chủ đang chọn hồ sơ Nguyễn Minh An. Đổi hồ sơ bằng nút ⇆ trên ảnh đại diện như hiện nay; sổ tiêm chủng luôn theo hồ sơ đang chọn.',
       'Nút nhanh "Tiêm chủng" có nhãn "Mới"; bật/tắt bằng cấu hình CDN như các nút khác. Màu xanh lá #13A36B là màu mới, cần thống nhất với Android.',
-      'Thẻ "Nhắc lịch tiêm" chỉ hiện khi hồ sơ có mũi quá hạn hoặc đến hạn trong 7 ngày; mũi quá hạn được ưu tiên. Đã bỏ nút Đặt lịch tiêm.',
-      'Thử bấm: nút Tiêm chủng, thẻ nhắc, hoặc tab Hồ Sơ Của Tôi.'] },
-    { id: 'A2', g: 0, name: 'Hồ Sơ Của Tôi · lối vào', render: scrA2, isNew: true, notes: [
-      'Mới theo góp ý BO: dòng "Sổ tiêm chủng" ngay dưới "Hồ sơ bệnh án điện tử", để khách không có nhắc lịch vẫn tìm được sổ.',
+      'Thẻ "Nhắc lịch tiêm" hiện lịch hẹn gần nhất trong 30 ngày tới, thêm dòng đỏ khi có lịch đã bỏ lỡ. Không có gì thì ẩn thẻ.',
+      'Thử bấm: nút Tiêm chủng, thẻ nhắc, dòng đỏ, hoặc tab Hồ Sơ Của Tôi.'] },
+    { id: 'A2', g: 0, name: 'Hồ Sơ Của Tôi · lối vào', render: scrA2, notes: [
+      'Dòng "Sổ tiêm chủng" ngay dưới "Hồ sơ bệnh án điện tử", để khách không có nhắc lịch vẫn tìm được sổ.',
       'Cùng kiểu dòng menu đang có trong tab; nhãn "Mới" bỏ sau vài phiên bản.',
       'Thử bấm dòng Sổ tiêm chủng.'] },
     { id: 'B', g: 1, name: 'Sổ tiêm chủng · Sắp tới', render: scrB, notes: [
-      'Không còn chip chọn hồ sơ: sổ hiện theo hồ sơ (PID) đang chọn trong app, chỉ giữ một dòng tên để biết đang xem sổ của ai.',
-      'Mỗi lịch hẹn có tên và địa chỉ chi nhánh DIAG (nơi tiêm) và nút "Chỉ đường" (mở Google Maps, không có thì Apple Maps, như "Tìm chi nhánh Diag").',
-      'Mũi quá hạn nằm trên cùng, màu cam, với nút "Gọi CSKH để được tư vấn tiêm bù".',
-      'Không có nút đặt lịch: khách đến DIAG vào ngày hẹn. Nhóm theo tháng; các mũi cùng ngày gộp thành một buổi.'] },
+      'Sổ hiện theo hồ sơ (PID) đang chọn trong app; một dòng tên cho biết đang xem sổ của ai.',
+      'Chỉ có các ngày hẹn y tá đã ghi sau mỗi mũi tiêm. Vắc xin chưa tiêm mũi nào thì không có lịch hẹn.',
+      'Lịch đã bỏ lỡ (từ ngày sau ngày hẹn) nằm trên cùng, màu đỏ, chỉ ghi "Lịch tiêm vắc xin đã bị bỏ lỡ." như VNVC. Không còn phần tiêm bù.',
+      'Mỗi lịch hẹn có tên, địa chỉ Trung tâm Y khoa Diag Cao Thắng và nút "Chỉ đường" (Google Maps, không có thì Apple Maps). Nhiều mũi hẹn cùng ngày gộp thành một buổi.'] },
     { id: 'C', g: 1, name: 'Sổ tiêm chủng · Đã tiêm', render: scrC, notes: [
-      'Nhóm theo bệnh, nhóm mới tiêm gần nhất lên trước; tiến độ 3/4 mũi; mũi tiếp theo hiện ngay trong nhóm.',
+      'Nhóm theo bệnh, nhóm mới tiêm gần nhất lên trước. Không còn "3/4 mũi" vì hệ thống không lưu tổng số mũi.',
+      'Còn mũi tiếp theo thì ngày hẹn hiện ngay trong nhóm. Mũi cuối, hoặc vắc xin chỉ 1 mũi, y tá ghi "Hoàn thành phác đồ" và nhóm có nhãn xanh (ví dụ Rota).',
       'Tên vắc xin hiện đúng như y tá nhập (ví dụ mũi Phế cầu 3).',
-      'Thay "Thêm mũi đã tiêm nơi khác" bằng thẻ "Sổ thiếu mũi đã tiêm tại DIAG?" gọi CSKH; thẻ này cũng dùng khi thông tin chưa đúng.'] },
+      'Thẻ "Sổ thiếu mũi đã tiêm tại DIAG?" gọi CSKH 1900 1717; dùng cả khi thông tin mũi tiêm chưa đúng.'] },
     { id: 'C2', g: 1, name: 'Hồ sơ chưa có mũi tiêm', render: scrC2, notes: [
       'Ví dụ: hồ sơ đang chọn là Trần Thu Hà, chưa tiêm mũi nào tại DIAG.',
-      'Bỏ nút Đặt lịch tiêm; thay bằng "Gọi CSKH" cho khách đã tiêm tại DIAG mà sổ chưa có.'] },
+      'Nút "Gọi CSKH" cho khách đã tiêm tại DIAG mà sổ chưa có.'] },
     { id: 'D', g: 1, name: 'Chi tiết mũi sắp tới', render: scrD, notes: [
-      'Mũi chưa tới hạn: nút chính "Chỉ đường". "Thêm vào Lịch" tạo sự kiện có sẵn tên và địa chỉ chi nhánh.',
-      'Nói rõ không cần đặt lịch: đến DIAG vào ngày hẹn, trong giờ mở cửa.',
+      'Nút chính "Chỉ đường" tới Trung tâm Y khoa Diag Cao Thắng. "Thêm vào Lịch" tạo sự kiện có sẵn tên và địa chỉ.',
+      'Giờ Phòng khám lấy từ danh sách chi nhánh trong app: 7:30 – 16:30, nghỉ trưa 12:00 – 13:00. Chờ BO xác nhận giờ nhận tiêm.',
       '"Chuẩn bị trước khi tiêm" theo đúng nội dung BO gửi; sửa được qua CMS.',
-      'Giờ mở cửa lấy từ danh sách chi nhánh có sẵn trong app (Tìm chi nhánh Diag).'] },
-    { id: 'D2', g: 1, name: 'Chi tiết mũi quá hạn', render: scrD, notes: [
-      'Mũi quá hạn: nút chính "Gọi CSKH" (tổng đài 1900 1717) để được tư vấn lịch tiêm bù; "Chỉ đường" là nút phụ.',
-      'Bỏ "Thêm vào Lịch" vì ngày hẹn đã qua.',
-      'Thử bấm Gọi CSKH: iPhone hỏi xác nhận trước khi gọi.'] },
+      '"Các mũi Cúm" chỉ gồm mũi đã tiêm và ngày hẹn này, không đoán các mũi sau.'] },
+    { id: 'D2', g: 1, name: 'Chi tiết lịch đã bỏ lỡ', render: scrD2, notes: [
+      'Chỉ hiện "Lịch tiêm vắc xin đã bị bỏ lỡ." như VNVC. Đã bỏ nút Gọi CSKH, Chỉ đường và Thêm vào Lịch vì chưa có quy định tiêm bù.',
+      'Lịch này hiện đến khi y tá ghi nhận mũi đó (chờ BO xác nhận).'] },
     { id: 'E', g: 1, name: 'Chi tiết mũi đã tiêm', render: scrE, notes: [
-      'Nhà sản xuất, số lô, liều - đường dùng không còn là dòng riêng: gộp vào tên vắc xin, hiện đúng như y tá nhập.',
-      'Bỏ nút "Báo sai thông tin" (màn E2 cũ). Thông tin sai thì khách gọi CSKH từ thẻ cuối tab Đã tiêm.',
+      'Hiện đúng những gì y tá ghi: tên vắc xin (gồm nhà sản xuất, số lô, liều nếu có), nơi tiêm và ngày hẹn mũi tiếp theo.',
+      'Thông tin sai thì khách gọi CSKH từ thẻ cuối tab Đã tiêm.',
       'Chỉ hiện tên, ngày sinh, PID; không lặp CCCD, SĐT, địa chỉ ở từng mũi.'] },
+    { id: 'E2', g: 1, name: 'Mũi cuối · hoàn thành phác đồ', render: scrE, isNew: true, notes: [
+      'Mới: mũi cuối của phác đồ (ví dụ Rota mũi 2). Y tá ghi "Hoàn thành phác đồ" thay cho ngày hẹn, nên "Mũi tiếp theo" hiện nhãn xanh.',
+      'Phác đồ kết thúc bằng dòng "Hoàn thành phác đồ"; không có lịch hẹn và không có nhắc lịch.'] },
     { id: 'J', g: 2, name: 'Thông báo nhắc lịch', render: scrJ, dark: true, notes: [
-      'Nhắc trước 3 ngày và trước 1 ngày, kèm tên chi nhánh; quá hạn 3 ngày thì nhắc gọi CSKH để tiêm bù.',
-      'Gửi về SĐT của tài khoản cho mọi hồ sơ, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.',
-      'Báo khi sổ có mũi mới sau mỗi lần tiêm. Thử bấm từng thông báo.'] }
+      'BE gửi lúc 8:00 sáng, 2 ngày trước ngày hẹn, cùng lúc và cùng nội dung với SMS đang gửi (chờ mẫu SMS).',
+      'Gửi đến app của tài khoản có hồ sơ đó, kể cả hồ sơ con. Chạm vào thì app chuyển sang đúng hồ sơ rồi mở mũi tiêm.',
+      'Không nhắc khi đã bỏ lỡ lịch. Thử bấm thông báo.'] }
   ];
-  var PARENT = { A2: 'A', B: 'A', C: 'A', C2: 'A', D: 'B', D2: 'B', E: 'C', J: 'A' };
+  var PARENT = { A2: 'A', B: 'A', C: 'A', C2: 'A', D: 'B', D2: 'B', E: 'C', E2: 'C', J: 'A' };
   function screenById(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return SCREENS[i]; return null; }
   function indexOf(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return i; return 0; }
 
@@ -805,11 +859,14 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     toastTimer = setTimeout(function () { var t = document.getElementById('toast'); if (t) t.classList.remove('on'); }, 2300);
   }
 
-  /* Opening a screen from the list or the pager: D shows an upcoming dose, D2 the overdue one. */
+  /* Opening a screen from the list or the pager: D shows an upcoming dose, D2 the missed one,
+     E a dose with a next appointment, E2 the last dose of a completed series. */
   function prepare(id) {
     state.alert = false;
     if (id === 'D' && ref(state.up).d.st !== 'up') state.up = { s: 'flu', n: 2 };
-    if (id === 'D2') state.up = { s: 'menb', n: 2 };
+    if (id === 'D2' && ref(state.up).d.st !== 'over') state.up = { s: 'menb', n: 2 };
+    if (id === 'E' && doseScreen(state.dose) !== 'E') state.dose = { s: 'pcv', n: 3 };
+    if (id === 'E2' && doseScreen(state.dose) !== 'E2') state.dose = { s: 'rota', n: 2 };
   }
 
   function doAct(act, d) {
@@ -818,12 +875,12 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
         state.up = { s: d.s, n: +d.n };
         show(ref(state.up).d.st === 'over' ? 'D2' : 'D', 'push');
         break;
-      case 'dose': state.dose = { s: d.s, n: +d.n }; show('E', 'push'); break;
+      case 'dose': state.dose = { s: d.s, n: +d.n }; show(doseScreen(state.dose), 'push'); break;
       case 'call': state.alert = true; render(true); break;
       case 'alertCancel': state.alert = false; render(true); break;
       case 'alertCall': state.alert = false; render(true); toast('Đang gọi ' + HOTLINE + ' (mô phỏng)'); break;
-      case 'dir': toast('Mở Google Maps (không có thì Apple Maps) chỉ đường tới ' + CENTERS[d.c].name + ' (mô phỏng)'); break;
-      case 'calendar': toast('Đã thêm vào Lịch trên iPhone, kèm tên và địa chỉ chi nhánh (mô phỏng)'); break;
+      case 'dir': toast('Mở Google Maps (không có thì Apple Maps) chỉ đường tới ' + CENTER.name + ' (mô phỏng)'); break;
+      case 'calendar': toast('Đã thêm vào Lịch trên iPhone, kèm tên và địa chỉ ' + CENTER.name + ' (mô phỏng)'); break;
       case 'toast': toast(d.msg); break;
     }
   }
