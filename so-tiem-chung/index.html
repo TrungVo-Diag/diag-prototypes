@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex, nofollow">
-<title>DIAG · Sổ tiêm chủng — prototype bản 4</title>
+<title>DIAG · Sổ tiêm chủng — prototype bản 5</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -292,12 +292,22 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
   <aside class="side">
     <header class="intro">
       <h1>Sổ tiêm chủng</h1>
-      <p><span class="ver">Bản 4</span>Đã cập nhật theo trả lời mới của BO ngày 06/11/2026: lịch đã bỏ lỡ, giờ tiêm, nội dung nhắc lịch, tên nhóm bệnh và mũi tiêm nơi khác. Prototype bấm được, dữ liệu mẫu; mốc thời gian là Thứ Sáu 06/11/2026.</p>
+      <p><span class="ver">Bản 5</span>Đã cập nhật theo trả lời của BO cho bản 4 (06/11/2026): đổi tiêu đề thẻ gọi CSKH ở tab Đã tiêm, chốt mốc 1 tháng và giữ thẻ gọi CSKH ở mũi chưa xác định. Prototype bấm được, dữ liệu mẫu; mốc thời gian là Thứ Sáu 06/11/2026.</p>
       <p>Hồ sơ đang chọn trong app: Nguyễn Minh An, 7 tháng tuổi (tài khoản của mẹ, Trần Thu Hà). Bấm trực tiếp trên điện thoại để đi theo luồng, hoặc chọn màn trong danh sách. Trên máy tính có thể dùng phím ← →.</p>
     </header>
 
     <section class="panel">
-      <h2>Đã sửa theo trả lời mới của BO</h2>
+      <h2>Đã sửa theo trả lời của BO cho bản 4</h2>
+      <ul>
+        <li><b>Thẻ gọi CSKH ở tab Đã tiêm:</b> tiêu đề đổi thành "Thiếu lịch sử tiêm chủng tại DIAG?", nội dung giữ nguyên (màn C).</li>
+        <li><b>Mũi chưa xác định:</b> giữ thẻ "Đã tiêm mũi này tại DIAG? Gọi CSKH" (màn E3). Y tá tra được mũi tiêm trên cổng tiêm chủng quốc gia; BE đang kiểm tra có đẩy được đủ dữ liệu đó về app không.</li>
+        <li><b>Mốc 1 tháng:</b> BO xác nhận, lịch hẹn 24/10 hiện ở tab Sắp tới đến hết 24/11.</li>
+        <li><b>Tên nhóm vắc xin:</b> BE gửi danh sách tên ngắn sau.</li>
+      </ul>
+    </section>
+
+    <details class="panel">
+      <summary>Đã sửa ở bản 4 (trả lời BO lần 2, 06/11/2026)</summary>
       <ul>
         <li><b>Lịch đã bỏ lỡ:</b> chỉ hiện ở tab Sắp tới và thẻ Trang chủ trong 1 tháng kể từ ngày hẹn; tab Đã tiêm giữ nguyên. Có lại nút "Gọi CSKH" để khách hỏi lại lịch tiêm (màn B, D2).</li>
         <li><b>Giờ tiêm:</b> bỏ hẳn, vì có lúc tiêm cả buổi tối và Chủ nhật. "Thêm vào Lịch" tạo sự kiện cả ngày (màn B, D).</li>
@@ -305,10 +315,10 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
         <li><b>Tên nhóm bệnh:</b> tên ngắn BE trả về theo mã nhóm vắc xin, ví dụ Phế cầu, Não mô cầu, Rota virus. Bỏ dòng mô tả dài (màn C, E).</li>
         <li><b>Mũi tiêm nơi khác:</b> ví dụ Phế cầu mũi 1 tiêm ở nơi khác, mũi 2 và 3 tại DIAG. Mũi 1 hiện "Chưa xác định"; chạm vào thì thấy "Chưa ghi nhận thông tin tiêm mũi 1." (màn C, E3 mới).</li>
       </ul>
-    </section>
+    </details>
 
     <details class="panel">
-      <summary>Đã sửa ở bản 3 (trả lời BO 06/11/2026)</summary>
+      <summary>Đã sửa ở bản 3 (trả lời BO lần 1, 06/11/2026)</summary>
       <ul>
         <li><b>Nơi tiêm:</b> chỉ còn Trung tâm Y khoa Diag Cao Thắng (D001), chi nhánh duy nhất đang tiêm. Địa chỉ và giờ Phòng khám lấy từ danh sách chi nhánh có sẵn trong app.</li>
         <li><b>Số mũi:</b> bỏ tổng số mũi ("2/4", chấm tiến độ) vì hệ thống chỉ lưu phòng bệnh gì và mũi số mấy. Mỗi bệnh chỉ hiện các mũi đã tiêm và ngày hẹn y tá ghi cho mũi tiếp theo.</li>
@@ -342,10 +352,16 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     <section class="panel">
       <h2>Cần BO trả lời</h2>
       <ol>
-        <li><b>Mũi chưa xác định (màn E3):</b> ngoài câu "Chưa ghi nhận thông tin tiêm mũi 1.", bản này thêm thẻ "Đã tiêm mũi này tại DIAG? Gọi CSKH" để khách báo sổ thiếu. Giữ hay bỏ thẻ này?</li>
-        <li><b>Mốc 1 tháng:</b> lịch hẹn 24/10 thì hiện ở tab Sắp tới đến hết 24/11 (cùng ngày của tháng sau). Đúng ý BO chưa?</li>
-        <li><b>Tên nhóm vắc xin:</b> khi BE thêm tên ngắn, gửi giúp danh sách tên để kiểm tra tên dài nhất hiển thị có vừa không.</li>
+        <li><b>Câu chữ ở hai thẻ gọi CSKH còn lại:</b> màn C2 (sổ trống) ghi "Đã tiêm tại DIAG nhưng sổ chưa có?", màn E3 ghi "Đã tiêm mũi này tại DIAG?". Đổi theo tiêu đề mới "Thiếu lịch sử tiêm chủng tại DIAG?" cho đồng bộ, hay giữ như hiện tại?</li>
       </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Đang chờ BE</h2>
+      <ul>
+        <li><b>Dữ liệu từ cổng tiêm chủng quốc gia:</b> khi y tá tra được một mũi trên cổng, BE có API đẩy đủ dữ liệu về app không. Nếu có, mũi "Chưa xác định" sẽ hiện ngày, vắc xin và nơi tiêm, và cần thêm cách hiện mũi tiêm ở nơi khác (ví dụ không có nút Chỉ đường).</li>
+        <li><b>Tên ngắn các nhóm vắc xin:</b> BE gửi sau, để kiểm tra tên dài nhất hiển thị có vừa không.</li>
+      </ul>
     </section>
 
     <section class="panel">
@@ -361,7 +377,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     </section>
 
     <button type="button" class="reset" id="resetBtn">Đặt lại dữ liệu mẫu</button>
-    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 4 (06/11/2026). Tên người, số điện thoại, PID và các mũi tiêm là dữ liệu mẫu. Tên và địa chỉ Trung tâm Y khoa Diag Cao Thắng lấy từ danh sách chi nhánh trong app; 1900 1717 là tổng đài DIAG.</p>
+    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 5 (06/11/2026). Tên người, số điện thoại, PID và các mũi tiêm là dữ liệu mẫu. Tên và địa chỉ Trung tâm Y khoa Diag Cao Thắng lấy từ danh sách chi nhánh trong app; 1900 1717 là tổng đài DIAG.</p>
   </aside>
 </div>
 
@@ -736,7 +752,7 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
         '</span></div>' + rows + nextRow + '</section>';
     });
     html += '<div class="endnote">' + ic('info', 16) + '<span>Dữ liệu từ hệ thống tiêm chủng DIAG, cập nhật sau mỗi lần tiêm tại DIAG.</span></div>';
-    html += helpCard('Sổ thiếu mũi đã tiêm tại DIAG?', 'Gọi CSKH ' + HOTLINE + ' để DIAG kiểm tra và cập nhật, kể cả khi thông tin mũi tiêm chưa đúng.');
+    html += helpCard('Thiếu lịch sử tiêm chủng tại\u00a0DIAG?', 'Gọi CSKH ' + HOTLINE + ' để DIAG kiểm tra và cập nhật, kể cả khi thông tin mũi tiêm chưa đúng.');
     return nav('Sổ tiêm chủng') + who('an') + seg('C') + '<div class="body">' + html + '</div>';
   }
 
@@ -841,14 +857,14 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
       'Sổ hiện theo hồ sơ (PID) đang chọn trong app; một dòng tên cho biết đang xem sổ của ai.',
       'Chỉ có các ngày hẹn y tá đã ghi sau mỗi mũi tiêm. Vắc xin chưa tiêm mũi nào thì không có lịch hẹn.',
       'Lịch đã bỏ lỡ (từ ngày sau ngày hẹn) nằm trên cùng, màu đỏ, với câu "Lịch tiêm vắc xin đã bị bỏ lỡ." như VNVC và nút "Gọi CSKH" để khách hỏi lại lịch tiêm.',
-      'Lịch bỏ lỡ chỉ hiện ở tab này 1 tháng kể từ ngày hẹn: Não mô cầu hẹn 24/10 thì hiện đến hết 24/11/2026, sau đó chỉ còn ở tab Đã tiêm.',
+      'Lịch bỏ lỡ chỉ hiện ở tab này 1 tháng kể từ ngày hẹn (BO đã xác nhận): Não mô cầu hẹn 24/10 thì hiện đến hết 24/11/2026, sau đó chỉ còn ở tab Đã tiêm.',
       'Mỗi lịch hẹn có tên, địa chỉ Trung tâm Y khoa Diag Cao Thắng và nút "Chỉ đường" (Google Maps, không có thì Apple Maps); không ghi giờ tiêm. Nhiều mũi hẹn cùng ngày gộp thành một buổi.'] },
     { id: 'C', g: 1, name: 'Sổ tiêm chủng · Đã tiêm', render: scrC, notes: [
       'Nhóm theo bệnh, nhóm mới tiêm gần nhất lên trước. Tên nhóm là tên ngắn BE trả về theo mã nhóm vắc xin (Phế cầu, Não mô cầu…); không còn dòng mô tả dài.',
       'Còn mũi tiếp theo thì ngày hẹn hiện ngay trong nhóm; lịch đã bỏ lỡ vẫn hiện ở đây sau 1 tháng. Mũi cuối, hoặc vắc xin chỉ 1 mũi, y tá ghi "Hoàn thành phác đồ" và nhóm có nhãn xanh (ví dụ Rota virus).',
       'Mũi tiêm nơi khác: Phế cầu mũi 1 tiêm ở nơi khác, mũi 2 và 3 tại DIAG, nên mũi 1 hiện "Chưa xác định" và không tính vào số mũi. Chạm vào để xem (màn E3).',
       'Tên vắc xin hiện đúng như y tá nhập (ví dụ mũi Phế cầu 3).',
-      'Thẻ "Sổ thiếu mũi đã tiêm tại DIAG?" gọi CSKH 1900 1717; dùng cả khi thông tin mũi tiêm chưa đúng.'] },
+      'Thẻ "Thiếu lịch sử tiêm chủng tại DIAG?" (tiêu đề theo BO) gọi CSKH 1900 1717; dùng cả khi thông tin mũi tiêm chưa đúng.'] },
     { id: 'C2', g: 1, name: 'Hồ sơ chưa có mũi tiêm', render: scrC2, notes: [
       'Ví dụ: hồ sơ đang chọn là Trần Thu Hà, chưa tiêm mũi nào tại DIAG.',
       'Nút "Gọi CSKH" cho khách đã tiêm tại DIAG mà sổ chưa có.'] },
@@ -869,10 +885,10 @@ body.narrow .intro h1{font-size:24px;line-height:30px}
     { id: 'E2', g: 1, name: 'Mũi cuối · hoàn thành phác đồ', render: scrE, notes: [
       'Mũi cuối của phác đồ (ví dụ Rota virus mũi 2). Y tá ghi "Hoàn thành phác đồ" thay cho ngày hẹn, nên "Mũi tiếp theo" hiện nhãn xanh.',
       'Phác đồ kết thúc bằng dòng "Hoàn thành phác đồ"; không có lịch hẹn và không có nhắc lịch.'] },
-    { id: 'E3', g: 1, name: 'Mũi chưa xác định', render: scrE3, isNew: true, notes: [
-      'Mới: mũi DIAG chưa ghi nhận, ví dụ Phế cầu mũi 1 tiêm ở nơi khác. Chỉ hiện câu chung "Chưa ghi nhận thông tin tiêm mũi 1."',
+    { id: 'E3', g: 1, name: 'Mũi chưa xác định', render: scrE3, notes: [
+      'Mũi DIAG chưa ghi nhận, ví dụ Phế cầu mũi 1 tiêm ở nơi khác. Chỉ hiện câu chung "Chưa ghi nhận thông tin tiêm mũi 1."',
       'Sổ biết có mũi 1 vì y tá ghi mũi 2 và 3 tại DIAG. Mũi nào nhỏ hơn mũi lớn nhất đã ghi mà chưa có thông tin đều hiện "Chưa xác định".',
-      'Thẻ "Đã tiêm mũi này tại DIAG?" gọi CSKH để kiểm tra; bỏ được nếu BO thấy không cần.'] },
+      'Thẻ "Đã tiêm mũi này tại DIAG?" gọi CSKH (BO giữ thẻ này). Y tá tra được mũi tiêm trên cổng tiêm chủng quốc gia; BE đang kiểm tra có đẩy đủ dữ liệu đó về app được không.'] },
     { id: 'J', g: 2, name: 'Thông báo nhắc lịch', render: scrJ, dark: true, notes: [
       'BE gửi lúc 8:00 sáng, 2 ngày trước ngày hẹn, cùng lúc và cùng nội dung với SMS, thêm dấu cho dễ đọc.',
       'Tiêu đề "Nhắc lịch tiêm" là đề xuất. Mỗi ngày hẹn một thông báo; chạm vào mở mũi tiêm đó, hoặc tab Sắp tới nếu hôm đó có nhiều mũi.',
