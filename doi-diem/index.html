@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<title>DIAG · Đổi điểm — prototype bản 1</title>
+<style>
+:root{--logo:url("data:image/png;base64,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")}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#E8EDF4;color:#0F1C2A;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input{font:inherit;color:inherit}
+
+/* ---------- page ---------- */
+.page{max-width:1240px;margin:0 auto;padding:28px 32px 48px;display:flex;gap:48px;align-items:flex-start}
+.stage{position:sticky;top:20px;display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0}
+.device-wrap{position:relative}
+.device{position:absolute;left:0;top:0;transform-origin:0 0;width:414px;height:868px;padding:12px;border-radius:68px;background:#10161D;box-shadow:0 30px 60px rgba(15,28,42,.28),inset 0 0 0 2px #2B3743}
+.screen{position:relative;width:390px;height:844px;border-radius:56px;overflow:hidden;background:#F3F8FC;isolation:isolate}
+.pager{display:flex;align-items:center;gap:10px}
+.pager button{height:40px;padding:0 16px;border-radius:20px;border:1px solid #C9D3DF;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.pager button:disabled{opacity:.45;cursor:default}
+.pager span{min-width:96px;text-align:center;font-size:14px;font-weight:600;color:#3B444D}
+.side{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.intro h1{margin:0 0 6px;font-size:30px;line-height:36px;letter-spacing:-.3px}
+.intro p{margin:0;font-size:15px;line-height:22px;color:#4A535C;max-width:640px}
+.intro p+p{margin-top:6px}
+.ver{display:inline-block;margin-right:6px;padding:1px 8px;border-radius:9px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;vertical-align:1px}
+.panel{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 2px rgba(15,28,42,.06)}
+.panel h2{margin:0 0 8px;font-size:17px}
+.panel ul,.panel ol{margin:0;padding-left:20px;font-size:14px;line-height:21px;color:#3B444D}
+.panel li+li{margin-top:5px}
+.panel li b{color:#0F1C2A}
+.list{padding:6px 8px 8px}
+.list h3{margin:10px 10px 4px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:#5E666E}
+.item{width:100%;display:flex;align-items:center;gap:12px;padding:9px 10px;border:0;border-radius:12px;background:transparent;text-align:left;font-size:15px;font-weight:600;cursor:pointer}
+.item:hover{background:#F1F5FA}
+.item .code{min-width:36px;height:28px;padding:0 6px;border-radius:8px;background:#EEF1F4;color:#4A535C;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.item[aria-current="true"]{background:#E6F0FE}
+.item[aria-current="true"] .code{background:#0766F7;color:#fff}
+.notes-title{display:flex;align-items:center;gap:8px}
+.notes-title .code{min-width:32px;height:24px;padding:0 6px;border-radius:7px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.notes-group{margin:-2px 0 8px;font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#5E666E}
+.ctlrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ctlrow+.ctlrow{margin-top:10px}
+.ctlrow .lab{width:44px;font-size:14px;font-weight:600;color:#4A535C}
+.segc{display:inline-flex;flex-wrap:wrap;padding:3px;border-radius:12px;background:#EEF1F4;gap:3px}
+.segc button{height:34px;padding:0 12px;border:0;border-radius:9px;background:transparent;font-size:14px;font-weight:600;color:#3B444D;cursor:pointer}
+.segc button[aria-pressed="true"]{background:#fff;color:#0F1C2A;box-shadow:0 1px 3px rgba(15,28,42,.14)}
+.ctlnote{margin:10px 0 0;font-size:13px;line-height:19px;color:#5E666E}
+.reset{align-self:flex-start;height:44px;padding:0 18px;border-radius:14px;border:1px solid #C9D3DF;background:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.foot{margin:0;font-size:12px;line-height:18px;color:#5E666E}
+body.narrow .page{flex-direction:column;align-items:center;padding:12px 8px 40px;gap:18px}
+body.narrow .stage{position:static}
+body.narrow .device{padding:0;background:none;box-shadow:none;border-radius:0;width:390px;height:844px}
+body.narrow .screen{border-radius:28px;box-shadow:0 10px 30px rgba(15,28,42,.18)}
+body.narrow .island{display:none}
+body.narrow .side{width:100%;max-width:560px}
+body.narrow .intro h1{font-size:24px;line-height:30px}
+
+/* ---------- phone chrome ---------- */
+.sb{position:absolute;left:0;right:0;top:0;height:50px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;pointer-events:none;color:#0F1C2A}
+.sb .t{font-size:16px;font-weight:600}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:122px;height:35px;border-radius:18px;background:#000;z-index:51;pointer-events:none}
+.toast{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);background:rgba(15,28,42,.94);color:#fff;font-size:14px;line-height:19px;font-weight:500;padding:10px 16px;border-radius:14px;width:max-content;max-width:320px;text-align:center;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+
+/* ---------- app ---------- */
+.app{position:absolute;inset:0;display:flex;flex-direction:column;background:#F3F8FC;color:#0F1C2A;font-size:15px;line-height:1.3}
+:where(.app,.ov) button{border:0;background:none;padding:0;margin:0;text-align:inherit;cursor:pointer;font:inherit;color:inherit}
+.app button:focus-visible,.ov button:focus-visible{outline:2px solid #0766F7;outline-offset:2px}
+.app button:disabled,.ov button:disabled{cursor:default}
+.rnd{font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.hdr{flex-shrink:0;position:relative;z-index:2;background:#fff;box-shadow:0 5px 10px rgba(15,28,42,.08);padding:54px 14px 14px;display:flex;align-items:center;gap:12px}
+.hdr .bk{width:38px;height:38px;border-radius:12px;background:#E6F0FE;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr h1{margin:0;flex:1;min-width:0;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:20px 20px 32px;display:flex;flex-direction:column;gap:12px;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex-shrink:0}
+.body.lb{gap:18px}
+.bar{flex-shrink:0;background:#fff;border-top:1px solid #E7E8EA;padding:12px 16px 30px;display:flex;flex-direction:column;gap:4px}
+.mcard{background:#fff;border-radius:16px;box-shadow:0 4px 8px rgba(15,28,42,.06)}
+.row{display:flex;align-items:center;gap:12px;width:100%}
+.col{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.between{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.divider{display:block;height:1px;background:#E7E8EA}
+.chev{flex-shrink:0}
+.cap12{font-size:12px;color:#5C6570}
+.cap13{font-size:13px;color:#5C6570;line-height:17px}
+.lh{line-height:17px;margin:0}
+.t14{font-size:14px;color:#3D4652;line-height:19px}
+.t14s{font-size:14px;font-weight:600}
+.t15b{font-size:15px;font-weight:700;line-height:20px}
+.t16b{font-size:16px;font-weight:700;line-height:21px}
+.p15{margin:0;font-size:15px;line-height:22px;color:#3D4652}
+.bal24{font-size:24px;font-weight:800;letter-spacing:-.2px}
+.bal24 small{font-size:14px;font-weight:600;color:#5C6570;margin-left:4px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.mic{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ibox{width:38px;height:38px;border-radius:11px;background:#E6F0FE;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn{height:52px;width:100%;border-radius:14px;background:#0766F7;color:#fff;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;text-align:center}
+.btn:disabled{background:#E4E7EB;color:#7A828A}
+.btn[aria-busy="true"]{background:#0766F7;color:#fff;opacity:.88}
+.btn.ghost{height:44px;background:transparent;color:#0766F7;font-size:16px;font-weight:600}
+.btn.ghost:disabled{background:transparent;color:#ADB3BC}
+.lnk{height:36px;display:flex;align-items:center;justify-content:center;gap:4px;color:#0766F7;font-size:14px;font-weight:600}
+.lnk.center{align-self:center}
+.chip{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 10px;border-radius:12px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.c-green{background:#E3F6EA;color:#0B6E37}
+.c-amber{background:#FFF1D6;color:#8A5200}
+.c-gray{background:#F1F2F4;color:#4A535C}
+.note{border-radius:14px;padding:12px 14px;display:flex;gap:10px;font-size:14px;line-height:20px}
+.note svg{flex-shrink:0;margin-top:1px}
+.note.blue{background:#E3F0FD;color:#0550A8}
+.note.gray{background:#EEF1F4;color:#3B444D}
+.note.sm{padding:10px 12px;font-size:13px;line-height:18px}
+.amber{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:#FFF1D6;color:#9A5B00;font-size:13px;font-weight:600;line-height:18px}
+.amber svg{flex-shrink:0;margin-top:1px}
+.endnote{display:flex;gap:7px;align-items:flex-start;margin:0;padding:0 4px;font-size:13px;line-height:18px;color:#5E666E}
+.endnote svg{flex-shrink:0;margin-top:1px}
+.endnote.c{justify-content:center;text-align:left}
+.stitle{margin:8px 2px 0;font-size:17px;font-weight:800}
+
+/* tier pill */
+.tpill{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:11px;border:1px solid;font-size:10.5px;font-weight:800;letter-spacing:.4px;white-space:nowrap;flex-shrink:0}
+
+/* membership card (LoyaltyCardView) */
+.pat{position:absolute;inset:0;pointer-events:none}
+.logo{display:block;flex-shrink:0;-webkit-mask-image:var(--logo);mask-image:var(--logo);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center}
+.sheen{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,236,180,.10) 45%,rgba(255,236,180,.02) 55%,transparent 65%)}
+.tcard{position:relative;overflow:hidden;height:208px;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.tcard .r1,.tcard .tn,.tcard .hold{position:relative}
+.tcard .wm,.phead .wm{position:absolute;pointer-events:none}
+.tcard .wm{right:-44px;bottom:-32px}
+.tcard .r1{display:flex;align-items:center;justify-content:space-between}
+.tcard .since{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}
+.tcard .tn{display:flex;align-items:center;gap:8px;font-size:28px;font-weight:800;letter-spacing:.5px}
+.tcard .hold{display:flex;flex-direction:column;gap:3px}
+.tcard .hn{font-size:13px;font-weight:700;letter-spacing:1px}
+.tcard .hid{font-size:11.5px;font-weight:500}
+
+/* points card */
+.ptsc{padding:16px;display:flex;flex-direction:column;gap:12px}
+.pbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pb{height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px;font-weight:700}
+.pb.pri{background:#0766F7;color:#fff}
+.pb.sec{background:#E6F0FE;color:#0B47B8}
+.soon{width:100%;height:48px;border-radius:12px;background:#F6F7F9;border:1px solid #ECEEF1;display:flex;align-items:center;gap:9px;padding:0 12px 0 14px;font-size:15px;font-weight:700;color:#0F1C2A}
+.soon .ml{margin-left:auto}
+.soontag{height:22px;padding:0 9px;border-radius:11px;background:#E3F0FD;color:#0550A8;font-size:12px;font-weight:700;display:inline-flex;align-items:center;white-space:nowrap}
+.soontag.lg{height:26px;padding:0 12px;border-radius:13px;font-size:13px}
+
+/* tier progress (context only) */
+.prog{padding:18px 16px;display:flex;flex-direction:column;gap:12px}
+.track{position:relative;height:22px;margin:4px 6px 0}
+.track .trk{position:absolute;left:0;right:0;top:7px;height:8px;border-radius:4px;background:#EDF0F3}
+.track .trf{position:absolute;left:0;top:7px;height:8px;border-radius:4px;background:linear-gradient(90deg,#3584FF,#3584FF 40%,#E1AE4B 70%,#CF962F)}
+.track .node{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:6px;background:#fff;border:2px solid #C9D2DE}
+.track .dot{position:absolute;top:4px;width:14px;height:14px;margin-left:-7px;border-radius:7px;background:#fff;border:3px solid #0A56DB;box-shadow:0 2px 3px rgba(10,86,219,.35)}
+.tlabels{position:relative;height:16px;margin:-6px 0 0;font-size:11px;font-weight:700;color:#5C6570}
+.tlabels span{position:absolute;top:0;white-space:nowrap}
+.tlabels span:nth-child(1){left:0}
+.tlabels span:nth-child(2){left:40%;transform:translateX(-50%)}
+.tlabels span:nth-child(3){right:0}
+.more{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;border-radius:12px;background:#F6F7F9;font-size:14px;line-height:19px}
+.more svg{vertical-align:-2px}
+.t16h{font-size:16px;font-weight:800;display:flex;align-items:center;gap:5px}
+.t14h{font-size:14px;font-weight:800}
+.t14h .lg{color:#9FA4AA}
+.ubar{display:block;height:8px;border-radius:4px;background:#EDF0F3;overflow:hidden}
+.ubar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#3584FF,#0A56DB)}
+
+/* market header */
+.phead{position:relative;overflow:hidden;border-radius:20px;padding:16px 18px 18px}
+.phead .between,.phead .big,.phead .psub{position:relative}
+.phead .wm{right:-34px;bottom:-28px}
+.pcap{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.hl{height:30px;padding:0 12px 0 10px;border-radius:15px;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700}
+.phead .big{font-size:36px;font-weight:800;letter-spacing:-.6px;line-height:42px;margin-top:10px}
+.phead .big small{font-size:16px;font-weight:700;margin-left:6px;letter-spacing:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.psub{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;margin-top:4px}
+.rrow{display:flex;align-items:center;gap:12px;padding:12px 14px;width:100%;text-align:left}
+
+/* filters */
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:2px 20px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip2{height:34px;padding:0 14px;border-radius:17px;background:#fff;border:1px solid #DCE1E8 !important;font-size:14px;font-weight:600;color:#3B444D;white-space:nowrap;flex-shrink:0;display:flex;align-items:center}
+.chip2.on{background:#0766F7;border-color:#0766F7 !important;color:#fff}
+.tools{min-height:32px;padding:0 2px}
+.tgl{display:flex;align-items:center;gap:8px;height:32px;font-size:14px;font-weight:600;color:#3B444D}
+.box{width:20px;height:20px;border-radius:6px;border:1.5px solid #B8BFC7;background:#fff;display:flex;align-items:center;justify-content:center}
+.tgl.on .box{background:#0766F7;border-color:#0766F7}
+
+/* reward ticket */
+.tk{position:relative;display:flex;align-items:stretch;width:100%;min-height:96px;background:#fff;border-radius:16px;box-shadow:0 4px 8px rgba(15,28,42,.06);text-align:left}
+.tk-main{flex:1;min-width:0;display:flex;align-items:flex-start;gap:12px;padding:14px 12px 14px 14px}
+.tk-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tk-t{font-size:15.5px;font-weight:700;line-height:20px}
+.tk-s{font-size:13px;color:#5C6570;line-height:17px;margin-top:1px}
+.tk-m{display:flex;align-items:center;gap:5px;margin-top:7px;font-size:12.5px;font-weight:600;color:#5C6570}
+.tk-m.warm{color:#8A5200}
+.tagrow{display:flex;align-items:center;gap:8px;margin-top:7px;flex-wrap:wrap}
+.tagrow .tk-m{margin-top:0}
+.mini{display:block;width:100%;height:4px;border-radius:2px;background:#EDF0F3;margin-top:7px;overflow:hidden}
+.mini i{display:block;height:100%;border-radius:2px;background:#0766F7}
+.tk-stub{position:relative;width:86px;flex-shrink:0;border-left:1.5px dashed #BFD4F8;background:#F1F6FF;border-radius:0 16px 16px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0 6px;color:#0B47B8}
+.tk-stub::before,.tk-stub::after{content:"";position:absolute;left:-8px;width:14px;height:14px;border-radius:50%;background:#F3F8FC}
+.tk-stub::before{top:-7px}
+.tk-stub::after{bottom:-7px}
+.tk-stub b{font-size:16.5px;font-weight:800;letter-spacing:-.2px}
+.tk-stub small{font-size:12px;font-weight:600}
+.tk.off .tk-stub{background:#F6F7F9;border-left-color:#DCE1E8;color:#6F777F}
+.tk.dim .tk-t{color:#6F777F}
+.tk.dim .tk-ic{filter:grayscale(1);opacity:.55}
+.emptyc{padding:24px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;font-size:13.5px;line-height:19px;color:#5C6570}
+.emptyc b{font-size:16px;color:#0F1C2A}
+.emptyc.sm{padding:18px}
+.eic{width:56px;height:56px;border-radius:28px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+
+/* detail */
+.hero{overflow:hidden;border-radius:20px;background:#fff;box-shadow:0 4px 8px rgba(15,28,42,.06)}
+.band{position:relative;overflow:hidden;height:124px;display:flex;align-items:center;gap:16px;padding:0 20px}
+.band .bwm{position:absolute;right:-18px;top:-6px;opacity:.13}
+.bic{position:relative;width:60px;height:60px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(15,28,42,.08);flex-shrink:0}
+.band .col{position:relative}
+.blbl{font-size:13.5px;font-weight:700}
+.bigv{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:36px}
+.hb{padding:16px 18px 18px;display:flex;flex-direction:column;gap:4px}
+.hb h2{margin:0;font-size:19px;font-weight:800;line-height:24px}
+.costrow{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:14px;border-top:1px dashed #DCE1E8}
+.costrow .chip,.costrow .tpill{margin-left:auto}
+.cost{font-size:21px;font-weight:800}
+.cost small{font-size:14px;font-weight:600;color:#5C6570;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.mic.sm{width:30px;height:30px}
+.aft{display:flex;align-items:center;justify-content:space-around;gap:8px;padding:14px 16px}
+.aft>div{display:flex;flex-direction:column;gap:2px;align-items:center}
+.aft b{font-size:20px;font-weight:800}
+.shortc{padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.kv{padding:2px 16px}
+.kvr{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid #EEF1F4;font-size:14.5px;line-height:19px}
+.kvr:first-child{border-top:0}
+.kvr span:first-child{color:#5C6570;flex-shrink:0}
+.kvr span:last-child{text-align:right;font-weight:600}
+.steps{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.st{display:flex;gap:12px;font-size:14.5px;line-height:20px}
+.st i{width:24px;height:24px;border-radius:12px;background:#E6F0FE;color:#0766F7;font-style:normal;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* sheets and alerts (over the app) */
+.ov{position:absolute;inset:0;z-index:40}
+.scrim{position:absolute;inset:0;width:100%;height:100%;background:rgba(15,28,42,.40)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:8px 20px 34px;box-shadow:0 -8px 30px rgba(15,28,42,.18);display:flex;flex-direction:column;gap:14px}
+.sheet.anim{animation:up .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(60px);opacity:.3}to{transform:none;opacity:1}}
+.grab{width:36px;height:5px;border-radius:3px;background:#D5D9DD;align-self:center;flex-shrink:0;margin-bottom:2px}
+.sh2{margin:0;font-size:20px;font-weight:800;line-height:26px}
+.sh2.c{text-align:center}
+.srow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:#F6F7F9}
+.calc{display:flex;flex-direction:column;gap:9px;font-size:15px;color:#3D4652;padding:0 2px}
+.calc .rnd{font-weight:700;color:#0F1C2A}
+.calc .tot{font-size:16px;font-weight:700;color:#0F1C2A}
+.calc .tot .rnd{font-size:18px;font-weight:800}
+.sbtns{display:flex;flex-direction:column;gap:2px;margin-top:2px}
+.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.fan{position:relative;height:112px;margin-top:4px}
+.mt{position:absolute;top:22px;left:50%;width:152px;height:72px;margin-left:-76px;background:#fff;border-radius:14px;border:1px solid #ECEEF1;box-shadow:0 8px 20px rgba(15,28,42,.12);display:flex;overflow:hidden}
+.mt .l{width:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mt .r{flex:1;min-width:0;padding:0 10px;display:flex;flex-direction:column;justify-content:center;gap:2px;border-left:1.5px dashed #DCE1E8}
+.mt b{font-size:14px;font-weight:800;white-space:nowrap}
+.mt small{font-size:11.5px;color:#5C6570;white-space:nowrap}
+.mt.a{transform:translateX(-100px) rotate(-9deg);flex-direction:row-reverse}
+.mt.a .r{border-left:0;border-right:1.5px dashed #DCE1E8;text-align:right}
+.mt.c{transform:translateX(100px) rotate(9deg)}
+.mt.b{top:10px;z-index:2}
+.tcenter{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.have{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#F6F7F9;box-shadow:none}
+.scrim2{position:absolute;inset:0;background:rgba(15,28,42,.25);z-index:2}
+.ialert{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:270px;border-radius:14px;background:rgba(242,242,247,.98);z-index:3;overflow:hidden;text-align:center;box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.iat{padding:19px 16px 18px;display:flex;flex-direction:column;gap:4px}
+.iat b{font-size:17px;font-weight:600}
+.iat span{font-size:13px;line-height:17px}
+.iab{border-top:1px solid rgba(60,60,67,.29)}
+.iab button{width:100%;height:44px;font-size:17px;font-weight:600;color:#007AFF;text-align:center}
+
+/* success */
+.body.succ{padding-top:64px;gap:16px}
+.okwrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.okmark{width:76px;height:76px;border-radius:38px;background:#E3F6EA;color:#0E8A45;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.okmark.anim{animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.h22{margin:0;font-size:22px;font-weight:800;line-height:28px}
+.mut2{color:#5C6570}
+.vcard{background:#fff;border-radius:20px;box-shadow:0 6px 16px rgba(15,28,42,.08)}
+.vtop{display:flex;align-items:center;gap:12px;padding:16px}
+.vperf{position:relative;display:block;height:0;border-top:1.5px dashed #DCE1E8;margin:0 16px}
+.vperf::before,.vperf::after{content:"";position:absolute;top:-9px;width:16px;height:16px;border-radius:50%;background:#F3F8FC}
+.vperf::before{left:-25px}
+.vperf::after{right:-25px}
+.vqr{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px 16px 18px}
+.code{display:flex;align-items:center;gap:10px;height:42px;padding:0 6px 0 14px;border-radius:12px;background:#F3F8FC;font-size:18px;font-weight:800;letter-spacing:1.5px}
+.copy{height:30px;padding:0 10px;border-radius:9px;background:#fff !important;color:#0766F7 !important;font-size:13px;font-weight:700;letter-spacing:0;display:flex;align-items:center;gap:5px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.left{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;color:#3D4652}
+.left .mic{width:28px;height:28px}
+
+/* wallet (Khuyến mãi của tôi) */
+.seg2{padding:3px;border-radius:12px;background:#EAECEF;display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.seg2 button{height:36px;border-radius:9px;font-size:14px;font-weight:600;color:#495363;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg2 button.on{background:#fff;color:#0F1C2A;box-shadow:0 1px 3px rgba(15,28,42,.14)}
+.cnt{height:20px;min-width:20px;padding:0 6px;border-radius:10px;background:#DADDE1;color:#3B444D;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.prow{display:flex;align-items:center;gap:10px;width:100%;padding:16px;background:#fff;border-radius:16px;border:1px solid #ECEEF1 !important;text-align:left}
+.prow .t{font-size:15.5px;font-weight:700;line-height:20px}
+.gap10{gap:10px}
+.gap6{gap:6px}
+.dl{display:flex;align-items:flex-start;gap:6px;font-size:13px;line-height:17px;color:#5C6570}
+.dl svg{flex-shrink:0;margin-top:1px}
+.dl b.ddark{color:#0F1C2A;font-weight:600}
+.dl b.dsoon{color:#A85A1A;font-weight:600}
+.dl.pts{color:#0B47B8;font-weight:600}
+
+/* history */
+.hsum{padding:16px;display:flex;flex-direction:column;gap:12px}
+.stats2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats2>div{background:#F6F7F9;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.stats2 b{font-size:17px;font-weight:800}
+.stats2 b.g{color:#0E8A45}
+.yr{margin:8px 4px 0;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6A7480}
+.hlist{overflow:hidden}
+.hrow{position:relative;display:flex;align-items:center;gap:12px;width:100%;padding:12px 12px 12px 14px;text-align:left}
+.hrow+.hrow::before{content:"";position:absolute;left:66px;right:0;top:0;height:1px;background:#E7E8EA}
+.hic{width:40px;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.amtc{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.amt{font-size:15px;font-weight:800;white-space:nowrap}
+.amt.plus{color:#0E8A45}
+.chev-sp{width:16px;flex-shrink:0}
+
+@media (prefers-reduced-motion: reduce){.sheet.anim,.okmark.anim{animation:none}.spin{animation-duration:2s}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stage">
+    <div class="device-wrap" id="deviceWrap">
+      <div class="device" id="device">
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+    <div class="pager">
+      <button type="button" id="prevBtn">‹ Màn trước</button>
+      <span id="pagerLabel" aria-live="polite"></span>
+      <button type="button" id="nextBtn">Màn sau ›</button>
+    </div>
+  </div>
+
+  <aside class="side">
+    <header class="intro">
+      <h1>Đổi điểm DIAG Points</h1>
+      <p><span class="ver">Bản 1</span>Thành viên dùng DIAG Points đổi voucher ngay trong app. Dự kiến ra mắt năm 2027; trước đó app chỉ có nút "Đổi điểm" với nhãn "Sắp ra mắt" (màn S1, S2), cho đến khi DIAG bật. Prototype bấm được, dữ liệu mẫu.</p>
+      <p>Các màn sau khi bật lấy mốc mẫu Thứ Ba 16/11/2027. Đổi hạng và số điểm mẫu ở ô bên dưới để xem từng trường hợp. Bấm trực tiếp trên điện thoại để đi theo luồng, hoặc chọn màn trong danh sách; trên máy tính có thể dùng phím ← →.</p>
+    </header>
+
+    <section class="panel">
+      <h2>Hai giai đoạn</h2>
+      <ul>
+        <li><b>Từ bản app tới (S1, S2):</b> thẻ DIAG Points có nút "Đổi điểm · Sắp ra mắt"; bấm vào chỉ mở lời giới thiệu. Không cần BE làm gì thêm.</li>
+        <li><b>Khi DIAG bật (dự kiến 2027):</b> Hạng thành viên (A) → Đổi điểm (B) → Chi tiết ưu đãi (C) → Xác nhận (D) → Thành công, có mã QR (E) → voucher nằm trong Khuyến mãi của tôi (F); mọi lần đổi hiện trong Lịch sử điểm (G).</li>
+        <li><b>Cách bật:</b> bằng cấu hình CDN như phần "Quyền lợi theo hạng", không cần chờ duyệt app, miễn là bản app đã có code và BE đã sẵn sàng. Khách dùng bản app cũ vẫn thấy "Sắp ra mắt" cho đến khi cập nhật.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="ctlTitle">
+      <h2 id="ctlTitle">Dữ liệu mẫu</h2>
+      <div class="ctlrow"><span class="lab">Hạng</span><div class="segc" id="tierCtl"><button type="button" data-tier="plus">Plus</button><button type="button" data-tier="pro">Pro</button><button type="button" data-tier="premier">Premier</button></div></div>
+      <div class="ctlrow"><span class="lab">Điểm</span><div class="segc" id="ptsCtl"><button type="button" data-pts="0">0</button><button type="button" data-pts="36500">36.500</button><button type="button" data-pts="86500">86.500</button><button type="button" data-pts="250000">250.000</button></div></div>
+      <p class="ctlnote" id="ptsNow"></p>
+    </section>
+
+    <nav class="panel list" id="screenList" aria-label="Danh sách màn hình"></nav>
+
+    <section class="panel" aria-labelledby="notesTitle">
+      <h2 class="notes-title" id="notesTitle"></h2>
+      <p class="notes-group" id="notesGroup"></p>
+      <ul id="notes"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Cần BO trả lời</h2>
+      <ol>
+        <li><b>Điểm năm 2026 có bị xóa trước khi mở Đổi điểm không?</b> App đang ghi "Điểm chưa dùng sẽ hết hạn vào ngày 31/12 hằng năm". Nếu Đổi điểm mở năm 2027, điểm tích năm 2026 sẽ mất trước khi khách kịp dùng. Đề xuất: giữ điểm 2026 đến 31/12/2027, và tạm bỏ câu hết hạn trong app cho đến khi chốt.</li>
+        <li><b>Tỉ lệ quy đổi:</b> mẫu dùng 1 điểm = 1đ cho voucher giảm giá (giảm 50.000đ = 50.000 điểm); dịch vụ như lấy mẫu tại nhà, tư vấn bác sĩ có giá điểm riêng.</li>
+        <li><b>Danh sách ưu đãi:</b> những ưu đãi nào, chia nhóm ra sao, số lượt, giới hạn mỗi khách, hạn dùng sau khi đổi (mẫu: 30 đến 60 ngày), đơn tối thiểu. Ai cập nhật trên trang quản trị?</li>
+        <li><b>Ưu đãi riêng theo hạng:</b> giữ hay bỏ? Mẫu có một ưu đãi chỉ hạng Premier đổi được (màn C3).</li>
+        <li><b>Voucher hết hạn mà chưa dùng:</b> có trả lại điểm không? Mẫu ghi "Điểm đã đổi không được hoàn lại".</li>
+        <li><b>Dùng voucher ở đâu:</b> chỉ tại quầy (đưa mã QR), hay cả khi đặt lịch, lấy mẫu tại nhà trong app? Đặt lịch trong app chưa có bước nhập voucher.</li>
+        <li><b>Tên gọi:</b> "Đổi điểm" (đề xuất), "Đổi ưu đãi" hay "Chợ đổi điểm"?</li>
+        <li><b>Ngày ra mắt:</b> lời giới thiệu (S2) có ghi tháng ra mắt không?</li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Cần BE trước khi bật</h2>
+      <ul>
+        <li><b>Ngày 09/11/2026 BE chưa có phần nào dưới đây.</b> Tài liệu BE ghi chưa có quy tắc quy đổi được duyệt, và đổi điểm trong app chưa nằm trong giai đoạn này.</li>
+        <li><b>Danh sách ưu đãi:</b> giá điểm, nhóm, số lượt còn, giới hạn mỗi khách, hạng tối thiểu, hạn dùng, điều kiện.</li>
+        <li><b>Đổi điểm:</b> trừ điểm và phát voucher trong một lần gọi; gọi lại không bị trừ hai lần; báo rõ lý do khi không đổi được (thiếu điểm, hết lượt, quá giới hạn, chưa đủ hạng).</li>
+        <li><b>Voucher đã đổi</b> nằm trong ví "Khuyến mãi của tôi", kèm số điểm đã đổi.</li>
+        <li><b>Lịch sử điểm:</b> cộng hằng tháng, đổi voucher, thu hồi khi hoàn tiền, hết hạn.</li>
+        <li><b>Ngày hết hạn điểm</b> (đang luôn trống), nếu giữ quy tắc 31/12.</li>
+      </ul>
+    </section>
+
+    <button type="button" class="reset" id="resetBtn">Đặt lại dữ liệu mẫu</button>
+    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 1 (09/11/2026). Tên, mã thành viên, ưu đãi, giá điểm, mã voucher và số điểm là dữ liệu mẫu.</p>
+  </aside>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- icons (24 × 24, stroked) ---------- */
+  var I = {
+    back: '<path d="M15 18l-6-6 6-6"/>',
+    chev: '<path d="M9 18l6-6-6-6"/>',
+    check: '<path d="M20 6L9 17l-5-5"/>',
+    info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+    clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+    cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    gift: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+    coin: '<circle cx="12" cy="12" r="10"/><path d="M15.2 8.7c-.6-1-1.8-1.6-3.2-1.6-1.8 0-3.1 1-3.1 2.4 0 3.2 6.4 1.7 6.4 4.9 0 1.4-1.4 2.5-3.3 2.5-1.6 0-2.9-.7-3.4-1.8M12 5v14"/>',
+    flask: '<path d="M9 3h6M10 3v6.2L4.8 18.3A1.8 1.8 0 0 0 6.4 21h11.2a1.8 1.8 0 0 0 1.6-2.7L14 9.2V3"/><path d="M7.2 15h9.6"/>',
+    home: '<path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    steth: '<path d="M11 2v2M5 2v2M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/>',
+    clip: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14l2 2 4-4"/>',
+    lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    hist: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/>',
+    ticket: '<path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M13 5v2M13 11v2M13 17v2"/>',
+    copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    undo: '<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+  };
+  function ic(name, size, color, width, cls) {
+    return '<svg' + (cls ? ' class="' + cls + '"' : '') + ' width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + (color || 'currentColor') + '" stroke-width="' + (width || 2) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[name] + '</svg>';
+  }
+  function chev() { return ic('chev', 16, '#ADB3BC', 2.4, 'chev'); }
+  /* The tier glyphs (SF Symbols plus.diamond.fill, star.fill, crown.fill), filled. */
+  function tsym(t, size, color, knock) {
+    var shape = t === 'plus' ? '<path d="M12 1.6L22.4 12 12 22.4 1.6 12z" fill="' + color + '"/><path d="M12 7.6v8.8M7.6 12h8.8" stroke="' + knock + '" stroke-width="2.6" stroke-linecap="round"/>'
+      : t === 'pro' ? '<path d="M12 2.2l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17l-5.9 3.3 1.3-6.6L2.5 9.1l6.6-.8z" fill="' + color + '"/>'
+      : '<path d="M3 7.5l4.6 3.8L12 4.5l4.4 6.8L21 7.5l-1.8 11H4.8z" fill="' + color + '"/>';
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" aria-hidden="true">' + shape + '</svg>';
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ---------- dates and numbers ---------- */
+  var TODAY = new Date(2027, 10, 16);
+  var EXPIRE = '31/12/2027';
+  function n(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function pad(x) { return x < 10 ? '0' + x : '' + x; }
+  function fd(d) { return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear(); }
+  function addDays(d, k) { var x = new Date(d.getTime()); x.setDate(x.getDate() + k); return x; }
+  function parse(s) { var p = s.split('/'); return new Date(+p[2], +p[1] - 1, +p[0]); }
+  function daysLeft(s) { return Math.round((parse(s) - TODAY) / 86400000); }
+
+  /* ---------- sample data ---------- */
+  var NAME = 'Phạm Ngọc Lan';
+  var MEMBER_ID = 'DL00000001';
+  var RANK = { plus: 0, pro: 1, premier: 2 };
+  /* Colours from MembershipStyle.swift (TierStyle). */
+  var TIERS = {
+    plus: { name: 'Diag Plus', short: 'Plus', rate: 5, spend: 1200000,
+      card: 'linear-gradient(135deg,#3C86FF,#0B55DA 50%,#063A9E)', text: '#FFFFFF', sub: 'rgba(255,255,255,.82)', pat: 'rgba(255,255,255,.07)', wm: 'rgba(255,255,255,.09)', glow: 'rgba(7,72,201,.30)',
+      tint: '#E6F0FE', icon: '#0B55DA', since: 'rgba(255,255,255,.82)', logo: '#FFFFFF', tname: 'linear-gradient(90deg,#FFFFFF,#D5DEEA,#FFFFFF,#B9C6D8)', sym: '#FFFFFF', knock: '#0B55DA',
+      link: 'rgba(255,255,255,.18)', linkText: '#FFFFFF', pill: 'linear-gradient(#F1F5FB,#DCE5F2)', pillText: '#0B47B8', pillStroke: '#C5D1E2', pillKnock: '#E6EDF7' },
+    pro: { name: 'Diag Pro', short: 'Pro', rate: 8, spend: 3240000,
+      card: 'linear-gradient(135deg,#F7DE97,#E0AE4C 50%,#B27B21)', text: '#3B2600', sub: 'rgba(59,38,0,.78)', pat: 'rgba(255,255,255,.16)', wm: 'rgba(255,255,255,.22)', glow: 'rgba(185,130,30,.40)',
+      tint: '#FFF6DF', icon: '#A06A15', since: 'rgba(59,38,0,.78)', logo: '#3B2600', tname: '#3B2600', sym: '#3B2600', knock: '#E0AE4C',
+      link: 'rgba(255,255,255,.40)', linkText: '#3B2600', pill: 'linear-gradient(#FBE7AE,#E1AE4B)', pillText: '#4A3000', pillStroke: 'rgba(150,100,10,.35)', pillKnock: '#EEC56E' },
+    premier: { name: 'Diag Premier', short: 'Premier', rate: 10, spend: 6100000,
+      card: 'linear-gradient(135deg,#3B3B47,#17171D 50%,#0A0A0D)', text: '#F3E3B5', sub: 'rgba(243,227,181,.78)', pat: 'rgba(224,174,74,.07)', wm: 'rgba(224,174,74,.09)', glow: 'rgba(20,16,8,.38)',
+      tint: '#1B1B22', icon: '#EBC574', since: '#E0AE4A', logo: 'linear-gradient(135deg,#FFEDB5,#E2B04F,#B8862A)', tname: 'linear-gradient(90deg,#FFF3CF,#E0AE4A,#FFE7A6,#B98524)', sym: '#E0AE4A', knock: '#17171D',
+      link: 'rgba(224,174,74,.18)', linkText: '#F1D08A', pill: 'linear-gradient(#2A2A33,#101015)', pillText: '#F1D08A', pillStroke: 'rgba(232,194,110,.6)', pillKnock: '#1E1E26' }
+  };
+  var CATS = {
+    test: { name: 'Xét nghiệm', ic: 'flask', fg: '#0766F7', bg: '#E6F0FE', ink: '#0550C8' },
+    home: { name: 'Lấy mẫu tại nhà', ic: 'home', fg: '#0B8F89', bg: '#E2F7F6', ink: '#07665F' },
+    doctor: { name: 'Tư vấn bác sĩ', ic: 'steth', fg: '#0E8A45', bg: '#E3F6EA', ink: '#0B6234' },
+    pkg: { name: 'Gói khám', ic: 'clip', fg: '#C2410C', bg: '#FFEDD5', ink: '#8C2F09' }
+  };
+  var CAT_ORDER = ['test', 'home', 'doctor', 'pkg'];
+  var REWARDS = [
+    { id: 'v20', cat: 'test', title: 'Voucher giảm 20.000đ', sub: 'Mọi xét nghiệm tại DIAG', big: '20.000đ', label: 'Giảm', cost: 20000, valid: 30, limit: 2, applies: 'Mọi xét nghiệm tại chi nhánh DIAG', minOrder: 'Không yêu cầu' },
+    { id: 'home', cat: 'home', title: 'Miễn phí lấy mẫu tại nhà', sub: '1 lần lấy mẫu tại nhà', big: 'Miễn phí', label: 'Lấy mẫu tại nhà', cost: 30000, valid: 60, applies: 'Phí lấy mẫu tại nhà, 1 lần', minOrder: 'Không yêu cầu' },
+    { id: 'v50', cat: 'test', title: 'Voucher giảm 50.000đ', sub: 'Xét nghiệm, đơn từ 300.000đ', big: '50.000đ', label: 'Giảm', cost: 50000, valid: 30, applies: 'Mọi xét nghiệm tại chi nhánh DIAG', minOrder: '300.000đ' },
+    { id: 'tele', cat: 'doctor', title: 'Tư vấn bác sĩ trực tuyến', sub: '1 lượt tư vấn qua video', big: '1 lượt', label: 'Tư vấn bác sĩ', cost: 60000, valid: 30, applies: '1 lượt tư vấn trực tuyến với bác sĩ DIAG', minOrder: 'Không yêu cầu' },
+    { id: 'pkg', cat: 'pkg', title: 'Giảm 100.000đ gói khám', sub: 'Gói khám sức khỏe từ 1.000.000đ', big: '100.000đ', label: 'Giảm', cost: 100000, valid: 45, applies: 'Các gói khám sức khỏe tại DIAG', minOrder: '1.000.000đ' },
+    { id: 'vitd', cat: 'test', title: 'Xét nghiệm Vitamin D miễn phí', sub: '25-OH Vitamin D, 1 lần', big: 'Miễn phí', label: 'Xét nghiệm', cost: 150000, valid: 60, minTier: 'premier', applies: 'Xét nghiệm 25-OH Vitamin D, 1 lần', minOrder: 'Không yêu cầu' },
+    { id: 'v200', cat: 'pkg', title: 'Voucher giảm 200.000đ', sub: 'Mọi dịch vụ, đơn từ 1.000.000đ', big: '200.000đ', label: 'Giảm', cost: 200000, valid: 30, soldOut: true, applies: 'Mọi dịch vụ tại DIAG', minOrder: '1.000.000đ' }
+  ];
+  var CODES = ['DPX7-KQ2M', 'DPA4-HN8R', 'DPL2-9VWE', 'DPC6-T3YB', 'DPQ8-M5JD', 'DPR3-W7NK', 'DPF5-B2XS', 'DPN9-C4HU'];
+  var OTHER_COUPONS = [
+    { title: 'Giảm 10% xét nghiệm tầm soát tiểu đường', until: '30/11/2027' },
+    { title: 'Giảm 15% gói xét nghiệm tổng quát', until: '31/12/2027' }
+  ];
+  function seedHistory() {
+    return [
+      { k: 'used', title: 'Đổi voucher', sub: 'Voucher giảm 20.000đ', date: '02/11/2027', amt: -20000 },
+      { k: 'earned', title: 'Hoàn điểm 8%', sub: 'Chi tiêu tháng 10/2027', date: '01/11/2027', amt: 18400 },
+      { k: 'earned', title: 'Hoàn điểm 8%', sub: 'Chi tiêu tháng 9/2027', date: '01/10/2027', amt: 24000 },
+      { k: 'back', title: 'Thu hồi điểm', sub: 'Hoàn tiền tháng 8/2027', date: '01/09/2027', amt: -2400 },
+      { k: 'earned', title: 'Hoàn điểm 8%', sub: 'Chi tiêu tháng 7/2027', date: '01/08/2027', amt: 31200 },
+      { k: 'earned', title: 'Hoàn điểm 8%', sub: 'Chi tiêu tháng 5/2027', date: '01/06/2027', amt: 20900 },
+      { k: 'earned', title: 'Hoàn điểm 8%', sub: 'Chi tiêu tháng 3/2027', date: '01/04/2027', amt: 14400 }
+    ];
+  }
+  function initial() {
+    return {
+      cur: 'S1', stack: [], tier: 'pro', points: 86500, rid: 'v50', cat: 'all', afford: false,
+      busy: false, alert: false, empty: false, anim: false,
+      soldOut: {}, stock: { home: 12, tele: 1 },
+      redeemed: [{ rid: 'v20', code: 'DPZ4-8KTQ', at: '02/11/2027', until: '02/12/2027', cost: 20000 }],
+      history: seedHistory(), codeIdx: 0, last: null
+    };
+  }
+  var state = initial();
+
+  function tier() { return TIERS[state.tier]; }
+  function byId(id) { for (var i = 0; i < REWARDS.length; i++) if (REWARDS[i].id === id) return REWARDS[i]; return REWARDS[0]; }
+  function stockOf(r) { return state.stock[r.id] == null ? null : state.stock[r.id]; }
+  function monthCount(id) { return state.redeemed.filter(function (v) { return v.rid === id && v.at.slice(3) === '11/2027'; }).length; }
+  /* ok · short (not enough points) · locked (tier) · limit (per month) · soldout */
+  function rstatus(r) {
+    if (r.soldOut || state.soldOut[r.id] || stockOf(r) === 0) return 'soldout';
+    if (r.minTier && RANK[state.tier] < RANK[r.minTier]) return 'locked';
+    if (r.limit && monthCount(r.id) >= r.limit) return 'limit';
+    if (state.points < r.cost) return 'short';
+    return 'ok';
+  }
+  function pct(r) { return state.points > 0 ? Math.max(3, Math.min(100, Math.round(state.points / r.cost * 100))) : 0; }
+  function redeem(r) {
+    var v = { rid: r.id, code: CODES[state.codeIdx % CODES.length], at: fd(TODAY), until: fd(addDays(TODAY, r.valid)), cost: r.cost };
+    state.codeIdx++;
+    state.points -= r.cost;
+    if (state.stock[r.id] != null) state.stock[r.id] = Math.max(0, state.stock[r.id] - 1);
+    state.redeemed.unshift(v);
+    state.history.unshift({ k: 'used', title: 'Đổi voucher', sub: r.title, date: v.at, amt: -r.cost });
+    state.last = v;
+  }
+
+  /* ---------- shared pieces ---------- */
+  function hdr(title) {
+    return '<header class="hdr"><button class="bk" data-back aria-label="Quay lại">' + ic('back', 20, '#0F1C2A', 2.5) + '</button><h1>' + title + '</h1></header>';
+  }
+  function logo(w, fill) { return '<span class="logo" style="width:' + w + 'px;height:' + Math.round(w * 178 / 360) + 'px;background:' + fill + '"></span>'; }
+  function pattern(color) { return '<span class="pat" style="background:repeating-linear-gradient(115deg,transparent 0 7.2px,' + color + ' 7.2px 8.2px)"></span>'; }
+  function tierPill(k) {
+    var s = TIERS[k];
+    return '<span class="tpill" style="background:' + s.pill + ';color:' + s.pillText + ';border-color:' + s.pillStroke + '">' + tsym(k, 11, s.pillText, s.pillKnock) + s.short.toUpperCase() + '</span>';
+  }
+  function coin(size) {
+    var t = tier();
+    return '<span class="mic" style="width:' + size + 'px;height:' + size + 'px;background:' + t.tint + ';color:' + t.icon + '">' + ic('coin', Math.round(size * .52), 'currentColor', 2.1) + '</span>';
+  }
+  function catIcon(c, size) { return '<span class="tk-ic" style="background:' + c.bg + ';color:' + c.fg + '">' + ic(c.ic, size || 22, 'currentColor', 2) + '</span>'; }
+  function amberLine() {
+    return '<div class="amber">' + ic('clock', 15, 'currentColor', 2.4) + '<span>' + n(state.points) + ' điểm chưa dùng sẽ hết hạn ngày ' + EXPIRE + '</span></div>';
+  }
+
+  /* ---------- Hạng thành viên (LoyaltyView) ---------- */
+  function tierCard() {
+    var k = state.tier, t = tier();
+    var nameStyle = k === 'pro' ? 'color:' + t.tname : 'background:' + t.tname + ';-webkit-background-clip:text;background-clip:text;color:transparent';
+    return '<section class="tcard" style="background:' + t.card + ';box-shadow:0 12px 30px ' + t.glow + ';color:' + t.text + '">' + pattern(t.pat) +
+      '<span class="wm">' + logo(200, t.wm) + '</span>' + (k === 'premier' ? '<span class="sheen"></span>' : '') +
+      '<div class="r1">' + logo(64, t.logo) + '<span class="since" style="color:' + t.since + '">Thành viên từ 2026</span></div>' +
+      '<div class="tn">' + tsym(k, 22, t.sym, t.knock) + '<span style="' + nameStyle + '">' + t.name.toUpperCase() + '</span></div>' +
+      '<div class="hold"><span class="hn" style="color:' + (k === 'premier' ? '#FFF4D6' : t.text) + '">' + NAME.toUpperCase() + '</span><span class="hid rnd" style="color:' + t.sub + '">ID ' + MEMBER_ID + '</span></div></section>';
+  }
+  function pointsCard(mode) {
+    var t = tier(), soon = mode === 'soon';
+    var showAmber = !soon && state.points > 0;
+    var rate = 'Mỗi hóa đơn được hoàn ' + t.rate + '% dưới dạng điểm.';
+    var actions = soon
+      ? '<button class="soon" data-go="S2">' + ic('gift', 19, state.tier === 'premier' ? '#8F6013' : t.icon, 2) + '<span>Đổi điểm</span><span class="soontag">Sắp ra mắt</span>' + ic('chev', 16, '#ADB3BC', 2.4, 'ml') + '</button>'
+      : '<div class="pbtns"><button class="pb pri" data-go="B">' + ic('gift', 18, '#FFFFFF', 2.2) + 'Đổi điểm</button><button class="pb sec" data-go="G">' + ic('hist', 18, '#0B47B8', 2.2) + 'Lịch sử</button></div>';
+    return '<section class="mcard ptsc"><div class="row">' + coin(40) + '<div class="col"><span class="cap12">DIAG Points</span><span class="bal24 rnd">' + n(state.points) + '<small>điểm</small></span></div></div>' +
+      (showAmber ? amberLine() : '') +
+      '<p class="cap12 lh">' + (showAmber ? rate : rate + ' Điểm chưa dùng sẽ hết hạn vào ngày 31/12 hằng năm.') + '</p>' + actions + '</section>';
+  }
+  function progressCard() {
+    var k = state.tier, t = tier();
+    if (k === 'premier') {
+      return '<section class="mcard prog"><div class="row"><span class="mic" style="background:#1B1B22">' + tsym('premier', 17, '#EBC574') + '</span><span class="t16h">Bạn đang ở hạng cao nhất ' + ic('info', 14, '#5C6570', 2.2) + '</span></div>' +
+        '<div class="between"><span class="cap12">Chi tiêu 12 tháng gần nhất</span><span class="rnd t14h">6.100.000đ <span class="lg">/ 5.000.000đ</span></span></div>' +
+        '<span class="ubar"><i style="width:100%;background:linear-gradient(90deg,#B98524,#F1D08A,#B98524)"></i></span></section>';
+    }
+    var next = k === 'plus' ? 'pro' : 'premier';
+    var need = (k === 'plus' ? 2000000 : 5000000) - t.spend;
+    var pos = Math.min(t.spend / 5000000, 1) * 100;
+    return '<section class="mcard prog"><div class="col"><span class="cap12">Chi tiêu 12 tháng gần nhất</span><span class="bal24 rnd">' + n(t.spend) + 'đ</span></div>' +
+      '<div class="track"><span class="trk"></span><span class="trf" style="width:' + pos + '%"></span><span class="node" style="left:0"></span><span class="node" style="left:40%"></span><span class="node" style="left:100%"></span><span class="dot" style="left:' + pos + '%"></span></div>' +
+      '<div class="tlabels"><span>Plus</span><span>Pro · 2tr</span><span>Premier · 5tr</span></div>' +
+      '<div class="more"><span>Chi tiêu thêm <b>' + n(need) + 'đ</b> để lên hạng ' + ic('info', 14, '#5C6570', 2.2) + '</span>' + tierPill(next) + '</div></section>';
+  }
+  function loyalty(mode) { return hdr('Hạng thành viên') + '<div class="body lb">' + tierCard() + pointsCard(mode) + progressCard() + '</div>'; }
+  function scrS1() { return loyalty('soon'); }
+  function scrA() { return loyalty('on'); }
+
+  function teaserSheet() {
+    var t = tier();
+    function mini(cls, cat, b, s) { var c = CATS[cat]; return '<span class="mt ' + cls + '"><span class="l" style="background:' + c.bg + ';color:' + c.fg + '">' + ic(c.ic, 20, 'currentColor', 2) + '</span><span class="r"><b>' + b + '</b><small>' + s + '</small></span></span>'; }
+    return '<div class="ov"><button class="scrim" data-back aria-label="Đóng"></button>' +
+      '<div class="sheet' + (state.anim ? ' anim' : '') + '" role="dialog" aria-modal="true" aria-labelledby="tsT"><span class="grab"></span>' +
+      '<div class="fan" aria-hidden="true">' + mini('a', 'home', 'Miễn phí', 'Lấy mẫu tại nhà') + mini('c', 'doctor', '1 lượt', 'Tư vấn bác sĩ') + mini('b', 'test', 'Giảm 50K', 'Xét nghiệm') + '</div>' +
+      '<div class="tcenter"><span class="soontag lg">Sắp ra mắt</span><h2 class="sh2 c" id="tsT">Đổi điểm lấy ưu đãi</h2>' +
+      '<p class="p15">Bạn sẽ sớm dùng được DIAG Points để đổi voucher xét nghiệm, lấy mẫu tại nhà, tư vấn bác sĩ và nhiều ưu đãi khác ngay trong ứng dụng.</p></div>' +
+      '<div class="mcard have">' + coin(40) + '<span class="col"><span class="t15b">' + (state.points > 0 ? 'Bạn đang có ' + n(state.points) + ' điểm' : 'Bạn chưa có điểm') + '</span><span class="cap13">Mỗi hóa đơn được hoàn ' + t.rate + '% dưới dạng điểm.</span></span></div>' +
+      '<button class="btn" data-back>Đã hiểu</button></div></div>';
+  }
+
+  /* ---------- Đổi điểm ---------- */
+  function pointsHead() {
+    var k = state.tier, t = tier();
+    return '<section class="phead" style="background:' + t.card + ';color:' + t.text + ';box-shadow:0 10px 24px ' + t.glow + '">' + pattern(t.pat) +
+      '<span class="wm">' + logo(170, t.wm) + '</span>' + (k === 'premier' ? '<span class="sheen"></span>' : '') +
+      '<div class="between"><span class="pcap" style="color:' + t.sub + '">' + ic('coin', 15, 'currentColor', 2.2) + 'DIAG Points</span>' +
+      '<button class="hl" data-go="G" style="background:' + t.link + ';color:' + t.linkText + '">' + ic('hist', 14, 'currentColor', 2.4) + 'Lịch sử</button></div>' +
+      '<div class="big rnd">' + n(state.points) + '<small>điểm</small></div>' +
+      '<div class="psub" style="color:' + t.sub + '">' + tsym(k, 12, t.sym, t.knock) + t.name + ' · hoàn ' + t.rate + '% mỗi hóa đơn</div></section>';
+  }
+  var STATUS_TEXT = { ok: 'đủ điểm đổi', short: 'chưa đủ điểm', locked: 'dành riêng hạng Premier', soldout: 'đã hết lượt đổi', limit: 'đã đổi tối đa trong tháng' };
+  function ticket(r) {
+    var st = rstatus(r), c = CATS[r.cat], m;
+    if (st === 'ok') {
+      var left = stockOf(r);
+      m = left != null ? '<span class="tk-m warm">' + ic('clock', 13, 'currentColor', 2.4) + 'Còn ' + left + ' lượt</span>'
+        : '<span class="tk-m">' + ic('cal', 13, 'currentColor', 2.2) + 'Dùng trong ' + r.valid + ' ngày</span>';
+    } else if (st === 'short') {
+      m = '<span class="tk-m">Còn thiếu ' + n(r.cost - state.points) + ' điểm</span><span class="mini"><i style="width:' + pct(r) + '%"></i></span>';
+    } else if (st === 'locked') {
+      m = '<span class="tk-m">' + ic('lock', 13, 'currentColor', 2.4) + 'Dành riêng hạng Premier</span>';
+    } else if (st === 'soldout') {
+      m = '<span class="tk-m">Đã hết lượt đổi</span>';
+    } else {
+      m = '<span class="tk-m">Đã đổi ' + r.limit + '/' + r.limit + ' lần trong tháng</span>';
+    }
+    var meta = r.minTier && st !== 'locked' && st !== 'short' ? '<span class="tagrow">' + tierPill(r.minTier) + m + '</span>' : m;
+    var label = r.title + ', ' + n(r.cost) + ' điểm, ' + (st === 'short' ? 'còn thiếu ' + n(r.cost - state.points) + ' điểm' : STATUS_TEXT[st]);
+    return '<button class="tk' + (st !== 'ok' ? ' off' : '') + (st === 'soldout' || st === 'limit' || st === 'locked' ? ' dim' : '') + '" data-act="reward" data-id="' + r.id + '" aria-label="' + esc(label) + '">' +
+      '<span class="tk-main">' + catIcon(c) + '<span class="col"><span class="tk-t">' + r.title + '</span><span class="tk-s">' + r.sub + '</span>' + meta + '</span></span>' +
+      '<span class="tk-stub">' + (st === 'locked' ? ic('lock', 15, 'currentColor', 2.4) : '') + '<b class="rnd">' + n(r.cost) + '</b><small>điểm</small></span></button>';
+  }
+  function chips() {
+    var all = [['all', 'Tất cả']].concat(CAT_ORDER.map(function (k) { return [k, CATS[k].name]; }));
+    return '<div class="chips" role="tablist" aria-label="Nhóm ưu đãi">' + all.map(function (c) {
+      var on = state.cat === c[0];
+      return '<button class="chip2' + (on ? ' on' : '') + '" role="tab" aria-selected="' + on + '" data-act="cat" data-cat="' + c[0] + '">' + c[1] + '</button>';
+    }).join('') + '</div>';
+  }
+  function scrB() {
+    var t = tier(), html = pointsHead();
+    html += state.points > 0 ? amberLine()
+      : '<div class="note blue">' + ic('info', 18, 'currentColor', 2.2) + '<span>Bạn đang có 0 điểm. Mỗi hóa đơn được hoàn ' + t.rate + '% dưới dạng điểm.</span></div>';
+    if (state.redeemed.length) {
+      html += '<button class="mcard rrow" data-go="F"><span class="ibox">' + ic('ticket', 19, '#0766F7', 2) + '</span><span class="col"><span class="t15b">Voucher đã đổi</span><span class="cap13">' + state.redeemed.length + ' voucher chưa dùng</span></span>' + chev() + '</button>';
+    }
+    html += '<h2 class="stitle">Ưu đãi</h2>';
+    if (state.empty) {
+      html += '<section class="mcard emptyc"><span class="eic" style="background:' + t.tint + ';color:' + t.icon + '">' + ic('gift', 26, 'currentColor', 2) + '</span><b>Ưu đãi đang được cập nhật</b><span>DIAG sẽ sớm thêm ưu đãi mới. Điểm của bạn vẫn được giữ nguyên.</span></section>';
+      return hdr('Đổi điểm') + '<div class="body">' + html + '</div>';
+    }
+    var list = REWARDS.filter(function (r) { return (state.cat === 'all' || r.cat === state.cat) && (!state.afford || rstatus(r) === 'ok'); });
+    list = list.filter(function (r) { return rstatus(r) !== 'soldout'; }).concat(list.filter(function (r) { return rstatus(r) === 'soldout'; }));
+    html += chips() + '<div class="between tools"><span class="cap13">' + list.length + ' ưu đãi</span>' +
+      '<button class="tgl' + (state.afford ? ' on' : '') + '" role="switch" aria-checked="' + state.afford + '" data-act="afford"><span class="box">' + (state.afford ? ic('check', 14, '#FFFFFF', 3) : '') + '</span>Đủ điểm đổi</button></div>';
+    if (!list.length) {
+      html += '<section class="mcard emptyc sm"><b>Chưa có ưu đãi phù hợp</b><span>' + (state.afford ? 'Bạn chưa đủ điểm cho ưu đãi nào trong nhóm này.' : 'Nhóm này chưa có ưu đãi.') + '</span><button class="lnk" data-act="clearFilter">Xem tất cả ưu đãi</button></section>';
+    }
+    html += list.map(ticket).join('');
+    html += '<button class="lnk center" data-act="toast" data-msg="Mở thể lệ đổi điểm (nội dung do DIAG cung cấp)">Thể lệ đổi điểm</button>';
+    return hdr('Đổi điểm') + '<div class="body">' + html + '</div>';
+  }
+
+  /* ---------- Chi tiết ưu đãi ---------- */
+  function statusChip(r, st) {
+    if (st === 'ok') { var left = stockOf(r); return left != null ? '<span class="chip c-amber">Còn ' + left + ' lượt</span>' : '<span class="chip c-green">Đủ điểm đổi</span>'; }
+    if (st === 'short') return '<span class="chip c-gray">Chưa đủ điểm</span>';
+    if (st === 'locked') return tierPill('premier');
+    if (st === 'soldout') return '<span class="chip c-gray">Hết lượt</span>';
+    return '<span class="chip c-gray">Đã đổi tối đa</span>';
+  }
+  function kvr(k, v) { return '<div class="kvr"><span>' + k + '</span><span>' + v + '</span></div>'; }
+  function howStep(i, text) { return '<div class="st"><i>' + i + '</i><span>' + text + '</span></div>'; }
+  function scrC() {
+    var r = byId(state.rid), st = rstatus(r), c = CATS[r.cat], t = tier();
+    var hero = '<section class="hero"><div class="band" style="background:' + c.bg + ';color:' + c.ink + '"><span class="bwm">' + ic(c.ic, 128, c.fg, 1.3) + '</span>' +
+      '<span class="bic" style="color:' + c.fg + '">' + ic(c.ic, 30, 'currentColor', 2) + '</span><span class="col"><span class="blbl">' + r.label + '</span><span class="bigv">' + r.big + '</span></span></div>' +
+      '<div class="hb"><h2>' + r.title + '</h2><span class="t14">' + r.sub + '</span>' +
+      '<div class="costrow"><span class="mic sm" style="background:' + t.tint + ';color:' + t.icon + '">' + ic('coin', 16, 'currentColor', 2.2) + '</span><span class="cost rnd">' + n(r.cost) + ' <small>điểm</small></span>' + statusChip(r, st) + '</div></div></section>';
+    var mine;
+    if (st === 'ok') {
+      mine = '<section class="mcard aft"><div><span class="cap12">Điểm hiện có</span><b class="rnd">' + n(state.points) + '</b></div>' + ic('arrow', 20, '#ADB3BC', 2.2) + '<div><span class="cap12">Sau khi đổi</span><b class="rnd">' + n(state.points - r.cost) + '</b></div></section>';
+    } else if (st === 'short') {
+      mine = '<section class="mcard shortc"><span class="t14s">Bạn có ' + n(state.points) + ' / ' + n(r.cost) + ' điểm</span><span class="ubar"><i style="width:' + pct(r) + '%"></i></span><span class="cap12">Mỗi hóa đơn được hoàn ' + t.rate + '% dưới dạng điểm.</span></section>';
+    } else if (st === 'locked') {
+      mine = '<div class="note gray">' + ic('lock', 18, 'currentColor', 2.2) + '<span>Ưu đãi dành riêng cho thành viên hạng Premier.</span></div>';
+    } else if (st === 'soldout') {
+      mine = '<div class="note gray">' + ic('info', 18, 'currentColor', 2.2) + '<span>Ưu đãi này đã hết lượt đổi.</span></div>';
+    } else {
+      mine = '<div class="note gray">' + ic('info', 18, 'currentColor', 2.2) + '<span>Bạn đã đổi ưu đãi này ' + r.limit + ' lần trong tháng 11. Có thể đổi tiếp từ 01/12/2027.</span></div>';
+    }
+    var rows = [kvr('Áp dụng cho', r.applies), kvr('Đơn tối thiểu', r.minOrder), kvr('Hạn dùng', r.valid + ' ngày kể từ ngày đổi')];
+    if (r.limit) rows.push(kvr('Giới hạn', 'Tối đa ' + r.limit + ' lần mỗi tháng'));
+    if (stockOf(r) != null) rows.push(kvr('Số lượt còn lại', stockOf(r) + ' lượt'));
+    rows.push(kvr('Hạng thành viên', r.minTier ? 'Chỉ hạng Premier' : 'Mọi hạng'));
+    var body = hero + mine +
+      '<h2 class="stitle">Điều kiện</h2><section class="mcard kv">' + rows.join('') + '</section>' +
+      '<p class="endnote">' + ic('info', 15, '#5E666E', 2.2) + '<span>Không áp dụng cùng các khuyến mãi khác.</span></p>' +
+      '<h2 class="stitle">Cách dùng</h2><section class="mcard steps">' +
+      howStep(1, 'Đổi điểm, voucher được lưu vào Khuyến mãi của tôi.') + howStep(2, 'Khi thanh toán tại DIAG, đưa mã QR cho nhân viên.') +
+      howStep(3, 'Dùng trong ' + r.valid + ' ngày kể từ ngày đổi. Điểm đã đổi không được hoàn lại.') + '</section>' +
+      '<button class="lnk center" data-act="toast" data-msg="Mở thể lệ đổi điểm (nội dung do DIAG cung cấp)">Thể lệ đổi điểm</button>';
+    var label = { ok: 'Đổi ' + n(r.cost) + ' điểm', short: 'Còn thiếu ' + n(r.cost - state.points) + ' điểm', locked: 'Dành riêng hạng Premier', soldout: 'Đã hết lượt đổi', limit: 'Đã đổi tối đa trong tháng' }[st];
+    return hdr('Chi tiết ưu đãi') + '<div class="body">' + body + '</div><div class="bar"><button class="btn" ' + (st === 'ok' ? 'data-go="D"' : 'disabled') + '>' + label + '</button></div>';
+  }
+
+  function confirmSheet() {
+    var r = byId(state.rid), c = CATS[r.cat], busy = state.busy;
+    return '<div class="ov"><button class="scrim" aria-label="Đóng"' + (busy ? ' disabled' : ' data-back') + '></button>' +
+      '<div class="sheet' + (state.anim ? ' anim' : '') + '" role="dialog" aria-modal="true" aria-labelledby="cfT"><span class="grab"></span>' +
+      '<h2 class="sh2" id="cfT">Xác nhận đổi điểm</h2>' +
+      '<div class="srow">' + catIcon(c) + '<span class="col"><span class="t15b">' + r.title + '</span><span class="cap13">' + r.sub + '</span></span></div>' +
+      '<div class="calc"><div class="between"><span>Điểm hiện có</span><span class="rnd">' + n(state.points) + '</span></div>' +
+      '<div class="between"><span>Điểm đổi</span><span class="rnd">−' + n(r.cost) + '</span></div><span class="divider"></span>' +
+      '<div class="between tot"><span>Còn lại</span><span><span class="rnd">' + n(Math.max(0, state.points - r.cost)) + '</span> điểm</span></div></div>' +
+      '<div class="note gray sm">' + ic('info', 17, 'currentColor', 2.2) + '<span>Voucher dùng được đến ' + fd(addDays(TODAY, r.valid)) + '. Điểm đã đổi không được hoàn lại.</span></div>' +
+      '<div class="sbtns"><button class="btn" data-act="confirm"' + (busy ? ' disabled aria-busy="true"' : '') + '>' + (busy ? '<span class="spin"></span>Đang đổi điểm…' : 'Xác nhận đổi') + '</button>' +
+      '<button class="btn ghost"' + (busy ? ' disabled' : ' data-back') + '>Hủy</button></div></div></div>';
+  }
+  function alertHtml() {
+    return '<div class="ov"><div class="scrim2"></div><div class="ialert" role="alertdialog" aria-modal="true" aria-labelledby="alT" aria-describedby="alB">' +
+      '<div class="iat"><b id="alT">Ưu đãi vừa hết lượt đổi</b><span id="alB">Điểm của bạn chưa bị trừ. Hãy chọn ưu đãi khác.</span></div>' +
+      '<div class="iab"><button data-act="alertClose">Đóng</button></div></div></div>';
+  }
+
+  /* ---------- Thành công ---------- */
+  /* A made-up QR: finder patterns in three corners, the rest from the code's hash. */
+  function qr(seed, px) {
+    var size = 25, h = 2166136261, i, x, y;
+    for (i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    function rnd() { h ^= h << 13; h >>>= 0; h ^= h >>> 17; h ^= h << 5; h >>>= 0; return h / 4294967296; }
+    var m = [];
+    for (y = 0; y < size; y++) { m.push([]); for (x = 0; x < size; x++) m[y].push(rnd() < 0.5); }
+    function finder(ox, oy) {
+      for (var dy = -1; dy <= 7; dy++) for (var dx = -1; dx <= 7; dx++) {
+        var X = ox + dx, Y = oy + dy;
+        if (X < 0 || Y < 0 || X >= size || Y >= size) continue;
+        var inside = dx >= 0 && dy >= 0 && dx <= 6 && dy <= 6, d = Math.max(Math.abs(dx - 3), Math.abs(dy - 3));
+        m[Y][X] = inside && (d === 3 || d <= 1);
+      }
+    }
+    finder(0, 0); finder(size - 7, 0); finder(0, size - 7);
+    var s = '<svg width="' + px + '" height="' + px + '" viewBox="0 0 ' + (size + 2) + ' ' + (size + 2) + '" shape-rendering="crispEdges" role="img" aria-label="Mã QR của voucher"><rect width="' + (size + 2) + '" height="' + (size + 2) + '" fill="#fff"/>';
+    for (y = 0; y < size; y++) { x = 0; while (x < size) { if (m[y][x]) { var x0 = x; while (x < size && m[y][x]) x++; s += '<rect x="' + (x0 + 1) + '" y="' + (y + 1) + '" width="' + (x - x0) + '" height="1" fill="#0F1C2A"/>'; } else x++; } }
+    return s + '</svg>';
+  }
+  function scrE() {
+    var v = state.last || { rid: 'v50', code: 'DPX7-KQ2M', until: fd(addDays(TODAY, 30)), cost: 50000 };
+    var r = byId(v.rid), c = CATS[r.cat];
+    return '<div class="body succ">' +
+      '<div class="okwrap"><span class="okmark' + (state.anim ? ' anim' : '') + '">' + ic('check', 40, 'currentColor', 3) + '</span><h2 class="h22">Đổi điểm thành công</h2><p class="p15 mut2">Voucher đã được lưu vào Khuyến mãi của tôi.</p></div>' +
+      '<section class="vcard"><div class="vtop">' + catIcon(c) + '<span class="col"><span class="t16b">' + r.title + '</span><span class="cap13">' + r.sub + '</span></span></div>' +
+      '<span class="vperf"></span><div class="vqr">' + qr(v.code, 148) +
+      '<div class="code rnd">' + v.code + '<button class="copy" data-act="toast" data-msg="Đã sao chép mã ' + v.code + '">' + ic('copy', 14, 'currentColor', 2.2) + 'Sao chép</button></div>' +
+      '<span class="cap13">HSD: ' + v.until + ' 23:59</span></div></section>' +
+      '<p class="endnote c">' + ic('info', 15, '#5E666E', 2.2) + '<span>Đưa mã QR cho nhân viên DIAG khi thanh toán.</span></p>' +
+      '<div class="left">' + coin(28) + '<span>Còn lại <b class="rnd">' + n(state.points) + '</b> điểm</span></div></div>' +
+      '<div class="bar"><button class="btn" data-act="done">Xong</button><button class="btn ghost" data-act="toWallet">Xem trong Khuyến mãi của tôi</button></div>';
+  }
+
+  /* ---------- Khuyến mãi của tôi ---------- */
+  function walletRow(title, until, extra) {
+    var d = daysLeft(until);
+    return '<button class="prow" data-act="toast" data-msg="Mở chi tiết khuyến mãi (màn có sẵn): mã QR, mã vạch, Sao chép, Chia sẻ"><span class="col gap10"><span class="t">' + title + '</span><span class="col gap6">' +
+      '<span class="dl">' + ic('cal', 13, 'currentColor', 2.2) + '<span>HSD: ' + until + ' 23:59 · <b class="' + (d <= 14 ? 'dsoon' : 'ddark') + '">Còn ' + d + ' ngày</b></span></span>' + extra + '</span></span>' + chev() + '</button>';
+  }
+  function scrF() {
+    var rows = state.redeemed.map(function (v) {
+      return walletRow(byId(v.rid).title, v.until, '<span class="dl pts">' + ic('coin', 13, 'currentColor', 2.2) + '<span>Đổi bằng ' + n(v.cost) + ' điểm</span></span>');
+    }).concat(OTHER_COUPONS.map(function (o) { return walletRow(o.title, o.until, ''); }));
+    return hdr('Khuyến mãi của tôi') + '<div class="body">' +
+      '<div class="seg2" role="tablist"><button class="on" role="tab" aria-selected="true">Chưa dùng <span class="cnt">' + rows.length + '</span></button>' +
+      '<button role="tab" aria-selected="false" data-act="toast" data-msg="Tab Đã dùng / Hết hạn giữ nguyên như hiện nay">Đã dùng / Hết hạn</button></div>' + rows.join('') + '</div>';
+  }
+
+  /* ---------- Lịch sử điểm ---------- */
+  var HKIND = { earned: ['plus', '#0E8A45', '#E3F6EA'], used: ['gift', '#0766F7', '#E6F0FE'], back: ['undo', '#B42318', '#FEF3F2'], expired: ['clock', '#5C6570', '#EEF0F2'] };
+  function scrG() {
+    var earned = 0, used = 0;
+    state.history.forEach(function (h) { if (h.date.slice(-4) === '2027') { if (h.k === 'earned') earned += h.amt; if (h.k === 'used') used -= h.amt; } });
+    var rows = state.history.map(function (h) {
+      var k = HKIND[h.k], tap = h.k === 'used';
+      var inner = '<span class="hic" style="background:' + k[2] + ';color:' + k[1] + '">' + ic(k[0], 18, 'currentColor', 2.4) + '</span>' +
+        '<span class="col"><span class="t15b">' + h.title + '</span><span class="cap13">' + h.sub + '</span></span>' +
+        '<span class="amtc"><span class="amt rnd' + (h.amt > 0 ? ' plus' : '') + '">' + (h.amt > 0 ? '+' : '−') + n(Math.abs(h.amt)) + '</span><span class="cap12">' + h.date.slice(0, 5) + '</span></span>' + (tap ? chev() : '<span class="chev-sp"></span>');
+      return tap ? '<button class="hrow" data-go="F">' + inner + '</button>' : '<div class="hrow">' + inner + '</div>';
+    }).join('');
+    return hdr('Lịch sử điểm') + '<div class="body">' +
+      '<section class="mcard hsum"><div class="row">' + coin(40) + '<div class="col"><span class="cap12">Điểm hiện có</span><span class="bal24 rnd">' + n(state.points) + '<small>điểm</small></span></div></div>' +
+      '<div class="stats2"><div><span class="cap12">Đã nhận năm 2027</span><b class="rnd g">+' + n(earned) + '</b></div><div><span class="cap12">Đã dùng năm 2027</span><b class="rnd">−' + n(used) + '</b></div></div>' +
+      '<p class="cap12 lh">Điểm chưa dùng sẽ hết hạn vào ngày 31/12 hằng năm.</p></section>' +
+      '<h3 class="yr">Năm 2027</h3><section class="mcard hlist">' + rows + '</section></div>';
+  }
+
+  /* ---------- screen list + notes ---------- */
+  var GROUPS = ['Trước khi ra mắt · có trong app từ bản tới', 'Khi bật Đổi điểm', 'Trạng thái khác'];
+  var SCREENS = [
+    { id: 'S1', g: 0, name: 'Hạng thành viên · Đổi điểm sắp ra mắt', render: scrS1, notes: [
+      'Bản sẽ có trong app từ bây giờ cho đến khi DIAG bật Đổi điểm.',
+      'Thẻ DIAG Points thêm nút "Đổi điểm" có nhãn "Sắp ra mắt". Bấm vào chỉ mở lời giới thiệu (màn S2), không gọi API mới.',
+      'Chưa có nút "Lịch sử", vì BE chưa có lịch sử điểm.',
+      'Phần "Quyền lợi theo hạng" bên dưới giữ nguyên.',
+      'Thử bấm nút Đổi điểm.'] },
+    { id: 'S2', g: 0, name: 'Giới thiệu Đổi điểm (sắp ra mắt)', render: scrS1, overlay: teaserSheet, notes: [
+      'Trang ngắn trượt lên từ dưới: đổi được những gì, số điểm đang có, mức hoàn điểm của hạng.',
+      'Không ghi ngày ra mắt. Nếu BO muốn ghi (ví dụ "Ra mắt tháng 1/2027"), app đọc câu này từ cấu hình để sửa không cần cập nhật app.',
+      'Không có nút "Nhắc tôi khi ra mắt", vì cần BE lưu danh sách và gửi thông báo. Ngày ra mắt, marketing có thể gửi thông báo cho mọi thành viên.'] },
+    { id: 'A', g: 1, name: 'Hạng thành viên · nút Đổi điểm', render: scrA, notes: [
+      'Khi bật: thẻ DIAG Points có hai nút "Đổi điểm" và "Lịch sử", theo ghi chú của BO trên Canva ("Thêm nút đổi voucher", "Chi tiết").',
+      'Dòng vàng là câu BO đã duyệt. Nó chỉ hiện khi BE gửi ngày hết hạn, vào những tuần cuối năm (mốc mẫu 16/11/2027).',
+      'Đề xuất: ô "DIAG Points" ở tab Hồ Sơ Của Tôi mở thẳng màn Đổi điểm.',
+      'Thử bấm Đổi điểm hoặc Lịch sử.'] },
+    { id: 'B', g: 1, name: 'Đổi điểm · danh sách ưu đãi', render: scrB, notes: [
+      'Số điểm trên nền màu của hạng (đổi hạng mẫu ở bảng bên để xem Plus, Pro, Premier); nút "Lịch sử" ở góc.',
+      'Dòng vàng nhắc điểm sắp hết hạn, cùng câu với thẻ DIAG Points.',
+      'Mỗi ưu đãi là một tấm vé như voucher của Hạng thành viên và DIAG CARE, giá điểm ở cuống vé. Thiếu điểm: cuống xám và thanh tiến độ. Ưu đãi riêng hạng cao: có khóa. Hết lượt: mờ và xuống cuối danh sách.',
+      'Lọc theo nhóm và "Đủ điểm đổi". Thứ tự ưu đãi do trang quản trị sắp.',
+      '"Voucher đã đổi" mở Khuyến mãi của tôi.',
+      'Thử bấm một nhóm, bật "Đủ điểm đổi", hoặc bấm một ưu đãi.'] },
+    { id: 'C', g: 1, name: 'Chi tiết ưu đãi', render: scrC, notes: [
+      'Giá điểm, số điểm còn lại sau khi đổi, điều kiện và cách dùng. Điều kiện, cách dùng và thể lệ là nội dung từ trang quản trị.',
+      'Nút ghi rõ số điểm sẽ bị trừ, ví dụ "Đổi 50.000 điểm".',
+      'Thử bấm nút Đổi.'] },
+    { id: 'D', g: 1, name: 'Xác nhận đổi điểm', render: scrC, overlay: confirmSheet, notes: [
+      'Có bước xác nhận vì điểm đã đổi không lấy lại được: điểm hiện có, điểm đổi, điểm còn lại và hạn dùng voucher.',
+      'Khi đang đổi, nút quay vòng và không đóng được trang, để không bị đổi hai lần.',
+      'Thử bấm Xác nhận đổi.'] },
+    { id: 'E', g: 1, name: 'Đổi điểm thành công', render: scrE, notes: [
+      'Mã QR hiện ngay, vì nhiều khách đổi điểm khi đang đứng ở quầy.',
+      'Voucher cũng được lưu trong Khuyến mãi của tôi. Số điểm mới hiện ngay; trên iPhone có rung nhẹ báo thành công.',
+      '"Xong" về lại màn Đổi điểm.'] },
+    { id: 'F', g: 1, name: 'Khuyến mãi của tôi · voucher đã đổi', render: scrF, notes: [
+      'Voucher đổi từ điểm nằm chung với các khuyến mãi khác, thêm dòng "Đổi bằng … điểm".',
+      'Chạm vào mở màn chi tiết khuyến mãi có sẵn: mã QR, mã vạch, Sao chép, Chia sẻ.',
+      'Không làm thêm danh sách voucher riêng trong Đổi điểm, để khách chỉ có một chỗ tìm mã.'] },
+    { id: 'G', g: 1, name: 'Lịch sử điểm', render: scrG, notes: [
+      'Màn đã làm sẵn trong app (đang ẩn), thêm dòng đổi voucher.',
+      'BE cộng điểm theo tháng, nên mỗi dòng cộng là một tháng chi tiêu ("Chi tiêu tháng 10/2027"), không theo từng hóa đơn.',
+      'Hoàn tiền làm giảm điểm ("Thu hồi điểm"). Dòng đổi voucher chạm vào mở Khuyến mãi của tôi.'] },
+    { id: 'C2', g: 2, name: 'Chi tiết · chưa đủ điểm', render: scrC, notes: [
+      'Vẫn xem được chi tiết. Thanh tiến độ cho biết còn thiếu bao nhiêu điểm; nút tắt và ghi "Còn thiếu … điểm".'] },
+    { id: 'C3', g: 2, name: 'Chi tiết · dành riêng hạng Premier', render: scrC, notes: [
+      'Ưu đãi riêng theo hạng, nếu BO giữ. Hạng thấp hơn thấy khóa và câu "Ưu đãi dành riêng cho thành viên hạng Premier".',
+      'Không thêm lời mời lên hạng, như đã chốt cho màn Hạng thành viên.'] },
+    { id: 'D2', g: 2, name: 'Lỗi khi đổi · vừa hết lượt', render: scrC, overlay: function () { return confirmSheet() + alertHtml(); }, notes: [
+      'Ví dụ: ưu đãi còn 1 lượt và người khác vừa đổi trước. App báo rõ điểm chưa bị trừ.',
+      'Lỗi khác cùng kiểu: điểm vừa thay đổi (hoàn tiền), đã đổi tối đa trong tháng, mất mạng. Khi mất mạng, app hỏi lại BE trước khi báo, để không trừ điểm hai lần.'] },
+    { id: 'B2', g: 2, name: 'Đổi điểm · chưa có điểm', render: scrB, notes: [
+      'Thành viên chưa có điểm vẫn xem được ưu đãi, để biết tích điểm để đổi được gì.'] },
+    { id: 'B3', g: 2, name: 'Đổi điểm · chưa có ưu đãi', render: scrB, notes: [
+      'Khi trang quản trị chưa mở ưu đãi nào.'] }
+  ];
+  var PARENT = { S2: 'S1', B: 'A', C: 'B', C2: 'B', C3: 'B', D: 'C', D2: 'C', E: 'B', F: 'B', G: 'A', B2: 'A', B3: 'A' };
+  function screenById(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return SCREENS[i]; return null; }
+  function indexOf(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return i; return 0; }
+
+  /* ---------- rendering ---------- */
+  var screenEl = document.getElementById('screen');
+  var listEl = document.getElementById('screenList');
+  var SB_ICONS =
+    '<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>' +
+    '<svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M8 11.5l2.4-2.9a3.6 3.6 0 0 0-4.8 0z" fill="currentColor"/><path d="M3.6 6.5a6.6 6.6 0 0 1 8.8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M1 3.6a10.4 10.4 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+    '<svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".45"/></svg>';
+
+  function render(keepScroll) {
+    var scr = screenById(state.cur) || SCREENS[0];
+    var body = screenEl.querySelector('.app .body'), chipsEl = screenEl.querySelector('.chips');
+    var y = keepScroll && body ? body.scrollTop : 0, cx = keepScroll && chipsEl ? chipsEl.scrollLeft : 0;
+    screenEl.innerHTML =
+      '<div class="sb"><span class="t">9:41</span><span class="ic">' + SB_ICONS + '</span></div><div class="island"></div>' +
+      '<div class="app">' + scr.render() + '</div>' + (scr.overlay ? scr.overlay() : '') +
+      '<div class="toast" id="toast" role="status"></div>';
+    if (keepScroll) {
+      var b = screenEl.querySelector('.app .body'); if (b) b.scrollTop = y;
+      var ch = screenEl.querySelector('.chips'); if (ch) ch.scrollLeft = cx;
+    }
+    state.anim = false;
+    updateSide(scr);
+  }
+  function show(id, mode) {
+    if (mode === 'push' && state.cur) state.stack.push({ id: state.cur, rid: state.rid });
+    if (mode === 'root') state.stack = [];
+    state.cur = id;
+    state.anim = id === 'S2' || id === 'D' || id === 'E';
+    render(false);
+  }
+  function back() {
+    var prev = state.stack.pop();
+    if (prev) { state.cur = prev.id; state.rid = prev.rid; }
+    else if (PARENT[state.cur]) state.cur = PARENT[state.cur];
+    else { toast('Quay lại tab Hồ Sơ Của Tôi (ngoài phạm vi prototype)'); return; }
+    state.busy = false; state.alert = false;
+    render(false);
+  }
+  /* Back to an earlier screen in the stack, or to it as a new root (with A under B). */
+  function popTo(id, silent) {
+    while (state.stack.length && state.stack[state.stack.length - 1].id !== id) state.stack.pop();
+    var top = state.stack.pop();
+    if (top) { state.cur = top.id; state.rid = top.rid; }
+    else { state.cur = id; state.stack = id === 'B' ? [{ id: 'A', rid: state.rid }] : []; }
+    if (!silent) render(false);
+  }
+  var toastTimer;
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { var t = document.getElementById('toast'); if (t) t.classList.remove('on'); }, 2300);
+  }
+
+  function firstWith(status) { for (var i = 0; i < REWARDS.length; i++) if (rstatus(REWARDS[i]) === status) return REWARDS[i].id; return null; }
+  /* Opening a screen from the list or the pager puts the sample in the state that screen shows. */
+  function prepare(id) {
+    state.alert = false; state.busy = false;
+    state.empty = id === 'B3';
+    if (id === 'B2') state.points = 0;
+    if ((id === 'C' || id === 'D') && rstatus(byId(state.rid)) !== 'ok') {
+      var k = firstWith('ok');
+      if (!k) { state.points = 86500; k = firstWith('ok') || 'v20'; }
+      state.rid = k;
+    }
+    if (id === 'C2') { if (state.points >= 50000) state.points = 36500; state.rid = 'v50'; }
+    if (id === 'C3') { if (state.tier === 'premier') state.tier = 'pro'; state.rid = 'vitd'; }
+    if (id === 'D2') { if (state.points < 60000) state.points = 86500; state.rid = 'tele'; state.soldOut.tele = true; }
+    if (id === 'E' && !state.last) { if (rstatus(byId('v50')) !== 'ok') state.points = 86500; state.rid = 'v50'; redeem(byId('v50')); }
+  }
+
+  function confirmRedeem() {
+    if (state.busy) return;
+    state.busy = true;
+    render(true);
+    setTimeout(function () {
+      state.busy = false;
+      var r = byId(state.rid);
+      if (rstatus(r) !== 'ok') { state.cur = 'D2'; render(true); return; }
+      redeem(r);
+      popTo('B', true);
+      show('E', 'push');
+    }, 900);
+  }
+
+  function doAct(act, d) {
+    switch (act) {
+      case 'reward':
+        state.rid = d.id;
+        var st = rstatus(byId(d.id));
+        show(st === 'short' ? 'C2' : st === 'locked' ? 'C3' : 'C', 'push');
+        break;
+      case 'cat': state.cat = d.cat; render(true); break;
+      case 'afford': state.afford = !state.afford; render(true); break;
+      case 'clearFilter': state.cat = 'all'; state.afford = false; render(true); break;
+      case 'confirm': confirmRedeem(); break;
+      case 'alertClose': back(); break;
+      case 'done': popTo('B'); break;
+      case 'toWallet': popTo('B', true); show('F', 'push'); break;
+      case 'toast': toast(d.msg); break;
+    }
+  }
+
+  screenEl.addEventListener('click', function (e) {
+    var t = e.target.closest('button');
+    if (!t || !screenEl.contains(t) || t.disabled) return;
+    if (t.hasAttribute('data-back')) { back(); return; }
+    if (t.dataset.act) { doAct(t.dataset.act, t.dataset); return; }
+    if (t.dataset.go) show(t.dataset.go, 'push');
+  });
+
+  function buildList() {
+    var html = '';
+    GROUPS.forEach(function (g, gi) {
+      html += '<h3>' + g + '</h3>';
+      SCREENS.filter(function (s) { return s.g === gi; }).forEach(function (s) {
+        html += '<button type="button" class="item" data-id="' + s.id + '"><span class="code">' + s.id + '</span><span>' + s.name + '</span></button>';
+      });
+    });
+    listEl.innerHTML = html;
+  }
+  listEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.item');
+    if (!b) return;
+    prepare(b.dataset.id);
+    show(b.dataset.id, 'root');
+    if (document.body.classList.contains('narrow')) document.getElementById('deviceWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function updateSide(scr) {
+    var items = listEl.querySelectorAll('.item');
+    for (var i = 0; i < items.length; i++) items[i].setAttribute('aria-current', items[i].dataset.id === scr.id ? 'true' : 'false');
+    document.getElementById('notesTitle').innerHTML = '<span class="code">' + scr.id + '</span>' + esc(scr.name);
+    document.getElementById('notesGroup').textContent = GROUPS[scr.g];
+    document.getElementById('notes').innerHTML = scr.notes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+    var idx = indexOf(scr.id);
+    document.getElementById('pagerLabel').textContent = scr.id + ' · ' + (idx + 1) + '/' + SCREENS.length;
+    document.getElementById('prevBtn').disabled = idx === 0;
+    document.getElementById('nextBtn').disabled = idx === SCREENS.length - 1;
+    var tb = document.querySelectorAll('#tierCtl button');
+    for (i = 0; i < tb.length; i++) tb[i].setAttribute('aria-pressed', tb[i].dataset.tier === state.tier ? 'true' : 'false');
+    var pb = document.querySelectorAll('#ptsCtl button');
+    for (i = 0; i < pb.length; i++) pb[i].setAttribute('aria-pressed', +pb[i].dataset.pts === state.points ? 'true' : 'false');
+    document.getElementById('ptsNow').textContent = 'Đang chọn: ' + TIERS[state.tier].name + ' (hoàn ' + TIERS[state.tier].rate + '%), ' + n(state.points) + ' điểm. Đổi xong một ưu đãi thì số điểm giảm theo.';
+    if (history.replaceState) history.replaceState(null, '', '#' + scr.id);
+  }
+  function step(delta) {
+    var idx = indexOf(state.cur) + delta;
+    if (idx < 0 || idx >= SCREENS.length) return;
+    var id = SCREENS[idx].id;
+    prepare(id);
+    show(id, 'root');
+  }
+  document.getElementById('prevBtn').addEventListener('click', function () { step(-1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { step(1); });
+  document.addEventListener('keydown', function (e) {
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+  document.getElementById('tierCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.tier = b.dataset.tier; render(true);
+  });
+  document.getElementById('ptsCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.points = +b.dataset.pts; render(true);
+  });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    state = initial();
+    render(false);
+    toast('Đã đặt lại dữ liệu mẫu');
+  });
+
+  /* ---------- fit the phone to the window ---------- */
+  var wrap = document.getElementById('deviceWrap');
+  var device = document.getElementById('device');
+  function fit() {
+    var narrow = window.innerWidth < 900;
+    document.body.classList.toggle('narrow', narrow);
+    var W = narrow ? 390 : 414, H = narrow ? 844 : 868;
+    var s = narrow ? Math.min(1, (window.innerWidth - 16) / W) : Math.min(1, Math.max(0.6, (window.innerHeight - 96) / H));
+    device.style.transform = 'scale(' + s + ')';
+    wrap.style.width = (W * s) + 'px';
+    wrap.style.height = (H * s) + 'px';
+  }
+  window.addEventListener('resize', fit);
+
+  /* ---------- start ---------- */
+  buildList();
+  var start = (location.hash || '').replace('#', '');
+  if (screenById(start)) { prepare(start); state.cur = start; }
+  fit();
+  render(false);
+})();
+</script>
+</body>
+</html>
