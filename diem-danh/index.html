@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<title>DIAG · Điểm danh — prototype bản 1</title>
+<style>
+:root{--mark:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAB4CAYAAAAT1Md9AAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAbqADAAQAAAABAAAAeAAAAACbT1mhAAAIGElEQVR4Ae2d/XHbOBDFrZv8H3dwSAXRVXBMBadUELmC+CqwXEGcCixXEF8Fkis4pQLxKohSge89BbRgWvzehSB5MYMBSOwugPcjQEpinNGZcHp8fHQImQmHbRMuD4w2qOej0YjlSaaR5KwA7QrxZpIxBWLliMH83ZcrlKtjhyoN7hGiHEvaAsRgH5CXAJkfy8A5TjFwfotcH9PkS2MlSEKcAyLrSScDtx9PjtNfke9TXYkGbj+48Ow9IQLgMjx56Ppvhx7AEfQ/wRgXuBWskaepjNfAtSfhYHqbCkAD1x5cYRkCzIqTsUsD119xB9cFViBXIetRk4EbLvcUIf4FvMvhodpHMHDttaqzPEfjF8BbxFp9Bq4OR/e2DC6EN+3u2s3DwHXTq421g9Et4PF7W7Vk4NSkPZsBHu99TqMLA6eh6i7mGNWFBjwDtxNZq+Y8PEIUSwZOTMraQA6tXHli8Axcrd6ijfzIIAbPwImyaQwmBs/ANWotbiACTwyc/8ExF5/maQYkvG9DnjbFwHl9P6LMfd2KegUcmnnPI8TOSewX8M49Czt4ASiC86HHvv4eJeu9BPKxNAu+HsELvlM6GXBNswbYDDYE+Bcy6ymlvwHvJqUBJTkWQHTIU+Q1ciopS1KsVAcFahnyIgF6a4wh1e08VXxnZxCNq3CBfMj0JV2FEh8ZqB16C80Slyjd4QHeOfLNgZbemv03qSP+VIlOL9FpY8dNAwva+Up4HhxHq2IuE3TG7ctF6/RXR9eY8yxan5go37uQTj8QcBxtEqWO0DfvfWvkmIlzdqWh6ByiI24vWulGZ9TtomJSnBu/ooqZbutGJ/mVl+T2WB7z2/KJmMfYtjbI/HaD/xAkVuJDkqvqTBJcVR8ncx7wLjGZmPAqXzgycB0vKw/vrqNbX/PKVWfg+knKlbfq59rZa7rPw8DtU6XhHO95MOE9L28wlWj+jHvdeTmQgSsr0vIY8HKYXrQ0H2JGaNNyAANXVqTDMeAtYR7jYYU/RT1LBu6ZHL0OZvDKe3m2d8qwXWahuYEL1ehR9/e7GFumgevBp9bFb5nLWqPhjZ/CELbiQjWG1bVXHb8zdcUQDVyhxMDSP2VqfzCfFMM0cIUSMuVcJkxllKenSwNXqVH3hgj3unExqjf+U/lnnHDFyZ7li0/3PePsc+PjcO3PHPucSud+4vjGb2mlJtHDfxAtE424C8afl8aYw2qEyhznnz2x7OxOrrbBjP7QhOcXwhr9aF3I23cwuVW+Fmi8CinmhBWthIuCF8dKKz7ivmfs13iPIzztxO1SK40Z+DWC0xI0jHsfHgjXHeMZOGFVGc7fQzcKoRmSDyjnBk5JXYR90At95gycnrq5XmgDp6it6pOlbZWK5LTucRyybZWK4HLF2PZUqSiu5oqzrVIRnGbot/ZUqSmvYmwDpyiuZmgDp6muXuz/DJyeuE4vtH1XqantuWLwja04PXWdXugzA6coria43FacHrntL9VK4Td852SB4JlSBymGfaf5zkkxYej6WNSlS4x/9AZBPyLfIP8u0EEmEGNfCH59tNrX0OEcY/D/gcs7+PQyBbOsl2M7p60ObzARTmjazqfaCoN1aF1XWwxq4Z8G1H7Fe9AAS86T0rHkIXnZl8ySigaxnt44Ds5JVbe/rNvDiZScPg52njGqTjhsGG7FAwMXSiJTv5QJUxllyRYDV6lP74Y/e3s2O678M4mBa9aqvQW2ySmsXXuPzpbbbZJetuI6a1frcFXbOrzx6Q1pAzdczG2ECKuNL9reF8M1cIUSA0r/GTbaauNQDdwAYIHrDHUXHGtUn1Ybgxu4gRJjtWUI8WlgmCb3DbbJeWhk4EI1Otb9Fnnb0a2P+bPVxgAGro+MO58Zqm53qFa7Lkc2cGVFWh5jtfFhRHuL5GiW2CZzVsJk4EI1WtYBjcBmLc2Hmt3tC2Dg9qlScw7Qxmie15hINuXlh5IiuIErlGhRAloGs0ULUymTF/e2IrCBK5RoKP32SGjnDaZSzZWrjR1IgtsgHrNGetAI2jYmoF3Bdt7WXsiucrUJxd+FwQQvkaXTAgFjXeW7yaDGfpFvkWOn22cD2XMw2nNu0CnMkCKLCb3vUXjQAFs6Yx4ZTCmgQ46d3h1q3rEnKtYfLzzkL8iHSjOxybyWQCA1RV4fihj7fi1ai8wTgvGv8y2QD51c2wnxhdhXmUCI9+Ep8ifkMfKh03WX+5r4w8mhZ1/Xv4dFSIQ1QSa8FBJf+OUb5a3TSYMLQBEWX1JlmQqsAlKOyocuq42O4uAgVoa4Djl2IhDm331JSA455bTB4Hr94VPRexygXWEgs5SVSmxsF11XWjF+sRXnt6UfRWArGxW4BrRZo1WFgeR3ldymLLVTYBA0diEJrt2QzWowNAMX/yISgWbg4oITg8Zhiz5VxtXhqHrb/l8BkiM2cJJqvozFz2kfR7/+Z8eXrQPOGLgB4jW4fkf7BNDyBrtezfZU2Uu2RqevsMi0oLF3W3GNDDoZcGvk/WzeyauHsYHrIVqFyxLnLzRXWdivbZWhGv3qXGUE9iEWNA7TwPWDVXjxXvYOwObFiVilbZX9lF7C7QLA8n7uw71sxXXTcAnzDwDGnHdzlbW2FdesJ+9h98h3gLVsNo9jYeCqdc7RdId8A2CEl1QycM9xEBBh8eWd5fOmtI4M3K+/g/lwDLDCS0fs1QUGxesLaxSO9UQTV9QKmd8jLplT3AYxrsYkDc6hx2/I48ae5Q3yICTrzD99yfoKkFieRPofiyFof+A36lIAAAAASUVORK5CYII=")}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#E8EDF4;color:#0F1C2A;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input{font:inherit;color:inherit}
+
+/* ---------- page ---------- */
+.page{max-width:1240px;margin:0 auto;padding:28px 32px 48px;display:flex;gap:48px;align-items:flex-start}
+.stage{position:sticky;top:20px;display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0}
+.device-wrap{position:relative}
+.device{position:absolute;left:0;top:0;transform-origin:0 0;width:414px;height:868px;padding:12px;border-radius:68px;background:#10161D;box-shadow:0 30px 60px rgba(15,28,42,.28),inset 0 0 0 2px #2B3743}
+.screen{position:relative;width:390px;height:844px;border-radius:56px;overflow:hidden;background:#F3F8FC;isolation:isolate}
+.pager{display:flex;align-items:center;gap:10px}
+.pager button{height:40px;padding:0 16px;border-radius:20px;border:1px solid #C9D3DF;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.pager button:disabled{opacity:.45;cursor:default}
+.pager span{min-width:96px;text-align:center;font-size:14px;font-weight:600;color:#3B444D}
+.side{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.intro h1{margin:0 0 6px;font-size:30px;line-height:36px;letter-spacing:-.3px}
+.intro p{margin:0;font-size:15px;line-height:22px;color:#4A535C;max-width:640px}
+.intro p+p{margin-top:6px}
+.ver{display:inline-block;margin-right:6px;padding:1px 8px;border-radius:9px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;vertical-align:1px}
+.panel{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 1px 2px rgba(15,28,42,.06)}
+.panel h2{margin:0 0 8px;font-size:17px}
+.panel ul,.panel ol{margin:0;padding-left:20px;font-size:14px;line-height:21px;color:#3B444D}
+.panel li+li{margin-top:5px}
+.panel li b{color:#0F1C2A}
+.list{padding:6px 8px 8px}
+.list h3{margin:10px 10px 4px;font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:#5E666E}
+.item{width:100%;display:flex;align-items:center;gap:12px;padding:9px 10px;border:0;border-radius:12px;background:transparent;text-align:left;font-size:15px;font-weight:600;cursor:pointer}
+.item:hover{background:#F1F5FA}
+.item .code{min-width:36px;height:28px;padding:0 6px;border-radius:8px;background:#EEF1F4;color:#4A535C;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.item[aria-current="true"]{background:#E6F0FE}
+.item[aria-current="true"] .code{background:#0766F7;color:#fff}
+.notes-title{display:flex;align-items:center;gap:8px}
+.notes-title .code{min-width:32px;height:24px;padding:0 6px;border-radius:7px;background:#0766F7;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.notes-group{margin:-2px 0 8px;font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#5E666E}
+.ctlrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ctlrow+.ctlrow{margin-top:10px}
+.ctlrow .lab{width:76px;font-size:14px;font-weight:600;color:#4A535C}
+.segc{display:inline-flex;flex-wrap:wrap;padding:3px;border-radius:12px;background:#EEF1F4;gap:3px}
+.segc button{min-width:34px;height:34px;padding:0 12px;border:0;border-radius:9px;background:transparent;font-size:14px;font-weight:600;color:#3B444D;cursor:pointer}
+.segc button[aria-pressed="true"]{background:#fff;color:#0F1C2A;box-shadow:0 1px 3px rgba(15,28,42,.14)}
+.minib{height:38px;padding:0 14px;border-radius:12px;border:1px solid #C9D3DF;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.ctlnote{margin:10px 0 0;font-size:13px;line-height:19px;color:#5E666E}
+.reset{align-self:flex-start;height:44px;padding:0 18px;border-radius:14px;border:1px solid #C9D3DF;background:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.foot{margin:0;font-size:12px;line-height:18px;color:#5E666E}
+body.narrow .page{flex-direction:column;align-items:center;padding:12px 8px 40px;gap:18px}
+body.narrow .stage{position:static}
+body.narrow .device{padding:0;background:none;box-shadow:none;border-radius:0;width:390px;height:844px}
+body.narrow .screen{border-radius:28px;box-shadow:0 10px 30px rgba(15,28,42,.18)}
+body.narrow .island{display:none}
+body.narrow .side{width:100%;max-width:560px}
+body.narrow .intro h1{font-size:24px;line-height:30px}
+
+/* ---------- phone chrome ---------- */
+.sb{position:absolute;left:0;right:0;top:0;height:50px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;pointer-events:none;color:#0F1C2A}
+.sb.light{color:#fff}
+.sb .t{font-size:16px;font-weight:600}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:122px;height:35px;border-radius:18px;background:#000;z-index:51;pointer-events:none}
+.toast{position:absolute;left:50%;bottom:118px;transform:translateX(-50%);background:rgba(15,28,42,.94);color:#fff;font-size:14px;line-height:19px;font-weight:500;padding:10px 16px;border-radius:14px;width:max-content;max-width:320px;text-align:center;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+
+/* ---------- app ---------- */
+.app{position:absolute;inset:0;display:flex;flex-direction:column;background:#F3F8FC;color:#0F1C2A;font-size:15px;line-height:1.3}
+:where(.app,.ov) button{border:0;background:none;padding:0;margin:0;text-align:inherit;cursor:pointer;font:inherit;color:inherit}
+.app button:focus-visible,.ov button:focus-visible{outline:2px solid #0766F7;outline-offset:2px}
+.app button:disabled,.ov button:disabled{cursor:default}
+.rnd{font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.hdr{flex-shrink:0;position:relative;z-index:2;background:#fff;box-shadow:0 5px 10px rgba(15,28,42,.08);padding:54px 14px 14px;display:flex;align-items:center;gap:12px}
+.hdr .bk,.hdr .act{width:38px;height:38px;border-radius:12px;background:#E6F0FE;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hdr h1{margin:0;flex:1;min-width:0;font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:0 0 30px;display:flex;flex-direction:column;scrollbar-width:none}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex-shrink:0}
+.spin{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(11,42,107,.28);border-top-color:#0B2A6B;border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* DIAG Points coin */
+.coin{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFEB99 0%,#FFC21F 52%,#F0A800 100%);box-shadow:inset 0 -1.5px 0 #D38600;flex-shrink:0}
+.coin i{display:block;width:50%;height:55%;background:var(--mark) center/contain no-repeat;filter:drop-shadow(0 1px 0 rgba(122,74,0,.6))}
+.coin.fly{position:absolute;z-index:46;pointer-events:none}
+.floatpts{position:absolute;z-index:46;width:80px;text-align:center;font-size:20px;font-weight:800;color:#E08600;text-shadow:0 1px 0 #fff,0 0 6px #fff;pointer-events:none;animation:floatUp 1.3s ease-out both}
+@keyframes floatUp{0%{transform:translateY(10px) scale(.7);opacity:0}20%{transform:translateY(0) scale(1.12);opacity:1}100%{transform:translateY(-36px) scale(1);opacity:0}}
+
+/* points band */
+.pband{position:relative;height:220px;padding:18px 20px 0;overflow:hidden;background:linear-gradient(180deg,#0A45C4 0%,#0766F7 60%,#3B8CFF 100%);color:#fff}
+.pband .glow{position:absolute;left:238px;top:-12px;width:180px;height:180px;border-radius:90px;background:radial-gradient(circle,rgba(255,255,255,.3) 0%,rgba(255,255,255,0) 68%)}
+.pband .deco{position:absolute}
+.pband .spark{position:absolute;opacity:.6}
+.plabel{position:relative;font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+.prow{position:relative;display:flex;align-items:center;gap:10px;height:50px;margin-top:6px}
+.prow .coin{box-shadow:inset 0 -2px 0 #D38600,0 2px 0 #B87400}
+.pnum{display:inline-block;transform-origin:left center;font-size:42px;font-weight:800;letter-spacing:-.5px}
+.punit{font-size:18px;font-weight:800;margin-left:6px}
+.pchip{position:relative;display:inline-flex;align-items:center;gap:6px;height:32px;margin-top:14px;padding:0 10px 0 12px;border-radius:16px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);color:#fff;font-size:13px;font-weight:700}
+.pskel{display:inline-block;width:120px;height:34px;border-radius:10px;background:rgba(255,255,255,.25)}
+
+/* check-in card */
+.ccard{position:relative;z-index:1;margin:-52px 16px 0;min-height:300px;padding:16px;display:flex;flex-direction:column;gap:12px;background:#fff;border:1px solid #E7E8EA;border-radius:20px;box-shadow:0 10px 24px rgba(2,26,77,.12)}
+.ctitle{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px}
+.ctitle .tl{display:flex;align-items:center}
+.ctitle h2{margin:0;font-size:16px;font-weight:800}
+.infob{width:32px;height:32px;margin:-4px 0;display:flex;align-items:center;justify-content:center;border-radius:16px}
+.streak{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;border-radius:12px;background:#FFF1E6;color:#B23C00;font-size:12px;font-weight:700;white-space:nowrap}
+.streak.off{background:#F3F5F8;color:#5C6570}
+.cnote{display:flex;align-items:center;min-height:36px;padding:8px 12px;border-radius:10px;font-size:12.5px;font-weight:600;line-height:1.3}
+.cnote.blue{background:#E6F0FE;color:#0B4DB8}
+.cnote.teal{background:#E8FDFC;color:#0B6F6B}
+.cnote.amber{background:#FFF1D6;color:#7A4A00}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.dcol{display:flex;flex-direction:column;align-items:center;gap:5px}
+.dtile{position:relative;width:100%;height:62px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#F3F5F8;border:1px solid #F3F5F8}
+.dtile .amt{font-size:11px;font-weight:800;color:#5C6570}
+.dtile.big{background:linear-gradient(180deg,#FFF3C4 0%,#FFDF7E 100%);border-color:#FFD25C}
+.dtile.big .amt{color:#7A4A00}
+.dtile.done{background:#FFF6DC;border-color:#FFE3A3}
+.dtile.done .amt{color:#8A5A00}
+.dtile.today{border:2px solid #0766F7}
+.dtile.today:not(.big){background:#fff}
+.dtile.today:not(.big) .amt{color:#0766F7}
+.dtile.pulse{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(7,102,247,.4)}50%{box-shadow:0 0 0 5px rgba(7,102,247,0)}}
+.dtick{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:9px;background:#12BAB4;border:2px solid #fff;display:flex;align-items:center;justify-content:center}
+.dtile.just .dtick{animation:pop .45s cubic-bezier(.2,1.6,.4,1) .2s both}
+.dlab{height:14px;font-size:10.5px;line-height:14px;font-weight:600;color:#5C6570;white-space:nowrap}
+.dlab.today{color:#0766F7;font-weight:800}
+.dlab.tmr{color:#0F1C2A;font-weight:700}
+.cta{width:100%;height:46px;border-radius:23px;display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;text-align:center}
+.cta.gold{background:linear-gradient(180deg,#FFE17A 0%,#FFB300 100%);box-shadow:0 4px 0 #D38600,0 10px 18px rgba(211,134,0,.25);color:#0B2A6B;font-size:15px;font-weight:800;letter-spacing:.2px;text-transform:uppercase}
+.cta.gold:active{transform:translateY(2px);box-shadow:0 2px 0 #D38600}
+.cta.gold[aria-busy="true"]{opacity:.8;text-transform:none}
+.cta.done{background:#F3F5F8;color:#5C6570;font-size:14px;font-weight:700}
+.remind{display:flex;align-items:center;gap:8px;width:100%;min-height:30px;color:#5C6570;font-size:12.5px;text-align:left}
+.sw{display:flex;width:38px;height:22px;padding:2px;border-radius:11px;background:#CFD2D4;flex-shrink:0;transition:background .2s}
+.sw i{display:block;width:18px;height:18px;border-radius:9px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw.on{background:#0766F7}
+.sw.on i{transform:translateX(16px)}
+.skel{background:#EEF1F5;border-radius:10px}
+.pulsebg{animation:breathe 1.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.55}}
+.cerr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center}
+.cerr .eic{width:52px;height:52px;margin-bottom:4px;border-radius:26px;background:#E6F0FE;display:flex;align-items:center;justify-content:center}
+.cerr b{font-size:15px}
+.cerr span{font-size:12.5px;color:#5C6570}
+.retry{display:flex;align-items:center;gap:6px;height:40px;margin-top:8px;padding:0 18px;border:1.5px solid #0766F7 !important;border-radius:20px;color:#0766F7 !important;font-size:14px;font-weight:700}
+
+/* lucky wheels */
+.sec{display:flex;align-items:center;gap:8px;margin:26px 16px 12px}
+.sec h2{margin:0;font-size:18px;font-weight:800}
+.cnt{min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#E6F0FE;color:#0766F7;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.mylink{margin-left:auto;display:flex;align-items:center;gap:5px;height:34px;color:#0766F7;font-size:13.5px;font-weight:700}
+.rbadge{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#E8412C;color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.ev{margin:0 16px;background:#fff;border:1px solid #E7E8EA;border-radius:20px;overflow:hidden;box-shadow:0 4px 10px rgba(15,28,42,.07)}
+.ev+.ev{margin-top:14px}
+.evart{position:relative;height:179px;overflow:hidden}
+.dtag{position:absolute;left:149px;top:0;width:60px;height:20px;border-radius:0 0 10px 10px;background:#fff;color:#0766F7;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.evrow{display:flex;align-items:center;gap:12px;padding:14px}
+.evrow .col{flex:1;min-width:0}
+.evname{font-size:16px;font-weight:800}
+.evchips{display:flex;gap:6px;margin-top:8px}
+.evchip{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:11px;font-size:11px;font-weight:700;white-space:nowrap}
+.join{flex-shrink:0;height:40px;padding:0 16px;border-radius:20px;background:linear-gradient(180deg,#FFE17A 0%,#FFB300 100%);color:#0B2A6B;font-size:14px;font-weight:800;display:flex;align-items:center}
+.join.elite{background:linear-gradient(180deg,#FFE9A6 0%,#D4A017 100%);color:#0A1640}
+.evrem{flex-shrink:0;height:40px;padding:0 14px;border-radius:20px;border:1.5px solid #C2185B !important;color:#C2185B !important;font-size:14px;font-weight:700;display:flex;align-items:center;gap:5px}
+.evrem.on{background:#C2185B !important;color:#fff !important}
+.empty{margin:0 16px;padding:22px;border-radius:20px;background:#fff;border:1px solid #E7E8EA;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.empty b{font-size:15px}
+.empty span{font-size:13px;line-height:1.45;color:#5C6570}
+.disc{margin:26px 24px 0;font-size:11.5px;line-height:1.45;color:#5C6570;text-align:center}
+
+/* overlays */
+.ov{position:absolute;inset:0;z-index:40}
+.scrim{position:absolute;inset:0;width:100%;height:100%;background:rgba(15,28,42,.45)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:8px 20px 34px;box-shadow:0 -8px 30px rgba(15,28,42,.18);display:flex;flex-direction:column;gap:16px}
+.sheet.anim{animation:up .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(60px);opacity:.3}to{transform:none;opacity:1}}
+.grab{width:36px;height:5px;border-radius:3px;background:#D5D9DD;align-self:center;flex-shrink:0}
+.shead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.shead h2{margin:0;font-size:19px;font-weight:800}
+.xbtn{width:34px;height:34px;border-radius:17px;background:#F3F5F8 !important;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rtiles .dtile{height:56px;gap:3px}
+.rules{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.rules li{display:flex;gap:10px;font-size:14px;line-height:1.45}
+.rules i{width:22px;height:22px;border-radius:11px;background:#E6F0FE;color:#0766F7;font-style:normal;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn{height:50px;width:100%;border-radius:25px;background:#0766F7 !important;color:#fff !important;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.modal{position:absolute;left:28px;right:28px;top:150px;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 24px 48px rgba(2,26,77,.35);text-align:center}
+.modal.anim{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.mart{position:relative;height:176px;overflow:hidden;background:linear-gradient(180deg,#E6F0FE 0%,#FFFFFF 100%)}
+.mart .glow{position:absolute;left:77px;top:4px;width:180px;height:180px;border-radius:90px;background:radial-gradient(circle,rgba(255,214,77,.55) 0%,rgba(255,214,77,0) 68%)}
+.mart .cf{position:absolute;border-radius:2px}
+.modal.anim .cf{animation:drift 1.4s ease-out both}
+@keyframes drift{from{transform:translateY(-30px) rotate(0);opacity:0}to{opacity:1}}
+.mart .mc{position:absolute}
+.modal.anim .mc{animation:rise .6s cubic-bezier(.2,1.3,.4,1) .15s both}
+@keyframes rise{from{transform:translateY(46px) scale(.4);opacity:0}to{opacity:1}}
+.mbody{padding:6px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.mbig{font-size:38px;font-weight:800;line-height:1.1;color:#B26A00}
+.mtitle{font-size:20px;font-weight:800}
+.mtext{font-size:14px;line-height:1.45;color:#5C6570}
+.msmall{font-size:12.5px;color:#5C6570}
+.scrim2{position:absolute;inset:0;background:rgba(15,28,42,.25)}
+.ialert{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:270px;border-radius:14px;background:rgba(242,242,247,.98);overflow:hidden;text-align:center;box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.iat{padding:19px 16px 18px;display:flex;flex-direction:column;gap:4px}
+.iat b{font-size:17px;font-weight:600;line-height:22px}
+.iat span{font-size:13px;line-height:17px}
+.iab{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(60,60,67,.29)}
+.iab button{height:44px;font-size:17px;color:#007AFF !important;text-align:center !important}
+.iab button+button{border-left:1px solid rgba(60,60,67,.29) !important;font-weight:600}
+
+/* lock screen */
+.lock{position:absolute;inset:0;background:linear-gradient(160deg,#A9C8FF 0%,#6A93E8 55%,#3E5FC6 100%);color:#fff;display:flex;flex-direction:column;align-items:center}
+.lock .ld{margin-top:76px;font-size:19px;font-weight:600;opacity:.92}
+.lock .lt{margin-top:2px;font-size:86px;font-weight:300;letter-spacing:-2px;line-height:1}
+.lnotif{position:absolute;left:12px;right:12px;top:286px;display:flex;gap:10px;padding:12px;border-radius:20px;background:rgba(255,255,255,.9) !important;color:#0F1C2A !important;box-shadow:0 8px 20px rgba(2,26,77,.2);text-align:left !important}
+.appic{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#3B8CFF 0%,#0A45C4 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.appic i{display:block;width:18px;height:20px;background:var(--mark) center/contain no-repeat}
+.lnotif .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.lnotif .top{display:flex;justify-content:space-between;font-size:12px;color:#5C6570}
+.lnotif .top b{color:#0F1C2A}
+.lnotif .nt{font-size:14px;font-weight:700}
+.lnotif .nb{font-size:13px;line-height:1.35;color:#3A4550}
+.lhint{position:absolute;bottom:40px;left:0;right:0;text-align:center;font-size:13px;opacity:.85}
+
+/* home (shortened) */
+.hhead{flex-shrink:0;padding:58px 20px 16px;background:#fff;display:flex;align-items:center;gap:12px;box-shadow:0 5px 10px rgba(15,28,42,.06)}
+.av{width:44px;height:44px;border-radius:22px;background:linear-gradient(135deg,#3584FF,#0A56DB);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hhead .col{display:flex;flex-direction:column;gap:2px}
+.hhead small{font-size:13px;color:#5C6570}
+.hhead b{font-size:17px}
+.qa{margin:18px 20px 0;padding:16px 8px 10px;border-radius:22px;background:#fff;box-shadow:0 4px 11px rgba(15,28,42,.09)}
+.qa h2{margin:0 12px 10px;font-size:15px;font-weight:800}
+.qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.qi{display:flex;flex-direction:column;align-items:center;gap:7px;padding:6px 2px}
+.qtile{position:relative;width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;color:#fff}
+.qt{height:30px;font-size:11.5px;font-weight:600;line-height:15px;text-align:center}
+.qbadge{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#E8412C;border:2px solid #fff;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.qdot{position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:7px;background:#E8412C;border:2px solid #fff}
+.hrest{margin:16px 20px 0;height:300px;border-radius:20px;border:1.5px dashed #CFD6DF;display:flex;align-items:center;justify-content:center;padding:0 30px;text-align:center;color:#6F777F;font-size:13px;line-height:19px}
+
+@media (prefers-reduced-motion: reduce){.sheet.anim,.modal.anim,.modal.anim .cf,.modal.anim .mc,.dtile.pulse,.dtile.just .dtick,.pulsebg{animation:none}.spin{animation-duration:2s}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stage">
+    <div class="device-wrap" id="deviceWrap">
+      <div class="device" id="device">
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+    <div class="pager">
+      <button type="button" id="prevBtn">‹ Màn trước</button>
+      <span id="pagerLabel" aria-live="polite"></span>
+      <button type="button" id="nextBtn">Màn sau ›</button>
+    </div>
+  </div>
+
+  <aside class="side">
+    <header class="intro">
+      <h1>Điểm danh nhận DIAG Points</h1>
+      <p><span class="ver">Bản 1</span>Màn hình Thử thách có thêm điểm danh mỗi ngày. Điểm nhận được là DIAG Points (bỏ Diag Xu), cộng vào cùng số dư với thẻ ở Hồ sơ và Hạng thành viên. Vòng quay may mắn giữ nguyên bên dưới. Prototype bấm được, dữ liệu mẫu.</p>
+      <p>Bấm trực tiếp trên điện thoại để đi theo luồng, hoặc chọn màn trong danh sách; trên máy tính có thể dùng phím ← →. Dùng ô "Dữ liệu mẫu" để đổi ngày trong chuỗi, sang ngày mai hoặc bỏ lỡ một ngày.</p>
+    </header>
+
+    <section class="panel">
+      <h2>Thay đổi so với app hiện nay</h2>
+      <ul>
+        <li><b>Phần đầu màu xanh hiện số DIAG Points</b> của hồ sơ đang mở, cùng số với thẻ ở Hồ sơ và Hạng thành viên. Nút "Hạng thành viên" mở màn hình đã có.</li>
+        <li><b>Thẻ "Điểm danh mỗi ngày"</b> ngay dưới số điểm: 7 ô, ngày thứ 7 là quà lớn. Bấm nút vàng, điểm bay lên số dư.</li>
+        <li><b>Vòng quay giữ nguyên</b> bên dưới. "Quà của tôi" chuyển xuống cạnh tiêu đề "Đang diễn ra".</li>
+        <li><b>Ô Thử thách ở Trang chủ luôn mở màn này</b>, kể cả khi chỉ có 1 vòng quay (hiện nay mở thẳng vòng quay), vì điểm danh nằm ở đây. Nút nổi ở Trang chủ vẫn mở thẳng vòng quay.</li>
+        <li><b>Nhắc lúc 8:00</b> mặc định tắt, khách tự bật; chỉ nhắc vào ngày chưa điểm danh.</li>
+        <li><b>Số điểm mỗi ngày là ví dụ</b>; BO chốt, BE cấu hình trên trang quản trị.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="ctlTitle">
+      <h2 id="ctlTitle">Dữ liệu mẫu</h2>
+      <div class="ctlrow"><span class="lab">Ngày</span><div class="segc" id="dayCtl"><button type="button" data-day="1">1</button><button type="button" data-day="2">2</button><button type="button" data-day="3">3</button><button type="button" data-day="4">4</button><button type="button" data-day="5">5</button><button type="button" data-day="6">6</button><button type="button" data-day="7">7</button></div></div>
+      <div class="ctlrow"><span class="lab">Hôm nay</span><div class="segc" id="doneCtl"><button type="button" data-done="0">Chưa điểm danh</button><button type="button" data-done="1">Đã điểm danh</button></div></div>
+      <div class="ctlrow"><span class="lab">Điểm</span><div class="segc" id="ptsCtl"><button type="button" data-pts="0">0</button><button type="button" data-pts="2400">2.400</button><button type="button" data-pts="28900">28.900</button></div></div>
+      <div class="ctlrow"><span class="lab">Vòng quay</span><div class="segc" id="evCtl"><button type="button" data-ev="some">Còn lượt</button><button type="button" data-ev="zero">Hết lượt</button><button type="button" data-ev="none">Không có</button></div></div>
+      <div class="ctlrow"><span class="lab"></span><button type="button" class="minib" id="nextDayBtn">Sang ngày mai ›</button><button type="button" class="minib" id="missBtn">Bỏ lỡ 1 ngày</button></div>
+      <p class="ctlnote" id="ctlNow"></p>
+    </section>
+
+    <nav class="panel list" id="screenList" aria-label="Danh sách màn hình"></nav>
+
+    <section class="panel" aria-labelledby="notesTitle">
+      <h2 class="notes-title" id="notesTitle"></h2>
+      <p class="notes-group" id="notesGroup"></p>
+      <ul id="notes"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Cần BO trả lời</h2>
+      <ol>
+        <li><b>Số điểm mỗi ngày và quà ngày thứ 7.</b> Prototype dùng 100, 100, 150, 150, 200, 200 và 500 điểm, tức 1.400 điểm cho đủ 7 ngày (bản Đổi điểm đang giả định 1 điểm = 1đ).</li>
+        <li><b>Lỡ một ngày:</b> chuỗi bắt đầu lại từ ngày 1 như prototype, hay giữ chuỗi?</li>
+        <li><b>Theo hồ sơ hay theo tài khoản?</b> DIAG Points thuộc từng hồ sơ. Nếu điểm danh theo hồ sơ, tài khoản có 4 hồ sơ nhận 4 lần mỗi ngày (chuyển hồ sơ rồi điểm danh). Đề xuất: theo hồ sơ, nhưng BE giới hạn mỗi tài khoản một lần mỗi ngày nếu BO lo bị lạm dụng.</li>
+        <li><b>Khách chưa có hạng thành viên</b> (chưa có hóa đơn) có được điểm danh và giữ điểm không?</li>
+        <li><b>Hạn điểm:</b> điểm hết hạn 31/12 hằng năm, còn Đổi điểm dự kiến ra mắt năm 2027. Điểm danh tháng 11 và 12/2026 sẽ mất trước khi khách dùng được. Đề xuất: mở điểm danh từ 01/01/2027, hoặc giữ điểm năm 2026 đến 31/12/2027.</li>
+        <li><b>Chấm đỏ ở Trang chủ:</b> có hiện trên ô Thử thách khi hôm nay chưa điểm danh không (màn L)?</li>
+        <li><b>Nhắc điểm danh:</b> mặc định tắt (đề xuất) hay bật? Giờ cố định 8:00 hay để khách chọn?</li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Cần BE trước khi bật</h2>
+      <ul>
+        <li><b>Ngày 09/11/2026 BE chưa có điểm danh</b> (đã thử trên staging).</li>
+        <li><b>Trạng thái điểm danh:</b> chuỗi hiện tại, hôm nay đã điểm danh chưa, điểm của từng ngày. Ngày tính theo giờ Việt Nam, do máy chủ quyết, không theo giờ trên điện thoại.</li>
+        <li><b>Điểm danh:</b> mỗi ngày một lần; gửi lại khi mạng chập chờn không cộng thêm; trả về số điểm vừa nhận và số dư mới.</li>
+        <li><b>Cộng thẳng vào DIAG Points ngay.</b> Hiện số dư chỉ tính lại mỗi đêm từ chi tiêu; lần tính lại đó phải giữ điểm điểm danh.</li>
+        <li><b>Trang quản trị:</b> bật/tắt điểm danh, số điểm 7 ngày, nội dung thể lệ.</li>
+        <li><b>Tài liệu cho BE:</b> doc-context, thư mục challenge-check-in (backend-spec.md).</li>
+      </ul>
+    </section>
+
+    <button type="button" class="reset" id="resetBtn">Đặt lại dữ liệu mẫu</button>
+    <p class="foot">DIAG Patient iOS · bản thiết kế nháp, bản 1 (09/11/2026). Tên, số điểm, chương trình vòng quay và số lượt là dữ liệu mẫu.</p>
+  </aside>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- icons (24 × 24, stroked) ---------- */
+  var I = {
+    back: '<path d="M15 18l-6-6 6-6"/>',
+    chev: '<path d="M9 18l6-6-6-6"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.7v.1"/>',
+    hist: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><path d="M12 8v4.2l2.8 1.8"/>',
+    bell: '<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
+    gift: '<rect x="3.5" y="8" width="17" height="4.5" rx="1"/><path d="M5.5 12.5V20h13v-7.5"/><path d="M12 8v12"/><path d="M12 8C10.5 5 7 4.5 7 6.8 7 8 9 8 12 8zM12 8c1.5-3 5-3.5 5-1.2C17 8 15 8 12 8z"/>',
+    medal: '<circle cx="12" cy="14.5" r="5.5"/><path d="M8.6 10.2L6.5 3.5h3.8l1.7 3.6 1.7-3.6h3.8l-2.1 6.7"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>',
+    ticket: '<path d="M3.5 8.5V6.5a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v2a2.5 2.5 0 0 0 0 5v2a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-2a2.5 2.5 0 0 0 0-5z"/>',
+    cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+    calplus: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/>',
+    doc: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+    tag: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+    wifi: '<path d="M2.5 8.8a14 14 0 0 1 19 0"/><path d="M5.6 12.2a9.5 9.5 0 0 1 12.8 0"/><path d="M8.8 15.5a5 5 0 0 1 6.4 0"/><path d="M12 19.2v.1"/><path d="M3.5 3.5l17 17"/>',
+    retry: '<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>',
+    shield: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/>'
+  };
+  function ic(name, size, color, width) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + (color || 'currentColor') + '" stroke-width="' + (width || 2) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[name] + '</svg>';
+  }
+  function flame() { return '<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c.9 3 4.6 4.8 4.6 9.2a4.6 4.6 0 0 1-9.2 0c0-1.8.8-3.1 1.7-4.1.2 1.6 1.1 2.5 2.2 2.5 0-2.8-.6-5 .7-7.6z" fill="currentColor"/></svg>'; }
+  function spark(x, y, s, o) { return '<svg class="spark" width="' + s + '" height="' + s + '" viewBox="0 0 24 24" aria-hidden="true" style="left:' + x + 'px;top:' + y + 'px;opacity:' + o + '"><path d="M12 1.5l2.2 8.3 8.3 2.2-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z" fill="#fff"/></svg>'; }
+  function coin(size, cls, extra) { return '<span class="coin' + (cls ? ' ' + cls : '') + '" style="width:' + size + 'px;height:' + size + 'px' + (extra || '') + '" aria-hidden="true"><i></i></span>'; }
+  function giftSvg(w, h, open, light) {
+    var base = '<rect x="18" y="50" width="84" height="52" rx="8" fill="#2567F0"/><path d="M60 50h34a8 8 0 0 1 8 8v36a8 8 0 0 1-8 8H60z" fill="#1A52D0"/><rect x="52" y="50" width="16" height="52" fill="' + (light ? '#FFF3C4' : '#FFC21F') + '"/>';
+    var lid = '<rect x="12" y="36" width="96" height="20" rx="6" fill="#3A82FF"/><rect x="52" y="36" width="16" height="20" fill="' + (light ? '#FFF3C4' : '#FFD64D') + '"/><path d="M60 36c-5-13-23-18-24-8-1 6 9 8 24 8z" fill="' + (light ? '#FFFFFF' : '#FFC21F') + '"/><path d="M60 36c5-13 23-18 24-8 1 6-9 8-24 8z" fill="' + (light ? '#FFF3C4' : '#F0A800') + '"/>' + (light ? '' : '<circle cx="60" cy="35" r="6" fill="#FFD64D"/>');
+    if (open) lid = '<g transform="translate(-6 -20) rotate(-16 12 46)">' + lid + '</g>';
+    return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 120 110" aria-hidden="true" style="overflow:visible">' + base + lid + '</svg>';
+  }
+  function giftFilled(size) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5h18V12H3zM4.5 12h15v8.5h-15z" fill="#fff"/><path d="M11 8.5h2v12h-2z" fill="#E91E63"/><path d="M12 8.3C10.6 5.4 7.2 4.8 7.2 7c0 1.2 1.9 1.3 4.8 1.3zM12 8.3c1.4-2.9 4.8-3.5 4.8-1.3 0 1.2-1.9 1.3-4.8 1.3z" fill="#fff"/></svg>';
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function n(v) { return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- sample data ---------- */
+  var REWARDS = [100, 100, 150, 150, 200, 200, 500];
+  function reward(day) { return REWARDS[day - 1]; }
+  function initial() {
+    return {
+      cur: 'A', stack: [],
+      day: 4, claimed: false, broken: false, justClaimed: false,
+      points: 28900, events: 'some',
+      remind: false, perm: 'unknown',
+      load: 'ok', failNext: false, busy: false,
+      evRemind: false, anim: false
+    };
+  }
+  var state = initial();
+  function doneCount() { return state.claimed ? state.day : state.day - 1; }
+  function nextReward() { return state.day === 7 ? REWARDS[0] : REWARDS[state.day]; }
+
+  /* ---------- pieces ---------- */
+  function hubHeader() {
+    return '<header class="hdr"><button class="bk" data-back aria-label="Quay lại">' + ic('back', 20, '#0F1C2A', 2.5) + '</button><h1>Thử thách</h1>' +
+      '<button class="act" data-act="toast" data-msg="Mở Lịch sử quay (đã có trong app)" aria-label="Lịch sử quay">' + ic('hist', 19, '#0F1C2A', 2) + '</button></header>';
+  }
+  function band() {
+    var loading = state.load === 'loading';
+    return '<section class="pband"><div class="glow"></div>' +
+      coin(70, 'deco', ';left:298px;top:24px;transform:rotate(-14deg);box-shadow:inset 0 -4px 0 #D38600,0 8px 16px rgba(2,26,77,.3)') +
+      coin(42, 'deco', ';left:256px;top:112px;transform:rotate(12deg);box-shadow:inset 0 -3px 0 #D38600,0 6px 12px rgba(2,26,77,.25)') +
+      coin(30, 'deco', ';left:344px;top:124px;transform:rotate(-8deg);box-shadow:inset 0 -2px 0 #D38600,0 4px 8px rgba(2,26,77,.25)') +
+      spark(232, 30, 12, .7) + spark(226, 140, 9, .5) + spark(376, 104, 8, .55) +
+      '<div class="plabel">DIAG Points của bạn</div>' +
+      '<div class="prow">' + coin(34, 'balcoin') +
+      (loading ? '<span class="pskel"></span>' : '<span class="rnd"><span class="pnum" id="balNum">' + n(state.points) + '</span><span class="punit">điểm</span></span>') + '</div>' +
+      '<button class="pchip" data-act="toast" data-msg="Mở Hạng thành viên (đã có trong app)">' + ic('medal', 15, '#fff', 2.2) + 'Hạng thành viên' + ic('chev', 14, '#fff', 2.4) + '</button></section>';
+  }
+  function streakChip() {
+    var d = doneCount();
+    if (d === 0) return '<span class="streak' + (state.broken ? ' off' : '') + '">' + flame() + (state.broken ? 'Bắt đầu lại' : 'Chuỗi mới') + '</span>';
+    return '<span class="streak">' + flame() + 'Chuỗi ' + d + ' ngày</span>';
+  }
+  function notice() {
+    var d = state.day;
+    if (state.claimed) {
+      if (d === 7) return ['teal', 'Đủ 7 ngày rồi! Mai bắt đầu chuỗi mới'];
+      if (state.justClaimed) return ['teal', 'Thành công! +' + reward(d) + ' điểm đã vào DIAG Points'];
+      return ['teal', 'Đã điểm danh hôm nay, mai quay lại nhé!'];
+    }
+    if (state.broken) return ['amber', 'Lỡ 1 ngày nên chuỗi bắt đầu lại từ ngày 1'];
+    if (d === 7) return ['amber', 'Ngày thứ 7 rồi, mở quà 500 điểm nào!'];
+    return ['blue', 'Đủ 7 ngày liên tiếp, nhận quà 500 điểm'];
+  }
+  function tiles(forRules) {
+    var d = state.day, done = doneCount();
+    return '<div class="days' + (forRules ? ' rtiles' : '') + '">' + REWARDS.map(function (r, i) {
+      var day = i + 1, big = day === 7;
+      var isDone = !forRules && day <= done, isToday = !forRules && day === d;
+      var pending = isToday && !state.claimed, tmr = !forRules && state.claimed && d !== 7 && day === d + 1;
+      var cls = 'dtile' + (big ? ' big' : '') + (isDone ? ' done' : '') + (pending ? ' today' : '') + (pending && !state.busy ? ' pulse' : '') + (isToday && state.justClaimed ? ' just' : '');
+      var label = isToday ? 'Hôm nay' : tmr ? 'Ngày mai' : 'Ngày ' + day;
+      var lcls = 'dlab' + (isToday ? ' today' : tmr ? ' tmr' : '');
+      var sr = 'Ngày ' + day + ', ' + r + ' điểm' + (isDone ? ', đã nhận' : '') + (isToday ? ', hôm nay' : '');
+      return '<div class="dcol" role="img" aria-label="' + sr + '"><div class="' + cls + '"><span class="amt">+' + r + '</span>' +
+        (big ? giftSvg(forRules ? 24 : 28, forRules ? 22 : 26) : coin(forRules ? 20 : 22)) +
+        (isDone ? '<span class="dtick">' + ic('check', 10, '#fff', 3.5) + '</span>' : '') +
+        '</div><span class="' + lcls + '" aria-hidden="true">' + label + '</span></div>';
+    }).join('') + '</div>';
+  }
+  function cta() {
+    var d = state.day;
+    if (state.claimed) return '<div class="cta done">' + ic('check', 16, '#0E9F9A', 3) + 'Đã điểm danh · Ngày mai +' + n(nextReward()) + ' điểm</div>';
+    if (state.busy) return '<button class="cta gold" aria-busy="true" disabled><span class="spin"></span>Đang điểm danh…</button>';
+    return '<button class="cta gold" data-act="claim">' + (d === 7 ? giftSvg(22, 20, false, true) + 'Mở quà ' + reward(7) + ' điểm' : coin(20) + 'Điểm danh nhận ' + reward(d) + ' điểm') + '</button>';
+  }
+  function remindRow() {
+    return '<button class="remind" data-act="remind" role="switch" aria-checked="' + state.remind + '">' + ic('bell', 16, '#5C6570', 2) +
+      '<span style="flex:1">Nhắc tôi điểm danh lúc 8:00 mỗi ngày</span><span class="sw' + (state.remind ? ' on' : '') + '"><i></i></span></button>';
+  }
+  function cardTitle(withStreak) {
+    return '<div class="ctitle"><div class="tl"><h2>Điểm danh mỗi ngày</h2><button class="infob" data-act="rules" aria-label="Thể lệ điểm danh">' + ic('info', 16, '#5C6570', 2) + '</button></div>' + (withStreak ? streakChip() : '') + '</div>';
+  }
+  function checkInCard() {
+    if (state.load === 'loading') {
+      var sk = '';
+      for (var i = 0; i < 7; i++) sk += '<div class="dcol"><div class="dtile pulsebg"><span class="skel" style="width:24px;height:8px"></span><span class="skel" style="width:20px;height:20px;border-radius:10px"></span></div><span class="dlab"></span></div>';
+      return '<section class="ccard" aria-busy="true">' + cardTitle(false) + '<div class="skel pulsebg" style="height:36px"></div><div class="days">' + sk + '</div><div class="skel pulsebg" style="height:46px;border-radius:23px"></div>' + remindRow() + '</section>';
+    }
+    if (state.load === 'failed') {
+      return '<section class="ccard">' + cardTitle(false) + '<div class="cerr"><span class="eic">' + ic('wifi', 24, '#0766F7', 2) + '</span><b>Chưa tải được điểm danh</b><span>Kiểm tra kết nối mạng rồi thử lại nhé.</span>' +
+        '<button class="retry" data-act="retry">' + ic('retry', 15, '#0766F7', 2.4) + 'Thử lại</button></div></section>';
+    }
+    var nt = notice();
+    return '<section class="ccard">' + cardTitle(true) + '<div class="cnote ' + nt[0] + '" role="status">' + nt[1] + '</div>' + tiles(false) + cta() + remindRow() + '</section>';
+  }
+
+  /* lucky wheels: the same three sample events as the canvas */
+  var ART = {
+    summer: '<div class="evart" style="background:linear-gradient(180deg,#8ED8FF 0%,#3AAEF7 58%,#FFE3A8 58%,#FFCF73 100%)"><div style="position:absolute;left:18px;top:14px;width:56px;height:56px;border-radius:28px;background:radial-gradient(circle,#FFF6C8 0%,#FFE17A 55%,rgba(255,225,122,0) 100%)"></div><div class="dtag rnd">Diag</div><div style="position:absolute;left:64px;top:38px;width:230px;height:88px;border-radius:14px;border:2px solid rgba(255,255,255,.7);background:linear-gradient(180deg,#2F7BFF 0%,#0A45C4 100%);box-shadow:0 8px 16px rgba(2,26,77,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#fff"><div class="rnd" style="font-size:32px;font-weight:900;line-height:1">GIẢM 100K</div><div style="font-size:10.5px;font-weight:800;letter-spacing:.3px">CÁC GÓI SIÊU ÂM TỔNG QUÁT</div></div></div>',
+    elite: '<div class="evart" style="background:linear-gradient(135deg,#030A24 0%,#0B1F5C 55%,#15327F 100%)"><div class="dtag rnd">Diag</div><div style="position:absolute;left:20px;top:36px;width:112px;height:112px;border-radius:56px;border:2px solid rgba(255,224,138,.7);display:flex;align-items:center;justify-content:center"><div style="width:84px;height:84px;border-radius:42px;background:linear-gradient(135deg,#1E3A8A 0%,#3B6BD6 100%);display:flex;align-items:center;justify-content:center">' + ic('shield', 40, '#FFE08A', 1.8) + '</div></div><div style="position:absolute;left:150px;top:50px;display:flex;flex-direction:column;gap:3px"><div style="font-size:12.5px;font-weight:800;letter-spacing:.3px;color:#FFE08A">XÉT NGHIỆM TỔNG QUÁT ELITE</div><div style="font-size:10.5px;font-weight:700;color:rgba(255,224,138,.85)">GIÁ CHỈ CÒN</div><div class="rnd" style="font-size:34px;font-weight:900;color:#FFD54A">5.999.000Đ</div></div></div>',
+    mothers: '<div class="evart" style="background:linear-gradient(135deg,#BFE6FF 0%,#6EC3FF 55%,#3BA7FF 100%)"><div class="dtag rnd">Diag</div><div style="position:absolute;left:24px;top:38px;width:108px;height:108px;border-radius:54px;background:#FFE1EC;display:flex;align-items:center;justify-content:center"><svg width="52" height="52" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" fill="#E8417A"/></svg></div><div style="position:absolute;left:150px;top:46px;display:flex;flex-direction:column;align-items:flex-start;gap:8px"><div class="rnd" style="font-size:40px;font-weight:900;line-height:1;color:#fff;text-shadow:0 3px 0 rgba(10,69,196,.35)">MIỄN PHÍ</div><div style="padding:5px 10px;border-radius:12px;background:#E8417A;color:#fff;font-size:10.5px;font-weight:800">XÉT NGHIỆM TIỂU ĐƯỜNG THAI KỲ</div></div></div>'
+  };
+  function evChip(text, icon, bg, fg) { return '<span class="evchip" style="background:' + bg + ';color:' + fg + '">' + ic(icon, 11, fg, 2.6) + text + '</span>'; }
+  function spinsChip(k) { return k > 0 ? evChip(k + ' lượt', 'ticket', '#FFF3E0', '#B25400') : evChip('0 lượt', 'ticket', '#F1F2F4', '#5C6570'); }
+  function myGifts(count) {
+    return '<button class="mylink" data-act="toast" data-msg="Mở Quà của tôi (đã có trong app)">' + ic('gift', 15, '#0766F7', 2.2) + 'Quà của tôi' + (count ? '<span class="rbadge">2</span>' : '') + ic('chev', 13, '#0766F7', 2.6) + '</button>';
+  }
+  function wheels() {
+    if (state.load === 'loading') {
+      return '<div class="sec"><span class="skel pulsebg" style="width:140px;height:20px"></span></div><div class="ev pulsebg" style="height:247px;background:#EEF1F5;border-color:#EEF1F5;box-shadow:none"></div><div class="ev pulsebg" style="height:247px;background:#EEF1F5;border-color:#EEF1F5;box-shadow:none"></div>';
+    }
+    if (state.events === 'none') {
+      return '<div class="sec"><h2>Vòng quay may mắn</h2>' + myGifts(false) + '</div>' +
+        '<div class="empty"><svg width="58" height="58" viewBox="0 0 56 56" aria-hidden="true" style="margin-bottom:6px"><circle cx="28" cy="29" r="24" fill="#E6F0FE" stroke="#9DBEF5" stroke-width="2"/><path d="M28 5v48M4 29h48M11 12l34 34M45 12L11 46" stroke="#9DBEF5" stroke-width="1.6"/><circle cx="28" cy="29" r="6" fill="#fff" stroke="#9DBEF5" stroke-width="2"/><path d="M28 1l4.5 7h-9z" fill="#0766F7"/></svg>' +
+        '<b>Chưa có vòng quay nào đang diễn ra</b><span>Vòng quay mới sẽ hiện ở đây. Bạn vẫn điểm danh mỗi ngày để tích DIAG Points nhé.</span></div>';
+    }
+    var some = state.events === 'some';
+    var join = '<button class="join rnd" data-act="toast" data-msg="Mở vòng quay của chương trình (đã có trong app)">Tham gia</button>';
+    return '<div class="sec"><h2>Đang diễn ra</h2><span class="cnt">2</span>' + myGifts(true) + '</div>' +
+      '<article class="ev">' + ART.summer + '<div class="evrow"><div class="col"><div class="evname">Vòng quay mùa hè</div><div class="evchips">' + evChip('Còn 16 ngày', 'clock', '#E6F0FE', '#0766F7') + spinsChip(some ? 3 : 0) + '</div></div>' + join + '</div></article>' +
+      '<article class="ev">' + ART.elite + '<div class="evrow"><div class="col"><div class="evname">Vòng quay Elite</div><div class="evchips">' + evChip('Còn 9 ngày', 'clock', '#E8ECF7', '#1E3A8A') + spinsChip(some ? 2 : 0) + '</div></div>' + join.replace('class="join rnd"', 'class="join elite rnd"') + '</div></article>' +
+      '<div class="sec"><h2>Sắp diễn ra</h2><span class="cnt">1</span></div>' +
+      '<article class="ev">' + ART.mothers + '<div class="evrow"><div class="col"><div class="evname">Tháng của mẹ</div><div class="evchips">' + evChip('Bắt đầu 20/11/2026', 'cal', '#FCE4EC', '#B0164F') + '</div></div>' +
+      '<button class="evrem' + (state.evRemind ? ' on' : '') + '" data-act="evRemind" aria-pressed="' + state.evRemind + '">' + ic('bell', 15, 'currentColor', 2.2) + (state.evRemind ? 'Đã nhắc' : 'Nhắc tôi') + '</button></div></article>';
+  }
+  function hub() {
+    return hubHeader() + '<div class="body">' + band() + checkInCard() + wheels() +
+      '<p class="disc">DIAG Points không quy đổi thành tiền mặt. Apple không phải là nhà tài trợ và không liên quan đến các chương trình này.</p></div>';
+  }
+
+  /* overlays */
+  function rulesSheet() {
+    var rules = [
+      'Mỗi ngày bạn điểm danh được một lần. Ngày mới bắt đầu lúc 0:00 (giờ Việt Nam).',
+      'Điểm danh liên tiếp để nhận nhiều điểm hơn. Ngày thứ 7 nhận quà 500 điểm.',
+      'Lỡ một ngày, chuỗi bắt đầu lại từ ngày 1. Sau ngày thứ 7, chuỗi mới bắt đầu từ ngày 1.',
+      'Điểm được cộng ngay vào DIAG Points của hồ sơ đang mở. Mỗi hồ sơ có chuỗi điểm danh riêng.',
+      'Điểm chưa dùng sẽ hết hạn vào ngày 31/12 hằng năm.',
+      'DIAG Points không quy đổi thành tiền mặt.'
+    ];
+    return '<div class="ov"><button class="scrim" data-back aria-label="Đóng"></button><div class="sheet' + (state.anim ? ' anim' : '') + '" role="dialog" aria-label="Thể lệ điểm danh"><span class="grab"></span>' +
+      '<div class="shead"><h2>Thể lệ điểm danh</h2><button class="xbtn" data-back aria-label="Đóng">' + ic('close', 16, '#0F1C2A', 2.4) + '</button></div>' +
+      '<div><div style="font-size:14px;font-weight:800;margin-bottom:10px">Điểm thưởng mỗi ngày</div>' + tiles(true) + '</div>' +
+      '<ol class="rules">' + rules.map(function (r, i) { return '<li><i>' + (i + 1) + '</i><span>' + r + '</span></li>'; }).join('') + '</ol>' +
+      '<button class="btn" data-back>Đã hiểu</button></div></div>';
+  }
+  function day7Modal() {
+    var cf = [[40, 30, 8, 14, '#0766F7', -24], [72, 100, 7, 12, '#12BAB4', 18], [262, 36, 8, 14, '#E8412C', 30], [288, 108, 7, 12, '#FFB300', -12], [108, 20, 7, 7, '#FFB300', 0], [230, 18, 7, 7, '#0766F7', 0], [56, 64, 6, 6, '#E8412C', 0], [270, 76, 6, 6, '#12BAB4', 0]];
+    return '<div class="ov"><div class="scrim"></div><div class="modal' + (state.anim ? ' anim' : '') + '" role="dialog" aria-label="Chúc mừng bạn"><div class="mart"><div class="glow"></div>' +
+      cf.map(function (c, i) { return '<span class="cf" style="left:' + c[0] + 'px;top:' + c[1] + 'px;width:' + c[2] + 'px;height:' + c[3] + 'px;background:' + c[4] + ';transform:rotate(' + c[5] + 'deg);animation-delay:' + (i * 0.05) + 's"></span>'; }).join('') +
+      '<span style="position:absolute;left:103px;top:59px">' + giftSvg(128, 117, true) + '</span>' +
+      coin(32, 'mc', ';left:118px;top:46px;transform:rotate(-16deg);box-shadow:inset 0 -2px 0 #D38600,0 4px 8px rgba(150,90,0,.3)') +
+      coin(40, 'mc', ';left:148px;top:14px;box-shadow:inset 0 -3px 0 #D38600,0 4px 10px rgba(150,90,0,.3)') +
+      coin(28, 'mc', ';left:190px;top:50px;transform:rotate(14deg);box-shadow:inset 0 -2px 0 #D38600,0 4px 8px rgba(150,90,0,.3)') +
+      '</div><div class="mbody"><div class="mbig rnd">+' + reward(7) + ' điểm</div><div class="mtitle">Chúc mừng bạn!</div>' +
+      '<div class="mtext">Bạn đã điểm danh đủ 7 ngày liên tiếp. ' + reward(7) + ' điểm đã được cộng vào DIAG Points.</div><div class="msmall">Ngày mai bắt đầu chuỗi mới.</div>' +
+      '<button class="btn" data-act="modalDone" style="margin-top:10px">Tuyệt vời</button></div></div></div>';
+  }
+  function permAlert() {
+    return '<div class="ov"><div class="scrim2"></div><div class="ialert" role="alertdialog" aria-label="Cho phép thông báo"><div class="iat"><b>“DIAG” muốn gửi thông báo cho bạn</b><span>Thông báo có thể bao gồm cảnh báo, âm thanh và biểu tượng. Bạn có thể đổi trong Cài đặt.</span></div>' +
+      '<div class="iab"><button data-act="deny">Không cho phép</button><button data-act="allow">Cho phép</button></div></div></div>';
+  }
+  function lockScreen() {
+    var d = doneCount(), r = reward(state.day);
+    var body = (d > 0 ? 'Bạn đang có chuỗi ' + d + ' ngày. ' : '') + 'Điểm danh ngay để nhận ' + r + ' điểm nhé.';
+    return '<div class="lock"><div class="ld">Thứ Ba, 10 tháng 11</div><div class="lt">8:00</div>' +
+      '<button class="lnotif" data-act="notifTap"><span class="appic"><i></i></span><span class="col"><span class="top"><b>DIAG</b><span>bây giờ</span></span>' +
+      '<span class="nt">Đừng quên điểm danh hôm nay!</span><span class="nb">' + body + '</span></span></button>' +
+      '<div class="lhint">Bấm vào thông báo để mở app</div></div>';
+  }
+  function homeScreen() {
+    var spins = state.events === 'some' ? 5 : 0;
+    var badge = spins > 0 ? '<span class="qbadge">' + spins + '</span>' : (!state.claimed && state.load !== 'failed' ? '<span class="qdot"></span>' : '');
+    var label = spins > 0 ? 'Thử thách, còn ' + spins + ' lượt quay' : (!state.claimed ? 'Thử thách, hôm nay chưa điểm danh' : 'Thử thách');
+    function tile(name, icon, color) { return '<button class="qi" data-act="toast" data-msg="' + name + ': ngoài phạm vi prototype"><span class="qtile" style="background:' + color + ';box-shadow:0 8px 9px ' + color + '59">' + ic(icon, 24, '#fff', 2) + '</span><span class="qt">' + name + '</span></button>'; }
+    return '<header class="hhead"><span class="av">L</span><span class="col"><small>Xin chào,</small><b>Phạm Ngọc Lan</b></span></header>' +
+      '<div class="body"><section class="qa"><h2>Tiện ích</h2><div class="qgrid">' + tile('Đặt lịch', 'calplus', '#0766F7') + tile('Kết quả', 'doc', '#12BAB4') + tile('Khuyến mãi', 'tag', '#E8412C') +
+      '<button class="qi" data-act="openHub" aria-label="' + label + '"><span class="qtile" style="background:#E91E63;box-shadow:0 8px 9px rgba(233,30,99,.35)">' + giftFilled(26) + badge + '</span><span class="qt">Thử thách</span></button></div></section>' +
+      '<div class="hrest">Trang chủ rút gọn: các phần khác giữ nguyên như app hiện nay.</div></div>';
+  }
+
+  /* ---------- screens ---------- */
+  var GROUPS = ['Màn hình Thử thách', 'Nhắc điểm danh', 'Trạng thái khác', 'Lối vào ở Trang chủ · đề xuất'];
+  var SCREENS = [
+    { id: 'A', g: 0, name: 'Chưa điểm danh hôm nay', render: hub, notes: [
+      'Phần đầu màu xanh hiện số DIAG Points của hồ sơ đang mở. Nút "Hạng thành viên" mở màn hình đã có.',
+      'Thẻ điểm danh: ô hôm nay viền xanh nhấp nháy; ô ngày 7 là hộp quà.',
+      'Bấm nút vàng: điểm bay lên số dư, máy rung nhẹ, thẻ chuyển sang "Đã điểm danh" (màn B).',
+      'Bấm ⓘ cạnh tiêu đề thẻ để xem thể lệ (màn E).',
+      'Vòng quay giữ nguyên bên dưới; "Quà của tôi" nằm cạnh tiêu đề "Đang diễn ra".'] },
+    { id: 'B', g: 0, name: 'Đã điểm danh hôm nay', render: hub, notes: [
+      'Nút tắt, báo trước số điểm của ngày mai; ô "Ngày mai" in đậm.',
+      'Dòng xanh lá báo điểm vừa vào DIAG Points.',
+      'Bấm "Sang ngày mai" ở ô Dữ liệu mẫu để đi tiếp chuỗi.'] },
+    { id: 'C', g: 0, name: 'Ngày thứ 7 · mở quà', render: hub, notes: [
+      'Ngày cuối chuỗi: nút đổi thành "Mở quà 500 điểm", dòng báo màu vàng cam.',
+      'Bấm để mở hộp chúc mừng (màn D).'] },
+    { id: 'D', g: 0, name: 'Chúc mừng ngày thứ 7', render: hub, overlay: day7Modal, notes: [
+      'Hộp chúc mừng khi nhận quà ngày 7, có pháo giấy và máy rung.',
+      'Bấm "Tuyệt vời": thẻ hiện đủ 7 ô; ngày mai chuỗi mới bắt đầu từ ngày 1.'] },
+    { id: 'E', g: 0, name: 'Thể lệ điểm danh', render: hub, overlay: rulesSheet, notes: [
+      'Mở từ ⓘ trên thẻ điểm danh.',
+      'Số điểm từng ngày và nội dung thể lệ nên do BE gửi, để BO sửa không cần cập nhật app.'] },
+    { id: 'F', g: 1, name: 'Bật nhắc lúc 8:00', render: hub, overlay: permAlert, notes: [
+      'Lần đầu bật nhắc, iOS hỏi quyền gửi thông báo.',
+      'Cho phép: công tắc bật, app nhắc lúc 8:00 vào những ngày chưa điểm danh.',
+      'Không cho phép: công tắc giữ tắt, app chỉ cách bật thông báo trong Cài đặt.',
+      'Nhắc do app tự đặt trên máy, không cần BE.'] },
+    { id: 'F2', g: 1, name: 'Thông báo nhắc lúc 8:00', light: true, render: lockScreen, notes: [
+      'Chỉ hiện khi đã bật nhắc và hôm đó chưa điểm danh. Đã điểm danh trước 8:00 thì không nhắc.',
+      'Bấm vào thông báo mở thẳng màn Thử thách.'] },
+    { id: 'G', g: 2, name: 'Lỡ một ngày', render: hub, notes: [
+      'Hôm qua chưa điểm danh: chuỗi về ngày 1, có dòng báo màu cam.',
+      'Luật này chờ BO chốt (câu hỏi 2).'] },
+    { id: 'H', g: 2, name: 'Không có vòng quay nào', render: hub, notes: [
+      'Không có vòng quay đang hay sắp diễn ra: vẫn điểm danh được, phần vòng quay hiện một dòng trống.',
+      'App hiện nay chỉ hiện màn trống trong trường hợp này.'] },
+    { id: 'I', g: 2, name: 'Đang tải', render: hub, notes: [
+      'Khung xám giữ chỗ trong lúc tải, không nhảy bố cục khi dữ liệu về.',
+      'Prototype giữ nguyên trạng thái này; bấm "Màn sau" để đi tiếp.'] },
+    { id: 'J', g: 2, name: 'Không tải được điểm danh', render: hub, notes: [
+      'Chỉ thẻ điểm danh báo lỗi; số dư và vòng quay vẫn dùng được.',
+      'Bấm "Thử lại".'] },
+    { id: 'K', g: 2, name: 'Điểm danh bị lỗi mạng', render: hub, notes: [
+      'Bấm nút vàng: lần này mạng lỗi, app báo ở cuối màn hình, thẻ giữ nguyên.',
+      'Bấm lại sẽ thành công. App gửi lại đúng yêu cầu cũ, nên không bao giờ cộng điểm hai lần.'] },
+    { id: 'L', g: 3, name: 'Trang chủ · ô Thử thách', render: homeScreen, notes: [
+      'Đề xuất: chấm đỏ trên ô Thử thách khi hôm nay chưa điểm danh; điểm danh xong thì mất.',
+      'Còn lượt quay thì vẫn hiện số lượt như hiện nay (ưu tiên hơn chấm đỏ).',
+      'Đổi "Vòng quay" và "Hôm nay" ở ô Dữ liệu mẫu để xem từng trường hợp. Bấm ô Thử thách để mở màn Thử thách.'] }
+  ];
+  var HUB = { A: 1, B: 1, C: 1, G: 1, H: 1, I: 1, J: 1, K: 1 };
+  function screenById(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return SCREENS[i]; return null; }
+  function indexOf(id) { for (var i = 0; i < SCREENS.length; i++) if (SCREENS[i].id === id) return i; return 0; }
+  function hubId() {
+    if (state.load === 'loading') return 'I';
+    if (state.load === 'failed') return 'J';
+    if (state.events === 'none') return 'H';
+    if (state.claimed) return 'B';
+    if (state.broken) return 'G';
+    if (state.day === 7) return 'C';
+    return 'A';
+  }
+
+  /* ---------- rendering ---------- */
+  var screenEl = document.getElementById('screen');
+  var listEl = document.getElementById('screenList');
+  var SB_ICONS =
+    '<svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>' +
+    '<svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M8 11.5l2.4-2.9a3.6 3.6 0 0 0-4.8 0z" fill="currentColor"/><path d="M3.6 6.5a6.6 6.6 0 0 1 8.8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M1 3.6a10.4 10.4 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+    '<svg width="27" height="13" viewBox="0 0 27 13" aria-hidden="true"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".45"/></svg>';
+
+  function render(keepScroll) {
+    var scr = screenById(state.cur) || SCREENS[0];
+    var body = screenEl.querySelector('.app .body');
+    var y = keepScroll && body ? body.scrollTop : 0;
+    screenEl.innerHTML =
+      '<div class="sb' + (scr.light ? ' light' : '') + '"><span class="t">' + (scr.light ? '' : '9:41') + '</span><span class="ic">' + SB_ICONS + '</span></div><div class="island"></div>' +
+      '<div class="app">' + scr.render() + '</div>' + (scr.overlay ? scr.overlay() : '') +
+      '<div class="toast" id="toast" role="status"></div>';
+    if (keepScroll) { var b = screenEl.querySelector('.app .body'); if (b) b.scrollTop = y; }
+    state.anim = false;
+    updateSide(scr);
+  }
+  function show(id, mode) {
+    if (mode === 'push' && state.cur) state.stack.push(state.cur);
+    if (mode === 'root') state.stack = [];
+    state.cur = id;
+    state.anim = id === 'D' || id === 'E';
+    // A sheet or alert opened over the Thử thách screen keeps its scroll.
+    render(mode === 'push' && (id === 'D' || id === 'E' || id === 'F'));
+  }
+  function back() {
+    var prev = state.stack.pop();
+    if (prev) { state.cur = HUB[prev] ? hubId() : prev; render(true); return; }
+    if (HUB[state.cur] || state.cur === 'D' || state.cur === 'E' || state.cur === 'F') { state.cur = 'L'; render(false); return; }
+    toast(state.cur === 'L' ? 'Đây là Trang chủ' : 'Màn hình khóa (ngoài app)');
+  }
+  var toastTimer;
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { var t = document.getElementById('toast'); if (t) t.classList.remove('on'); }, 2400);
+  }
+
+  /* Opening a screen from the list or the pager puts the sample in the state that screen shows. */
+  function prepare(id) {
+    state.load = 'ok'; state.busy = false; state.failNext = false; state.justClaimed = false;
+    // L shows the proposed red dot, which only appears once the spins are used up.
+    state.events = id === 'H' ? 'none' : id === 'L' ? 'zero' : 'some';
+    switch (id) {
+      case 'A': case 'E': state.day = 4; state.claimed = false; state.broken = false; break;
+      case 'B': state.day = 4; state.claimed = true; state.broken = false; break;
+      case 'C': state.day = 7; state.claimed = false; state.broken = false; break;
+      case 'D': state.day = 7; state.claimed = true; state.broken = false; state.justClaimed = true; break;
+      case 'F': state.day = 4; state.claimed = false; state.broken = false; state.remind = false; state.perm = 'unknown'; break;
+      case 'F2': state.day = 4; state.claimed = false; state.broken = false; break;
+      case 'G': state.day = 1; state.claimed = false; state.broken = true; break;
+      case 'H': state.day = 4; state.claimed = false; state.broken = false; state.events = 'none'; break;
+      case 'I': state.day = 4; state.claimed = false; state.broken = false; state.load = 'loading'; break;
+      case 'J': state.day = 4; state.claimed = false; state.broken = false; state.load = 'failed'; break;
+      case 'K': state.day = 4; state.claimed = false; state.broken = false; state.failNext = true; break;
+      case 'L': state.claimed = false; break;
+    }
+  }
+
+  /* ---------- the check-in ---------- */
+  function claim() {
+    if (state.busy || state.claimed) return;
+    state.busy = true;
+    render(true);
+    setTimeout(function () {
+      state.busy = false;
+      if (state.failNext) {
+        state.failNext = false;
+        render(true);
+        toast('Chưa điểm danh được. Vui lòng thử lại.');
+        return;
+      }
+      var r = reward(state.day), old = state.points;
+      state.points += r; state.claimed = true; state.justClaimed = true; state.broken = false;
+      if (state.day === 7) {
+        state.stack.push(hubId());
+        state.cur = 'D'; state.anim = true;
+        render(true);
+        return;
+      }
+      state.cur = 'B';
+      render(true);
+      celebrate(old, state.points, r);
+    }, 800);
+  }
+  function center(el) {
+    var sr = screenEl.getBoundingClientRect(), k = sr.width / 390, b = el.getBoundingClientRect();
+    return { x: (b.left - sr.left + b.width / 2) / k, y: (b.top - sr.top + b.height / 2) / k };
+  }
+  function celebrate(old, nu, r) {
+    var bal = document.getElementById('balNum');
+    var tile = screenEl.querySelector('.dtile.just'), target = screenEl.querySelector('.balcoin');
+    if (!bal || !tile || !target || reduceMotion || !Element.prototype.animate) { if (bal) bal.textContent = n(nu); return; }
+    bal.textContent = n(old);
+    var a = center(tile), b = center(target);
+    var f = document.createElement('div');
+    f.className = 'floatpts rnd'; f.textContent = '+' + r;
+    f.style.left = (a.x - 40) + 'px'; f.style.top = (a.y - 40) + 'px';
+    screenEl.appendChild(f);
+    setTimeout(function () { if (f.parentNode) f.parentNode.removeChild(f); }, 1400);
+    var mids = [{ x: -36, y: -110 }, { x: -84, y: -80 }, { x: 10, y: -130 }];
+    mids.forEach(function (m, i) {
+      var c = document.createElement('span');
+      c.className = 'coin fly'; c.style.width = c.style.height = '22px'; c.innerHTML = '<i></i>';
+      c.style.left = (a.x - 11) + 'px'; c.style.top = (a.y - 11) + 'px';
+      screenEl.appendChild(c);
+      var anim = c.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 0 },
+        { transform: 'translate(0,0) scale(1)', opacity: 1, offset: 0.08 },
+        { transform: 'translate(' + m.x + 'px,' + m.y + 'px) scale(1.2)', opacity: 1, offset: 0.45 },
+        { transform: 'translate(' + (b.x - a.x) + 'px,' + (b.y - a.y) + 'px) scale(.55)', opacity: 0 }
+      ], { duration: 900, delay: 150 + i * 100, easing: 'cubic-bezier(.45,0,.25,1)', fill: 'both' });
+      anim.onfinish = function () { if (c.parentNode) c.parentNode.removeChild(c); };
+      // Also on a timer, in case the animation never reports finishing (background tab).
+      setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 150 + i * 100 + 1000);
+    });
+    setTimeout(function () { countUp(old, nu); }, 1050);
+  }
+  function countUp(old, nu) {
+    var t0 = null, dur = 500, finished = false;
+    function finish() {
+      if (finished) return;
+      finished = true;
+      var e = document.getElementById('balNum');
+      if (!e) return;
+      e.textContent = n(nu);
+      if (e.animate) e.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.16)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'ease-out' });
+    }
+    function frame(ts) {
+      if (finished) return;
+      var e = document.getElementById('balNum');
+      if (!e) return;
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      if (p < 1) { e.textContent = n(Math.round(old + (nu - old) * (1 - Math.pow(1 - p, 3)))); requestAnimationFrame(frame); }
+      else finish();
+    }
+    requestAnimationFrame(frame);
+    // The balance must end right even when animation frames don't run (background tab).
+    setTimeout(finish, dur + 120);
+  }
+  function toggleRemind() {
+    if (state.remind) { state.remind = false; render(true); toast('Đã tắt nhắc điểm danh'); return; }
+    if (state.perm === 'unknown') { show('F', 'push'); return; }
+    if (state.perm === 'denied') { toast('Hãy bật thông báo cho DIAG trong Cài đặt để nhận nhắc'); return; }
+    state.remind = true; render(true); toast('Sẽ nhắc bạn lúc 8:00 nếu hôm đó chưa điểm danh');
+  }
+  function answerPermission(allow) {
+    state.perm = allow ? 'granted' : 'denied';
+    state.remind = allow;
+    state.stack.pop();
+    state.cur = hubId();
+    render(true);
+    toast(allow ? 'Sẽ nhắc bạn lúc 8:00 nếu hôm đó chưa điểm danh' : 'Hãy bật thông báo cho DIAG trong Cài đặt để nhận nhắc');
+  }
+  function retry() {
+    state.load = 'loading';
+    render(true);
+    setTimeout(function () { state.load = 'ok'; state.cur = hubId(); render(true); }, 800);
+  }
+
+  function doAct(act, d) {
+    switch (act) {
+      case 'claim': claim(); break;
+      case 'rules': show('E', 'push'); break;
+      case 'remind': toggleRemind(); break;
+      case 'allow': answerPermission(true); break;
+      case 'deny': answerPermission(false); break;
+      case 'modalDone': state.stack = []; state.cur = hubId(); render(true); break;
+      case 'retry': retry(); break;
+      case 'evRemind':
+        state.evRemind = !state.evRemind; render(true);
+        toast(state.evRemind ? 'Sẽ nhắc khi chương trình bắt đầu' : 'Đã tắt nhắc chương trình'); break;
+      case 'openHub': show(hubId(), 'push'); break;
+      case 'notifTap': state.stack = []; state.cur = hubId(); render(false); break;
+      case 'toast': toast(d.msg); break;
+    }
+  }
+  screenEl.addEventListener('click', function (e) {
+    var t = e.target.closest('button');
+    if (!t || !screenEl.contains(t) || t.disabled) return;
+    if (t.hasAttribute('data-back')) { back(); return; }
+    if (t.dataset.act) doAct(t.dataset.act, t.dataset);
+  });
+
+  /* ---------- side panel ---------- */
+  function buildList() {
+    var html = '';
+    GROUPS.forEach(function (g, gi) {
+      html += '<h3>' + g + '</h3>';
+      SCREENS.filter(function (s) { return s.g === gi; }).forEach(function (s) {
+        html += '<button type="button" class="item" data-id="' + s.id + '"><span class="code">' + s.id + '</span><span>' + s.name + '</span></button>';
+      });
+    });
+    listEl.innerHTML = html;
+  }
+  listEl.addEventListener('click', function (e) {
+    var b = e.target.closest('.item');
+    if (!b) return;
+    prepare(b.dataset.id);
+    show(b.dataset.id, 'root');
+    if (document.body.classList.contains('narrow')) document.getElementById('deviceWrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  function press(sel, attr, value) {
+    var bs = document.querySelectorAll(sel + ' button');
+    for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', bs[i].getAttribute(attr) === String(value) ? 'true' : 'false');
+  }
+  function updateSide(scr) {
+    var items = listEl.querySelectorAll('.item');
+    for (var i = 0; i < items.length; i++) items[i].setAttribute('aria-current', items[i].dataset.id === scr.id ? 'true' : 'false');
+    document.getElementById('notesTitle').innerHTML = '<span class="code">' + scr.id + '</span>' + esc(scr.name);
+    document.getElementById('notesGroup').textContent = GROUPS[scr.g];
+    document.getElementById('notes').innerHTML = scr.notes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+    var idx = indexOf(scr.id);
+    document.getElementById('pagerLabel').textContent = scr.id + ' · ' + (idx + 1) + '/' + SCREENS.length;
+    document.getElementById('prevBtn').disabled = idx === 0;
+    document.getElementById('nextBtn').disabled = idx === SCREENS.length - 1;
+    press('#dayCtl', 'data-day', state.day);
+    press('#doneCtl', 'data-done', state.claimed ? 1 : 0);
+    press('#ptsCtl', 'data-pts', state.points);
+    press('#evCtl', 'data-ev', state.events);
+    var ev = { some: 'còn lượt quay', zero: 'hết lượt quay', none: 'không có vòng quay' }[state.events];
+    document.getElementById('ctlNow').textContent = 'Đang chọn: ngày ' + state.day + '/7, ' + (state.claimed ? 'đã' : 'chưa') + ' điểm danh hôm nay, ' + n(state.points) + ' điểm, ' + ev + '. Điểm danh xong thì số điểm tăng theo.';
+    if (history.replaceState) history.replaceState(null, '', '#' + scr.id);
+  }
+  /* A sample change shows its result on the matching Thử thách screen. */
+  function applySample() {
+    state.busy = false; state.justClaimed = false;
+    if (state.cur !== 'L' && state.cur !== 'F2') { state.stack = []; state.cur = hubId(); }
+    render(true);
+  }
+  function step(delta) {
+    var idx = indexOf(state.cur) + delta;
+    if (idx < 0 || idx >= SCREENS.length) return;
+    var id = SCREENS[idx].id;
+    prepare(id);
+    show(id, 'root');
+  }
+  document.getElementById('prevBtn').addEventListener('click', function () { step(-1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { step(1); });
+  document.addEventListener('keydown', function (e) {
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+  document.getElementById('dayCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.day = +b.dataset.day; state.claimed = false; state.broken = false; state.load = 'ok';
+    applySample();
+  });
+  document.getElementById('doneCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.claimed = b.dataset.done === '1'; state.load = 'ok';
+    if (state.claimed) state.broken = false;
+    applySample();
+  });
+  document.getElementById('ptsCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.points = +b.dataset.pts;
+    applySample();
+  });
+  document.getElementById('evCtl').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.events = b.dataset.ev;
+    applySample();
+  });
+  document.getElementById('nextDayBtn').addEventListener('click', function () {
+    var msg;
+    if (state.claimed) { state.day = state.day === 7 ? 1 : state.day + 1; state.broken = false; msg = 'Sang ngày mới: ngày ' + state.day + ' của chuỗi'; }
+    else { state.day = 1; state.broken = true; msg = 'Hôm qua chưa điểm danh nên chuỗi bắt đầu lại'; }
+    state.claimed = false; state.load = 'ok';
+    applySample();
+    toast(msg);
+  });
+  document.getElementById('missBtn').addEventListener('click', function () {
+    state.day = 1; state.broken = true; state.claimed = false; state.load = 'ok';
+    applySample();
+    toast('Đã bỏ lỡ một ngày: chuỗi bắt đầu lại');
+  });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    state = initial();
+    render(false);
+    toast('Đã đặt lại dữ liệu mẫu');
+  });
+
+  /* ---------- fit the phone to the window ---------- */
+  var wrap = document.getElementById('deviceWrap');
+  var device = document.getElementById('device');
+  function fit() {
+    var narrow = window.innerWidth < 900;
+    document.body.classList.toggle('narrow', narrow);
+    var W = narrow ? 390 : 414, H = narrow ? 844 : 868;
+    var s = narrow ? Math.min(1, (window.innerWidth - 16) / W) : Math.min(1, Math.max(0.6, (window.innerHeight - 96) / H));
+    device.style.transform = 'scale(' + s + ')';
+    wrap.style.width = (W * s) + 'px';
+    wrap.style.height = (H * s) + 'px';
+  }
+  window.addEventListener('resize', fit);
+
+  /* ---------- start ---------- */
+  buildList();
+  var start = (location.hash || '').replace('#', '');
+  if (screenById(start)) { prepare(start); state.cur = start; }
+  fit();
+  render(false);
+})();
+</script>
+</body>
+</html>
